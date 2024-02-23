@@ -1,13 +1,12 @@
 import 'dart:ui';
-
-import 'package:quikhyr/screens/auth/sign_in_screen.dart';
-import 'package:quikhyr/screens/auth/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quikhyr/screens/auth/sign_in_screen.dart';
+import 'package:quikhyr/screens/auth/sign_up_screen.dart';
 
-// import '../../blocs/authentication_bloc/authentication_bloc.dart';
-// import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
-// import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
+import '../../blocs/authentication_bloc/authentication_bloc.dart';
+import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
+import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -16,26 +15,25 @@ class WelcomeScreen extends StatefulWidget {
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateMixin{
-  	late TabController tabController;
+class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateMixin {
+	late TabController tabController;
 
-  @override
+	@override
   void initState() {
-    super.initState();
     tabController = TabController(
 			initialIndex: 0,
 			length: 2, 
 			vsync: this
 		);
-   
+    super.initState();
   }
 
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SingleChildScrollView(
+			backgroundColor: Theme.of(context).colorScheme.background,
+			body: SingleChildScrollView(
 				child: SizedBox(
 					height: MediaQuery.of(context).size.height,
 					child: Stack(
@@ -115,9 +113,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
 												child: TabBarView(
 													controller: tabController,
 													children: [
-														
-													SignInScreen(),
-                          SignUpScreen()
+														BlocProvider<SignInBloc>(
+															create: (context) => SignInBloc(
+																userRepository: context.read<AuthenticationBloc>().userRepository
+															),
+															child: const SignInScreen(),
+														),
+														BlocProvider<SignUpBloc>(
+															create: (context) => SignUpBloc(
+																userRepository: context.read<AuthenticationBloc>().userRepository
+															),
+															child: const SignUpScreen(),
+														),
 													],
 												)
 											)
@@ -129,49 +136,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
 					),
 				),
 			),
-		
-    );
+		);
   }
 }
-
-// class _WelcomeScreenState extends State<WelcomeScreen>  {
-
-
-	
-    
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-// 			backgroundColor: Theme.of(context).colorScheme.background,
-
-// 											Expanded(
-// 												child: TabBarView(
-// 													controller: tabController,
-// 													children: [
-// 														BlocProvider<SignInBloc>(
-// 															create: (context) => SignInBloc(
-// 																userRepository: context.read<AuthenticationBloc>().userRepository
-// 															),
-// 															child: const SignInScreen(),
-// 														),
-// 														BlocProvider<SignUpBloc>(
-// 															create: (context) => SignUpBloc(
-// 																userRepository: context.read<AuthenticationBloc>().userRepository
-// 															),
-// 															child: const SignUpScreen(),
-// 														),
-// 													],
-// 												)
-// 											)
-// 										],
-// 									),
-// 								),
-// 							)
-// 						],
-// 					),
-// 				),
-// 			),
-// 		);
-//   }
-// }

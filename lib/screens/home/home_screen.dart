@@ -13,17 +13,17 @@ class HomeScreen extends StatelessWidget {
 				title: const Text(
 					'Welcome, you are In !'
 				),
+        actions: [
+					IconButton(
+						onPressed: () {
+							context.read<SignInBloc>().add(const SignOutRequired());
+						}, 
+						icon: Icon(Icons.login)
+					)
+				],
 				
 			),
 		);
   }
 }
 
-// actions: [
-// 					IconButton(
-// 						onPressed: () {
-// 							context.read<SignInBloc>().add(const SignOutRequired());
-// 						}, 
-// 						icon: Icon(Icons.login)
-// 					)
-// 				],

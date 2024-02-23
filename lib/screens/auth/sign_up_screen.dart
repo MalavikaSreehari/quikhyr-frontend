@@ -31,22 +31,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return 
-    // BlocListener<SignUpBloc, SignUpState>(
-		// 	listener: (context, state) {
-		// 		if(state is SignUpSuccess) {
-		// 			setState(() {
-		// 			  signUpRequired = false;
-		// 			});
-		// 			// Navigator.pop(context);
-		// 		} else if(state is SignUpProcess) {
-		// 			setState(() {
-		// 			  signUpRequired = true;
-		// 			});
-		// 		}  else if(state is SignUpFailure) {
-		// 			return;
-		// 		} 
-		// 	},
-		// 	child: 
+    BlocListener<SignUpBloc, SignUpState>(
+			listener: (context, state) {
+				if(state is SignUpSuccess) {
+					setState(() {
+					  signUpRequired = false;
+					});
+					// Navigator.pop(context);
+				} else if(state is SignUpProcess) {
+					setState(() {
+					  signUpRequired = true;
+					});
+				}  else if(state is SignUpFailure) {
+					return;
+				} 
+			},
+			child: 
       Form(
 						key: _formKey,
 						child: Center(
@@ -240,12 +240,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 																name: nameController.text,
 															);
 															setState(() {
-																// context.read<SignUpBloc>().add(
-																// 	SignUpRequired(
-																// 		myUser,
-																// 		passwordController.text
-																// 	)
-																// );
+																context.read<SignUpBloc>().add(
+																	SignUpRequired(
+																		myUser,
+																		passwordController.text
+																	)
+																);
 															});																			
 														}
 													},
@@ -275,7 +275,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 								],
 							),
 						),
-				//),
+				),
 		);
   }
 }
