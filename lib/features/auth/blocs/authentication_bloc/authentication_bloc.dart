@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:user_repository/user_repository.dart';
+import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository userRepository;
+  final FirebaseUserRepo userRepository;
   late final StreamSubscription<User?> _userSubscription;
 
   AuthenticationBloc(
