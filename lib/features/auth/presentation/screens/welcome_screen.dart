@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quikhyr/screens/auth/sign_in_screen.dart';
-import 'package:quikhyr/screens/auth/sign_up_screen.dart';
+import 'package:quikhyr/features/auth/sign_in_screen.dart';
+import 'package:quikhyr/features/auth/sign_up_screen.dart';
 
 import '../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
