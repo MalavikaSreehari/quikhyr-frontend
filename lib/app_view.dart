@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quikhyr/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:quikhyr/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:quikhyr/screens/auth/welcome_screen.dart';
-import 'package:quikhyr/screens/home/home_screen.dart';
+import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
+import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});
@@ -41,9 +38,3 @@ class MyAppView extends StatelessWidget {
 		);
   }
 }
-
-// BlocProvider(
-// 							create: (context) => SignInBloc(
-// 								userRepository: context.read<AuthenticationBloc>().userRepository
-// 							),
-// 							child:

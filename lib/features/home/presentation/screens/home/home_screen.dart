@@ -1,7 +1,6 @@
-import 'package:quikhyr/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 						onPressed: () {
 							context.read<SignInBloc>().add(const SignOutRequired());
 						}, 
-						icon: Icon(Icons.login)
+						icon: const Icon(Icons.login)
 					)
 				],
 				
