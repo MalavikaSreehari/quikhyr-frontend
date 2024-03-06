@@ -79,4 +79,3 @@ app.*.map.json
 # Firebase related
 **/google-services.json
 **/GoogleService-Info.plist
-/lib/config/firebase_options.dart
