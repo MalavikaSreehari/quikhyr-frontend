@@ -11,3 +11,5 @@ const Color error = Color(0xFFFF0000);
 const Color outline = Color(0xFF424242);
 const Color surface = Color(0xFFE0E0E0);
 const Color onSurface = Color(0xFF000000);
+
+const Color textColor = Color(0xFFE9EAE6);

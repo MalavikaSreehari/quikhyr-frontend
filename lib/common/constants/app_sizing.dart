@@ -32,6 +32,16 @@ class AppSizing {
     return const SizedBox(height: 16);
   }
 
+  /// Creates a vertical [SizedBox] with a height of 20.
+  static SizedBox vS20() {
+    return const SizedBox(height: 20);
+  }
+
+  /// Creates a vertical [SizedBox] with a height of 24.
+  static SizedBox vS24() {
+    return const SizedBox(height: 24);
+  }
+
   /// Creates a horizontal [SizedBox] with the given [width].
   static SizedBox hS(double width) {
     return SizedBox(width: width);
@@ -60,5 +70,15 @@ class AppSizing {
   /// Creates a horizontal [SizedBox] with a width of 16.
   static SizedBox hS16() {
     return const SizedBox(width: 16);
+  }
+
+  /// Creates a horizontal [SizedBox] with a width of 20.
+  static SizedBox hS20() {
+    return const SizedBox(width: 20);
+  }
+
+  /// Creates a horizontal [SizedBox] with a width of 24.
+  static SizedBox hS24() {
+    return const SizedBox(width: 24);
   }
 }

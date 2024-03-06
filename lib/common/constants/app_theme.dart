@@ -6,10 +6,18 @@ class AppTheme {
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         color: secondary,
-        // fontFamily: 'Trap',
+        fontFamily: 'Trap',
         fontSize: 13,
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w700,
+        height: 1.0,
+      ),
+      bodyMedium: TextStyle(
+        color: textColor,
+        fontFamily: 'Trap',
+        fontSize: 12,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w400,
         height: 1.0,
       ),
     ),

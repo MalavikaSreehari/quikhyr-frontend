@@ -3,6 +3,7 @@ import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikhyr/features/auth/presentation/components/my_text_field.dart';
+import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -29,9 +30,9 @@ class _SignInScreenState extends State<SignInScreen> {
       body: BlocListener<SignInBloc, SignInState>(
         listener: (context, state) {
           if (state is SignInSuccess) {
-            setState(() {
-              signInRequired = false;
-            });
+            signInRequired = false;
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
           } else if (state is SignInProcess) {
             setState(() {
               signInRequired = true;
@@ -60,7 +61,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   validator: (val) {
                     if (val!.isEmpty) {
                       return 'Please fill in this field';
-                    } else if (!RegExp(r'^[\w-\.]+@([\w-]+.)+[\w-]{2,4}$').hasMatch(val)) {
+                    } else if (!RegExp(r'^[\w-\.]+@([\w-]+.)+[\w-]{2,4}$')
+                        .hasMatch(val)) {
                       return 'Please enter a valid email';
                     }
                     return null;
@@ -80,7 +82,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   validator: (val) {
                     if (val!.isEmpty) {
                       return 'Please fill in this field';
-                    } else if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^]).{8,}$').hasMatch(val)) {
+                    } else if (!RegExp(
+                            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^]).{8,}$')
+                        .hasMatch(val)) {
                       return 'Please enter a valid password';
                     }
                     return null;
@@ -117,14 +121,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         },
                         style: TextButton.styleFrom(
                           elevation: 3.0,
-                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(60),
                           ),
                         ),
                         child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                           child: Text(
                             'Sign In',
                             textAlign: TextAlign.center,
