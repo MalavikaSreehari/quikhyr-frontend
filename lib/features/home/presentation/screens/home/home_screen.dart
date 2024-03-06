@@ -8,21 +8,17 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-			appBar: AppBar(
-				title: const Text(
-					'Welcome, you are In !'
-				),
-        actions: [
-					IconButton(
-						onPressed: () {
-							context.read<SignInBloc>().add(const SignOutRequired());
-						}, 
-						icon: const Icon(Icons.login)
-					)
-				],
-				
-			),
-		);
+        appBar: AppBar(
+          title: const Text('Welcome, you are In !'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  context.read<SignInBloc>().add(const SignOutRequired());
+                },
+                icon: const Icon(Icons.login))
+          ],
+        ),
+        body: Container(),
+        );
   }
 }
-

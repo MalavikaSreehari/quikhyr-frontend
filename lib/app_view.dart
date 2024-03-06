@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quikhyr/common/constants/app_theme.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
@@ -10,31 +11,16 @@ class MyAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-			title: 'Firebase Auth',
-			theme: ThemeData(
-				colorScheme: const ColorScheme.light(
-          background: Colors.white,
-          onBackground: Colors.black,
-          primary: Color.fromRGBO(206, 147, 216, 1),
-          onPrimary: Colors.black,
-          secondary: Color.fromRGBO(244, 143, 177, 1),
-          onSecondary: Colors.white,
-					tertiary: Color.fromRGBO(255, 204, 128, 1),
-          error: Colors.red,
-					outline: Color(0xFF424242)
-        ),
-			),
-			home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-				builder: (context, state) {
-					if(state.status == AuthenticationStatus.authenticated) {
-						return const HomeScreen();
-						
-					} else {
-						return const WelcomeScreen();
-					}
-				}
-			
-      )
-		);
+      title: 'Firebase Auth',
+      theme: AppTheme.appTheme,
+      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (context, state) {
+        if (state.status == AuthenticationStatus.authenticated) {
+          return const HomeScreen();
+        } else {
+          return const WelcomeScreen();
+        }
+      }),
+    );
   }
 }

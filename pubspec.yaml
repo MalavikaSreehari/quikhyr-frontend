@@ -16,6 +16,8 @@ dependencies:
   equatable: ^2.0.5
   cupertino_icons: ^1.0.6
   cloud_firestore: ^4.15.6
+  flutter_svg: ^2.0.10+1
+
 
 
 dev_dependencies:
@@ -25,3 +27,26 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+  fonts:
+    - family: Moonhouse
+      fonts:
+        - asset: assets/fonts/moonhouse.ttf
+    - family: Trap
+      fonts:
+        - asset: assets/fonts/Trap-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Trap-Bold.otf
+          weight: 700
+        - asset: assets/fonts/Trap-Light.otf
+          weight: 300
+        - asset: assets/fonts/Trap-Medium.otf
+          weight: 500
+        - asset: assets/fonts/Trap-SemiBold.otf
+          weight: 600
+        - asset: assets/fonts/Trap-Black.otf
+          weight: 900
+        - asset: assets/fonts/Trap-ExtraBold.otf
+          weight: 800
