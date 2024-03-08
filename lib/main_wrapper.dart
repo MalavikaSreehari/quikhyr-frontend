@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_routes.dart';
+import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/common/cubits/navigation_cubit/navigation_cubit.dart';
 import 'package:quikhyr/common/widgets/named_nav_bar_item_widget.dart';
 
@@ -26,9 +27,13 @@ class _MainWrapperState extends State<MainWrapper> {
 
   final tabs = [
     NamedNavigationBarItemWidget(
-      activeIcon: SvgPicture.asset(
+      activeIcon: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+        SvgPicture.asset(
         AppAssetLinks.homeNavBarActiveSvg,
       ),
+      AppSizing.hS8(),
+      Text("Home", style: ThemeData.dark().textTheme.bodyLarge),
+      ],),
       initialLocation: Routes.homeNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.homeNavBarSvg,
@@ -36,9 +41,15 @@ class _MainWrapperState extends State<MainWrapper> {
       label: 'Home',
     ),
     NamedNavigationBarItemWidget(
-      activeIcon: SvgPicture.asset(
+      activeIcon: Row(
+        mainAxisAlignment: MainAxisAlignment.center
+        ,children: [
+        SvgPicture.asset(
         AppAssetLinks.exploreNavBarActiveSvg,
       ),
+      AppSizing.hS8(),
+      Text("Explore", style: ThemeData.dark().textTheme.bodyLarge),
+      ],),
       initialLocation: Routes.exploreNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.exploreNavBarSvg,
@@ -46,9 +57,15 @@ class _MainWrapperState extends State<MainWrapper> {
       label: 'Explore',
     ),
     NamedNavigationBarItemWidget(
-      activeIcon: SvgPicture.asset(
+      activeIcon: Row(
+        mainAxisAlignment: MainAxisAlignment.center
+        ,children: [
+        SvgPicture.asset(
         AppAssetLinks.chatNavBarActiveSvg,
       ),
+      AppSizing.hS8(),
+      Text("Chat", style: ThemeData.dark().textTheme.bodyLarge),
+      ],),
       initialLocation: Routes.chatNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.chatNavBarSvg,
@@ -56,9 +73,15 @@ class _MainWrapperState extends State<MainWrapper> {
       label: 'Chat',
     ),
     NamedNavigationBarItemWidget(
-      activeIcon: SvgPicture.asset(
+      activeIcon: Row(
+        mainAxisAlignment: MainAxisAlignment.center
+        ,children: [
+        SvgPicture.asset(
         AppAssetLinks.bookNavBarActiveSvg,
       ),
+      AppSizing.hS8(),
+      Text("Book", style: ThemeData.dark().textTheme.bodyLarge),
+      ],),
       initialLocation: Routes.bookNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.bookNavBarSvg,
@@ -66,9 +89,15 @@ class _MainWrapperState extends State<MainWrapper> {
       label: 'Bookmark',
     ),
     NamedNavigationBarItemWidget(
-      activeIcon: SvgPicture.asset(
+      activeIcon: Row(
+        mainAxisAlignment: MainAxisAlignment.center
+        ,children: [
+        SvgPicture.asset(
         AppAssetLinks.profileNavBarActiveSvg,
       ),
+      AppSizing.hS8(),
+      Text("Profile", style: ThemeData.dark().textTheme.bodyLarge),
+      ],),
       initialLocation: Routes.profileNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.profileNavBarSvg,
@@ -89,7 +118,7 @@ class _MainWrapperState extends State<MainWrapper> {
         elevation: 0,
         backgroundColor: Colors.black,
         currentIndex: selectedIndex,
-        type: BottomNavigationBarType.fixed,
+        type: BottomNavigationBarType.shifting,
         onTap: (index) {
           setState(() {
             selectedIndex = index;
