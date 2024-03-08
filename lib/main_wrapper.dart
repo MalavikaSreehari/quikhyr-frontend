@@ -7,10 +7,22 @@ import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/cubits/navigation_cubit/navigation_cubit.dart';
 import 'package:quikhyr/common/widgets/named_nav_bar_item_widget.dart';
 
-class MainScreen extends StatelessWidget {
-  final Widget screen;
+class MainWrapper extends StatefulWidget {
+  const MainWrapper({Key? key, required this.navigationShell})
+      : super(key: key);
 
-  MainScreen({Key? key, required this.screen}) : super(key: key);
+  final StatefulNavigationShell navigationShell;
+
+  @override
+  State<MainWrapper> createState() => _MainWrapperState();
+}
+
+class _MainWrapperState extends State<MainWrapper> {
+  int selectedIndex = 0;
+  void _goToBranch(int index) {
+    widget.navigationShell.goBranch(index,
+        initialLocation: index == widget.navigationShell.currentIndex);
+  }
 
   final tabs = [
     NamedNavigationBarItemWidget(
@@ -68,8 +80,24 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screen,
-      bottomNavigationBar: _buildBottomNavigation(context, tabs),
+      body: widget.navigationShell,
+      // bottomNavigationBar: _buildBottomNavigation(context, tabs),
+      bottomNavigationBar: BottomNavigationBar(
+        items: tabs,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        elevation: 0,
+        backgroundColor: Colors.black,
+        currentIndex: selectedIndex,
+        type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+            //if having lag move _goToBranch(index) to the bottom of the setState
+            _goToBranch(index);
+          });
+        },
+      ),
     );
   }
 }
@@ -81,10 +109,10 @@ BlocBuilder<NavigationCubit, NavigationState> _buildBottomNavigation(
       builder: (context, state) {
         return BottomNavigationBar(
           onTap: (value) {
-            if (state.index != value) {
-              context.read<NavigationCubit>().getNavBarItem(value);
-              context.go(tabs[value].initialLocation);
-            }
+            // if (state.index != value) {
+            //   context.read<NavigationCubit>().getNavBarItem(value);
+            //   context.go(tabs[value].initialLocation);
+            // }
           },
           showSelectedLabels: false,
           showUnselectedLabels: false,

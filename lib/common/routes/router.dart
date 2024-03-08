@@ -14,39 +14,41 @@ import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dar
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
 import 'package:quikhyr/features/profile/presentation/screens/profile_screen.dart';
-import 'package:quikhyr/main_screen.dart';
+import 'package:quikhyr/main_wrapper.dart';
 
 class AppRouter {
-static final _rootNavigatorKey = GlobalKey<NavigatorState>();
-static final _shellNavigatorHomeKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellHome');
-static final _shellNavigatorExploreKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellExplore');
-static final _shellNavigatorChatKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellChat');
-static final _shellNavigatorBookKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellBook');
-static final _shellNavigatorProfileKey =
-    GlobalKey<NavigatorState>(debugLabel: 'shellProfile');
+  static final _rootNavigatorKey = GlobalKey<NavigatorState>();
+  static final _shellNavigatorHomeKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellHome');
+  static final _shellNavigatorExploreKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellExplore');
+  static final _shellNavigatorChatKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellChat');
+  static final _shellNavigatorBookKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellBook');
+  static final _shellNavigatorProfileKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellProfile');
   static final GoRouter _router = GoRouter(
     initialLocation: Routes.homeNamedPage,
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     routes: [
-StatefulShellRoute.indexedStack(
-    builder: (context, state, child) {
-      return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, authState) {
-          if (authState.status == AuthenticationStatus.authenticated) {
-            return BlocProvider(
-              create: (context) => NavigationCubit(),
-              child: MainScreen(screen: child),
-            );
-          }
-          return const WelcomeScreen();
-        },
-      );
-    },
+// BlocBuilder<AuthenticationBloc, AuthenticationState>(
+//         builder: (context, authState) {
+//           if (authState.status == AuthenticationStatus.authenticated) {
+//             return BlocProvider(
+//               create: (context) => NavigationCubit(),
+//               child: MainScreen(screen: child),
+//             );
+//           }
+//           return const WelcomeScreen();
+//         },
+//       );
+
+      StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) {
+            return MainWrapper(navigationShell: navigationShell,);
+          },
           branches: <StatefulShellBranch>[
             StatefulShellBranch(
                 navigatorKey: _shellNavigatorHomeKey,
@@ -60,8 +62,10 @@ StatefulShellRoute.indexedStack(
                       GoRoute(
                         path: Routes.homeDetailsNamedPage,
                         name: 'details',
-                        // name should be given for inner routes or else error will be thrown
-                        builder: (context, state) => const HomeDetailsScreen(),
+                        //navigation is done through routes so please make sure to supply a name
+                        
+
+                        builder: (context, state) => HomeDetailsScreen(key: state.pageKey),
                       ),
                     ],
                   ),
@@ -71,8 +75,8 @@ StatefulShellRoute.indexedStack(
               routes: <RouteBase>[
                 GoRoute(
                   path: Routes.exploreNamedPage,
-                  pageBuilder: (context, state) => const NoTransitionPage(
-                    child: ExploreScreen(),
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    child: ExploreScreen(key: state.pageKey,),
                   ),
                 ),
               ],
@@ -82,8 +86,8 @@ StatefulShellRoute.indexedStack(
               routes: <RouteBase>[
                 GoRoute(
                   path: Routes.chatNamedPage,
-                  pageBuilder: (context, state) => const NoTransitionPage(
-                    child: ChatScreen(),
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    child: ChatScreen(key: state.pageKey),
                   ),
                 ),
               ],
@@ -93,8 +97,8 @@ StatefulShellRoute.indexedStack(
               routes: <RouteBase>[
                 GoRoute(
                   path: Routes.bookNamedPage,
-                  pageBuilder: (context, state) => const NoTransitionPage(
-                    child: BookingScreen(),
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    child: BookingScreen(key: state.pageKey),
                   ),
                 ),
               ],
@@ -104,8 +108,8 @@ StatefulShellRoute.indexedStack(
               routes: <RouteBase>[
                 GoRoute(
                   path: Routes.profileNamedPage,
-                  pageBuilder: (context, state) => const NoTransitionPage(
-                    child: ProfileScreen(),
+                  pageBuilder: (context, state) => NoTransitionPage(
+                    child: ProfileScreen(key: state.pageKey),
                   ),
                 ),
               ],
