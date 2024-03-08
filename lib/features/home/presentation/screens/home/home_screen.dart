@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 
@@ -36,6 +38,9 @@ class HomeScreen extends StatelessWidget {
                 ))
           ],
         ),
-        body: Container());
+        body: Center(child: TextButton(onPressed: () {
+          context.goNamed(Routes.homeDetailsNamedPage);
+          
+        }, child: const Text('Go to Home Details'))));
   }
 }

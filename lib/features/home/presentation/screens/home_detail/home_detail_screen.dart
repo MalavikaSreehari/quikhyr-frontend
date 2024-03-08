@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 
 class HomeDetailsScreen extends StatelessWidget {
@@ -13,7 +12,7 @@ class HomeDetailsScreen extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false, // Remove back button
           backgroundColor: Colors.transparent,
-          title: Column(
+          title: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [Text("Hi")]),
           actions: [
