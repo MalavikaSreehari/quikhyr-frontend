@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeDetailsScreen extends StatelessWidget {
+  const HomeDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +14,8 @@ class HomeScreen extends StatelessWidget {
           automaticallyImplyLeading: false, // Remove back button
           backgroundColor: Colors.transparent,
           title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Hey Noah,',
-                  style: Theme.of(context).textTheme.headlineMedium),
-              AppSizing.vS12(),
-              Text(
-                'Want some service today?',
-                style: Theme.of(context).textTheme.headlineSmall,
-              )
-            ],
-          ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text("Hi")]),
           actions: [
             IconButton(
                 onPressed: () {
