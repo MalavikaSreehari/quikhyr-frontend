@@ -27,6 +27,6 @@ class HomeDetailsScreen extends StatelessWidget {
                 ))
           ],
         ),
-        body: Container());
+        body: const Center(child: Text("HomeDetailsScreen")));
   }
 }

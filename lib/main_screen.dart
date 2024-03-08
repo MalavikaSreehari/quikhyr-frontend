@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/cubits/navigation_cubit/navigation_cubit.dart';
 import 'package:quikhyr/common/widgets/named_nav_bar_item_widget.dart';
@@ -13,42 +14,54 @@ class MainScreen extends StatelessWidget {
 
   final tabs = [
     NamedNavigationBarItemWidget(
-      activeIcon: const Icon(Icons.home),
-      // activeIcon: SvgPicture.asset(
-      //   'images/search_active.svg',
-      //   color: Colors.white,
-      // ),
+      activeIcon: SvgPicture.asset(
+        AppAssetLinks.homeNavBarActiveSvg,
+      ),
       initialLocation: Routes.homeNamedPage,
-      // icon: SvgPicture.asset(
-      //   'images/search.svg',
-      //   color: Colors.white,
-      // ),
-      icon: const Icon(Icons.key),
+      icon: SvgPicture.asset(
+        AppAssetLinks.homeNavBarSvg,
+      ),
       label: 'Home',
     ),
     NamedNavigationBarItemWidget(
-      activeIcon: const Icon(Icons.search_off_outlined),
+      activeIcon: SvgPicture.asset(
+        AppAssetLinks.exploreNavBarActiveSvg,
+      ),
       initialLocation: Routes.exploreNamedPage,
-      icon: const Icon(Icons.search),
-      label: 'Explore', // Set label position to right
+      icon: SvgPicture.asset(
+        AppAssetLinks.exploreNavBarSvg,
+      ),
+      label: 'Explore',
     ),
     NamedNavigationBarItemWidget(
-      activeIcon: const Icon(Icons.chat_bubble_outline),
+      activeIcon: SvgPicture.asset(
+        AppAssetLinks.chatNavBarActiveSvg,
+      ),
       initialLocation: Routes.chatNamedPage,
-      icon: const Icon(Icons.chat),
+      icon: SvgPicture.asset(
+        AppAssetLinks.chatNavBarSvg,
+      ),
       label: 'Chat',
     ),
     NamedNavigationBarItemWidget(
-      activeIcon: const Icon(Icons.bookmark),
+      activeIcon: SvgPicture.asset(
+        AppAssetLinks.bookNavBarActiveSvg,
+      ),
       initialLocation: Routes.bookNamedPage,
-      icon: const Icon(Icons.book_online_outlined),
+      icon: SvgPicture.asset(
+        AppAssetLinks.bookNavBarSvg,
+      ),
       label: 'Bookmark',
     ),
     NamedNavigationBarItemWidget(
-      activeIcon: const Icon(Icons.person),
-      initialLocation: Routes.bookNamedPage,
-      icon: const Icon(Icons.person_4),
-      label: 'Bookmark',
+      activeIcon: SvgPicture.asset(
+        AppAssetLinks.profileNavBarActiveSvg,
+      ),
+      initialLocation: Routes.profileNamedPage,
+      icon: SvgPicture.asset(
+        AppAssetLinks.profileNavBarSvg,
+      ),
+      label: 'Profile',
     ),
   ];
 
@@ -78,9 +91,9 @@ BlocBuilder<NavigationCubit, NavigationState> _buildBottomNavigation(
           elevation: 0,
           backgroundColor: Colors.black,
           unselectedItemColor: Colors.white,
-          selectedIconTheme: IconThemeData(
-            size: ((IconTheme.of(mContext).size)! * 1.3),
-          ),
+          // selectedIconTheme: IconThemeData(
+          //   size: ((IconTheme.of(mContext).size)! * 1.3),
+          // ),
           items: tabs,
           currentIndex: state.index,
           type: BottomNavigationBarType.fixed,

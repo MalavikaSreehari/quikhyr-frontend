@@ -7,8 +7,13 @@ import 'package:quikhyr/common/cubits/navigation_cubit/navigation_cubit.dart';
 import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
+import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
+import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
+import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
+import 'package:quikhyr/features/profile/presentation/screens/profile_screen.dart';
 import 'package:quikhyr/main_screen.dart';
 
 class AppRouter {
@@ -31,7 +36,7 @@ class AppRouter {
                   child: MainScreen(screen: child),
                 );
               }
-              return const SignInScreen();
+              return const WelcomeScreen();
             },
           );
         },
@@ -51,25 +56,25 @@ class AppRouter {
           GoRoute(
             path: Routes.exploreNamedPage,
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: HomeScreen(),
+              child: ExploreScreen(),
             ),
           ),
           GoRoute(
             path: Routes.chatNamedPage,
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: HomeScreen(),
+              child: ChatScreen(),
             ),
           ),
           GoRoute(
             path: Routes.bookNamedPage,
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: HomeScreen(),
+              child: BookingScreen(),
             ),
           ),
           GoRoute(
             path: Routes.profileNamedPage,
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: HomeScreen(),
+              child: ProfileScreen(),
             ),
           ),
           
