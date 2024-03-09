@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
-import 'package:quikhyr/common/cubits/navigation_cubit/navigation_cubit.dart';
 import 'package:quikhyr/common/widgets/named_nav_bar_item_widget.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -20,6 +17,7 @@ class MainWrapper extends StatefulWidget {
 
 class _MainWrapperState extends State<MainWrapper> {
   int selectedIndex = 0;
+
   void _goToBranch(int index) {
     widget.navigationShell.goBranch(index,
         initialLocation: index == widget.navigationShell.currentIndex);
@@ -27,14 +25,16 @@ class _MainWrapperState extends State<MainWrapper> {
 
   final tabs = [
     NamedNavigationBarItemWidget(
-      activeIcon: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-        SvgPicture.asset(
-        AppAssetLinks.homeNavBarActiveSvg,
+      activeIcon: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            AppAssetLinks.homeNavBarActiveSvg,
+          ),
+          AppSizing.hS8(),
+          Text("Home", style: ThemeData.dark().textTheme.bodyLarge),
+        ],
       ),
-      AppSizing.hS8(),
-      Text("Home", style: ThemeData.dark().textTheme.bodyLarge),
-      ],),
-      initialLocation: Routes.homeNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.homeNavBarSvg,
       ),
@@ -42,15 +42,15 @@ class _MainWrapperState extends State<MainWrapper> {
     ),
     NamedNavigationBarItemWidget(
       activeIcon: Row(
-        mainAxisAlignment: MainAxisAlignment.center
-        ,children: [
-        SvgPicture.asset(
-        AppAssetLinks.exploreNavBarActiveSvg,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            AppAssetLinks.exploreNavBarActiveSvg,
+          ),
+          AppSizing.hS8(),
+          Text("Explore", style: ThemeData.dark().textTheme.bodyLarge),
+        ],
       ),
-      AppSizing.hS8(),
-      Text("Explore", style: ThemeData.dark().textTheme.bodyLarge),
-      ],),
-      initialLocation: Routes.exploreNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.exploreNavBarSvg,
       ),
@@ -58,15 +58,15 @@ class _MainWrapperState extends State<MainWrapper> {
     ),
     NamedNavigationBarItemWidget(
       activeIcon: Row(
-        mainAxisAlignment: MainAxisAlignment.center
-        ,children: [
-        SvgPicture.asset(
-        AppAssetLinks.chatNavBarActiveSvg,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            AppAssetLinks.chatNavBarActiveSvg,
+          ),
+          AppSizing.hS8(),
+          Text("Chat", style: ThemeData.dark().textTheme.bodyLarge),
+        ],
       ),
-      AppSizing.hS8(),
-      Text("Chat", style: ThemeData.dark().textTheme.bodyLarge),
-      ],),
-      initialLocation: Routes.chatNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.chatNavBarSvg,
       ),
@@ -74,15 +74,15 @@ class _MainWrapperState extends State<MainWrapper> {
     ),
     NamedNavigationBarItemWidget(
       activeIcon: Row(
-        mainAxisAlignment: MainAxisAlignment.center
-        ,children: [
-        SvgPicture.asset(
-        AppAssetLinks.bookNavBarActiveSvg,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            AppAssetLinks.bookNavBarActiveSvg,
+          ),
+          AppSizing.hS8(),
+          Text("Book", style: ThemeData.dark().textTheme.bodyLarge),
+        ],
       ),
-      AppSizing.hS8(),
-      Text("Book", style: ThemeData.dark().textTheme.bodyLarge),
-      ],),
-      initialLocation: Routes.bookNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.bookNavBarSvg,
       ),
@@ -90,15 +90,15 @@ class _MainWrapperState extends State<MainWrapper> {
     ),
     NamedNavigationBarItemWidget(
       activeIcon: Row(
-        mainAxisAlignment: MainAxisAlignment.center
-        ,children: [
-        SvgPicture.asset(
-        AppAssetLinks.profileNavBarActiveSvg,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            AppAssetLinks.profileNavBarActiveSvg,
+          ),
+          AppSizing.hS8(),
+          Text("Profile", style: ThemeData.dark().textTheme.bodyLarge),
+        ],
       ),
-      AppSizing.hS8(),
-      Text("Profile", style: ThemeData.dark().textTheme.bodyLarge),
-      ],),
-      initialLocation: Routes.profileNamedPage,
       icon: SvgPicture.asset(
         AppAssetLinks.profileNavBarSvg,
       ),
@@ -108,6 +108,13 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      //!!RISKY CODE!!//
+      if (context.canPop()){
+        context.pop();
+      }
+    });
+
     return Scaffold(
       body: widget.navigationShell,
       // bottomNavigationBar: _buildBottomNavigation(context, tabs),
@@ -131,29 +138,29 @@ class _MainWrapperState extends State<MainWrapper> {
   }
 }
 
-BlocBuilder<NavigationCubit, NavigationState> _buildBottomNavigation(
-        mContext, List<NamedNavigationBarItemWidget> tabs) =>
-    BlocBuilder<NavigationCubit, NavigationState>(
-      buildWhen: (previous, current) => previous.index != current.index,
-      builder: (context, state) {
-        return BottomNavigationBar(
-          onTap: (value) {
-            // if (state.index != value) {
-            //   context.read<NavigationCubit>().getNavBarItem(value);
-            //   context.go(tabs[value].initialLocation);
-            // }
-          },
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 0,
-          backgroundColor: Colors.black,
-          unselectedItemColor: Colors.white,
-          // selectedIconTheme: IconThemeData(
-          //   size: ((IconTheme.of(mContext).size)! * 1.3),
-          // ),
-          items: tabs,
-          currentIndex: state.index,
-          type: BottomNavigationBarType.fixed,
-        );
-      },
-    );
+// BlocBuilder<NavigationCubit, NavigationState> _buildBottomNavigation(
+//         mContext, List<NamedNavigationBarItemWidget> tabs) =>
+//     BlocBuilder<NavigationCubit, NavigationState>(
+//       buildWhen: (previous, current) => previous.index != current.index,
+//       builder: (context, state) {
+//         return BottomNavigationBar(
+//           onTap: (value) {
+//             // if (state.index != value) {
+//             //   context.read<NavigationCubit>().getNavBarItem(value);
+//             //   context.go(tabs[value].initialLocation);
+//             // }
+//           },
+//           showSelectedLabels: false,
+//           showUnselectedLabels: false,
+//           elevation: 0,
+//           backgroundColor: Colors.black,
+//           unselectedItemColor: Colors.white,
+//           // selectedIconTheme: IconThemeData(
+//           //   size: ((IconTheme.of(mContext).size)! * 1.3),
+//           // ),
+//           items: tabs,
+//           currentIndex: state.index,
+//           type: BottomNavigationBarType.fixed,
+//         );
+//       },
+//     );

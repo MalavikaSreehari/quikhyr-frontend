@@ -8,8 +8,10 @@ import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
@@ -38,9 +40,11 @@ class HomeScreen extends StatelessWidget {
                 ))
           ],
         ),
-        body: Center(child: TextButton(onPressed: () {
-          context.goNamed(Routes.homeDetailsNamedPage);
-          
-        }, child: const Text('Go to Home Details'))));
+        body: Center(
+            child: TextButton(
+                onPressed: () {
+                  context.goNamed(Routes.homeDetailsNamedPageName);
+                },
+                child: const Text('Go to Home Details'))));
   }
 }
