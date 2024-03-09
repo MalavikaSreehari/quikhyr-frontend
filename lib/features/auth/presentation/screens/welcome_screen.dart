@@ -23,99 +23,98 @@ class WelcomeScreen extends StatelessWidget {
               image: AssetImage('assets/images/welcome_background.png'),
               fit: BoxFit.cover),
         ),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
+        child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(
-                      AppAssetLinks.logoSvg,
-                      width: 200,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+        Expanded(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                LongIconButton(
-                  text: "Let's get started",
-                  svgPath: AppAssetLinks.rightArrowSvg,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => SignUpBloc(
-                              userRepository: context
-                                  .read<AuthenticationBloc>()
-                                  .userRepository),
-                          child: const SignUpScreen(),
-                        ),
-                      ),
-                    );
-                  },
+                SvgPicture.asset(
+                  AppAssetLinks.logoSvg,
+                  width: 200,
                 ),
-                AppSizing.vS12(),
-                LongIconButton(
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  foregroundColor: Theme.of(context).colorScheme.onSecondary,
-                  text: "Already have an account",
-                  svgPath: AppAssetLinks.rightArrowSvg,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => SignInBloc(
-                              userRepository: context
-                                  .read<AuthenticationBloc>()
-                                  .userRepository),
-                          child: const SignInScreen(),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                AppSizing.vS24(),
-                Text(
-                  "By continuing, you give consent to QuikHyr's",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                AppSizing.vS4(),
-                RichText(
-                  text: TextSpan(
-                    text: "Terms of Service",
+              ],
+            ),
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            LongIconButton(
+              text: "Let's get started",
+              svgPath: AppAssetLinks.rightArrowSvg,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => SignUpBloc(
+                          userRepository: context
+                              .read<AuthenticationBloc>()
+                              .userRepository),
+                      child: const SignUpScreen(),
+                    ),
+                  ),
+                );
+              },
+            ),
+            AppSizing.vS12(),
+            LongIconButton(
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Theme.of(context).colorScheme.onSecondary,
+              text: "Already have an account",
+              svgPath: AppAssetLinks.rightArrowSvg,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => SignInBloc(
+                          userRepository: context
+                              .read<AuthenticationBloc>()
+                              .userRepository),
+                      child: const SignInScreen(),
+                    ),
+                  ),
+                );
+              },
+            ),
+            AppSizing.vS24(),
+            Text(
+              "By continuing, you give consent to QuikHyr's",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            AppSizing.vS4(),
+            RichText(
+              text: TextSpan(
+                text: "Terms of Service",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.w700),
+                children: [
+                  TextSpan(
+                    text: " and ",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  TextSpan(
+                    text: "Privacy Policy",
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
                         ?.copyWith(fontWeight: FontWeight.w700),
-                    children: [
-                      TextSpan(
-                        text: " and ",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      TextSpan(
-                        text: "Privacy Policy",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(fontWeight: FontWeight.w700),
-                      ),
-                    ],
                   ),
-                ),
-                AppSizing.vS24(),
-              ],
-            )
+                ],
+              ),
+            ),
+            AppSizing.vS24(),
           ],
-        )),
+        )
+                  ],
+                ),
       ),
     );
   }
