@@ -16,4 +16,7 @@ class AppAssetLinks {
   static const String bookNavBarActiveSvg = 'assets/icons/book_active.svg';
   static const String profileNavBarSvg = 'assets/icons/profile.svg';
   static const String profileNavBarActiveSvg = 'assets/icons/profile_active.svg';
+  static const String bellSvg = 'assets/icons/bell.svg';
+  static const String bellNotificationActiveSvg = 'assets/icons/bell_notification_active.svg';
+  static const String logoutSvg = 'assets/icons/logout.svg';
 }
