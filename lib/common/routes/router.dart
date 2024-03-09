@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_routes.dart';
-import 'package:quikhyr/common/cubits/navigation_cubit/navigation_cubit.dart';
 import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:quikhyr/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
@@ -47,7 +44,19 @@ class AppRouter {
 
       StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
-            return MainWrapper(navigationShell: navigationShell,);
+            return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (context, authState) {
+                if (authState.status == AuthenticationStatus.authenticated) {
+                  debugPrint("Going to Main Wrapper");
+                  debugPrint(navigationShell.shellRouteContext.route.toString());
+                  return MainWrapper(
+                    navigationShell: navigationShell,
+                  );
+                } else {
+                  return const WelcomeScreen();
+                }
+              },
+            );
           },
           branches: <StatefulShellBranch>[
             StatefulShellBranch(
@@ -55,17 +64,18 @@ class AppRouter {
                 routes: <RouteBase>[
                   GoRoute(
                     path: Routes.homeNamedPage,
-                    pageBuilder: (context, state) => const NoTransitionPage(
-                      child: HomeScreen(),
+                    name: Routes.homeNamedPageName,
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      child: HomeScreen(key: state.pageKey),
                     ),
                     routes: [
                       GoRoute(
                         path: Routes.homeDetailsNamedPage,
-                        name: 'details',
+                        name: Routes.homeDetailsNamedPageName,
                         //navigation is done through routes so please make sure to supply a name
-                        
 
-                        builder: (context, state) => HomeDetailsScreen(key: state.pageKey),
+                        pageBuilder: (context, state) => NoTransitionPage(
+                            child: HomeDetailsScreen(key: state.pageKey)),
                       ),
                     ],
                   ),
@@ -75,8 +85,11 @@ class AppRouter {
               routes: <RouteBase>[
                 GoRoute(
                   path: Routes.exploreNamedPage,
+                  name: Routes.exploreNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
-                    child: ExploreScreen(key: state.pageKey,),
+                    child: ExploreScreen(
+                      key: state.pageKey,
+                    ),
                   ),
                 ),
               ],
@@ -86,6 +99,7 @@ class AppRouter {
               routes: <RouteBase>[
                 GoRoute(
                   path: Routes.chatNamedPage,
+                  name: Routes.chatNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: ChatScreen(key: state.pageKey),
                   ),
@@ -97,6 +111,7 @@ class AppRouter {
               routes: <RouteBase>[
                 GoRoute(
                   path: Routes.bookNamedPage,
+                  name: Routes.bookNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: BookingScreen(key: state.pageKey),
                   ),
@@ -108,6 +123,7 @@ class AppRouter {
               routes: <RouteBase>[
                 GoRoute(
                   path: Routes.profileNamedPage,
+                  name: Routes.profileNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: ProfileScreen(key: state.pageKey),
                   ),
