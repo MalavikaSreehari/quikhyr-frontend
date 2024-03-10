@@ -16,5 +16,7 @@ const Color textColor = Color(0xFFE9EAE6);
 const Color gridItemBackgroundColor = Color(0xFF081b27);
 const Color labelColor = Color(0xffa0a4a6);
 const Color textInputBackgroundColor = Color(0xFF313131);
+const Color textInputActiveBackgroundColor = Color(0xFF040f16);
+const Color textInputIconColor = Color(0xFFb2b5b5);
 const Color ratingTextColor = Color(0xFFE9EAE6);
 const Color quikHyrOrange = Color(0xFFED7124);

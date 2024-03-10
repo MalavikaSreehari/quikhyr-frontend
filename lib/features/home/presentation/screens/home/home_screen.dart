@@ -88,6 +88,7 @@ class HomeScreen extends StatelessWidget {
                       onMicPressed: () {},
                       onSearch: (String query) {},
                       controller: TextEditingController()),
+
                   AppSizing.vS16(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -273,98 +274,90 @@ class HomeScreen extends StatelessWidget {
             child: AppSizing.vS24(),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            sliver: BlocBuilder<MostRatedWorkersBloc, MostRatedWorkersState>(
-              builder: (context, state) {
-                if (state is MostRatedWorkersLoaded) {
-                  return SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: 104,
-                      mainAxisSpacing: 20.0,
-                      crossAxisSpacing: 20.0,
-                      crossAxisCount: 4,
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: gridItemBackgroundColor,
-                              ),
-                              alignment: Alignment.center,
-                              height: 64,
-                              width: 64,
-                              child: Stack(
-                                children: [
-                                  Positioned.fill(
-                                    child: ClipOval(
-                                      child: Image.asset(
-                                        state.workers[index].profileImageUrl,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  // if (state.workers[index].isVerified)
-                                  //   const Positioned(
-                                  //     top: 0,
-                                  //     right: 0,
-                                  //     child: Icon(
-                                  //       Icons.verified_rounded,
-                                  //       color: primary,
-                                  //       size: 16,
-                                  //     ),
-                                  //   ),
-                                  // const Positioned(
-                                  //   bottom: 0,
-                                  //   left: 0,
-                                  //   child: RatingStar(rating: "4.5"),
-                                  // ),
-                                ],
-                              ),
-                            ),
-                            AppSizing.vS8(),
-                            Text(
-                              state.workers[index].name,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
-                            AppSizing.vS4(),
-                            Text(
-                              state.workers[index].category,
-                              // overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.labelSmall,
-                            )
-                          ],
-                        );
-                      },
-                      childCount: state.workers.length,
-                    ),
-                  );
-                } else if (state is MostRatedWorkersLoading) {
-                  return const SliverToBoxAdapter(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                } else if (state is MostRatedWorkersError) {
-                  return SliverToBoxAdapter(
-                    child: Center(
-                      child: Text(state.message),
-                    ),
-                  );
-                }
-                return const SliverToBoxAdapter(
-                  child: Center(
-                    child: Text("Failure"),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              sliver: SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisExtent: 104,
+                  mainAxisSpacing: 20.0,
+                  crossAxisSpacing: 20.0,
+                  crossAxisCount: 4,
+                ),
+                delegate: SliverChildListDelegate([
+                  Column(
+                    children: [
+                      Container(
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: gridItemBackgroundColor),
+                          alignment: Alignment.center,
+                          height: 64,
+                          width: 64,
+                          child: SvgPicture.asset(
+                            AppAssetLinks.cleaningSvg,
+                            height: 24,
+                          )),
+                      AppSizing.vS8(),
+                      Text(
+                        "Plumbing",
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      )
+                    ],
                   ),
-                );
-              },
-            ),
-          ),
-
+                  Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: gridItemBackgroundColor,
+                        ),
+                        alignment: Alignment.center,
+                        height: 64,
+                        width: 64,
+                        child: ClipOval(
+                          child: Image.asset(
+                            "assets/images/ratedWorker3.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      AppSizing.vS8(),
+                      Text(
+                        "Henry Kal",
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      AppSizing.vS4(),
+                      Text(
+                        "Electrician",
+                        // overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Container(
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: gridItemBackgroundColor),
+                          alignment: Alignment.center,
+                          height: 64,
+                          width: 64,
+                          child: SvgPicture.asset(
+                            AppAssetLinks.lawnMangementSvg,
+                            height: 24,
+                          )),
+                      AppSizing.vS8(),
+                      Text(
+                        "Lawn Management",
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      )
+                    ],
+                  ),
+                ]),
+              )),
           SliverToBoxAdapter(
             child: AppSizing.vS48(),
           ),
@@ -435,10 +428,12 @@ class HomeScreen extends StatelessWidget {
                                         size: 16,
                                       ),
                                     ),
-                                  const Positioned(
+                                  Positioned(
                                     bottom: 0,
                                     left: 0,
-                                    child: RatingStar(rating: "4.5"),
+                                    child: RatingStar(
+                                        rating: state.workers[index].rating
+                                            .toString()),
                                   ),
                                 ],
                               ),

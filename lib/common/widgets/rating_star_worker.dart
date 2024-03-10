@@ -9,8 +9,9 @@ class RatingStar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
       height: 16,
-      width: 30,
+      // width: 30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: quikHyrOrange,
