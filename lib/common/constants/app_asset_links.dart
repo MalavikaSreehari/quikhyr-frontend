@@ -21,4 +21,7 @@ class AppAssetLinks {
   static const String plumbingSvg = 'assets/icons/plumbing.svg';
   static const String treeClimbingSvg = 'assets/icons/tree_climbing.svg';
   static const String homeCareSvg = 'assets/icons/home_care.svg';
+  static const String settingsSvg = 'assets/icons/settings.svg';
+  static const String settingsActiveSvg = 'assets/icons/settings_active.svg';
+  static const String filterSvg = 'assets/icons/filter.svg';
 }

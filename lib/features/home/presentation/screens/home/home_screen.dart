@@ -5,6 +5,7 @@ import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_colors.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
+import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 import 'package:quikhyr/common/widgets/rating_star_worker.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
@@ -28,9 +29,26 @@ class HomeScreen extends StatelessWidget {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SvgPicture.asset(
-                  AppAssetLinks.logoSvg,
-                  height: 24,
+                RichText(
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Q',
+                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
+                      ),
+                      TextSpan(
+                        text: 'uik',
+                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
+                      ),
+                      TextSpan(
+                        text: 'Hyr',
+                        style: TextStyle(
+                            fontFamily: 'Trap',
+                            fontSize: 24,
+                            letterSpacing: -1.5),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -64,24 +82,12 @@ class HomeScreen extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  SearchBar(
-                      shape: MaterialStateProperty.resolveWith(
-                          (states) => RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              )),
+                  QuikSearchBar(
+                      onChanged: (String value) {},
                       hintText: "Search for services..",
-                      leading: const Padding(
-                          padding: EdgeInsets.only(left: 12),
-                          child: Icon(Icons.search)),
-                      trailing: [
-                        const SizedBox(),
-                        IconButton(
-                          icon: const Icon(Icons.mic),
-                          onPressed: () {
-                            // Handle voice search
-                          },
-                        ),
-                      ]),
+                      onMicPressed: () {},
+                      onSearch: (String query) {},
+                      controller: TextEditingController()),
                   AppSizing.vS16(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -301,16 +307,16 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  if (state.workers[index].isVerified)
-                                    const Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: Icon(
-                                        Icons.verified_rounded,
-                                        color: primary,
-                                        size: 16,
-                                      ),
-                                    ),
+                                  // if (state.workers[index].isVerified)
+                                  //   const Positioned(
+                                  //     top: 0,
+                                  //     right: 0,
+                                  //     child: Icon(
+                                  //       Icons.verified_rounded,
+                                  //       color: primary,
+                                  //       size: 16,
+                                  //     ),
+                                  //   ),
                                   // const Positioned(
                                   //   bottom: 0,
                                   //   left: 0,

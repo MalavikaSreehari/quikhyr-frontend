@@ -3,8 +3,8 @@ import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ChatScreen extends StatelessWidget {
                       style: TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
                     ),
                     TextSpan(
-                      text: 'Chat',
+                      text: 'Settings',
                       style: TextStyle(
                           fontFamily: 'Trap',
                           fontSize: 24,

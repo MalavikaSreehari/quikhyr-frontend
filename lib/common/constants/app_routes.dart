@@ -12,7 +12,8 @@ class Routes {
   static const chatConversationNamedPage = 'conversation';
   static const bookNamedPage = '/book';
   static const loginNamedPage = '/login';
-  static const signUpNamePage = '/signup';
+  static const signUpNamedPage = '/signup';
+  static const settingsNamedPage = '/settings';
 
   static const homeNamedPageName = 'homeName';
   static const homeDetailsNamedPageName = 'homeDetailsName';
@@ -23,6 +24,8 @@ class Routes {
   static const bookNamedPageName = 'bookName';
   static const loginNamedPageName = 'loginName';
   static const signUpNamePageName = 'signupName';
+  static const settingsNamedPageName = 'settingsName';
+
 
     static Widget errorWidget(BuildContext context, GoRouterState state) => const NotFoundScreen();
 }

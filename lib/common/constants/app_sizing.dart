@@ -54,7 +54,10 @@ class AppSizing {
   static SizedBox hS(double width) {
     return SizedBox(width: width);
   }
-
+  /// Creates a horizontal [SizedBox] with a width of 2.
+  static SizedBox hS2() {
+    return const SizedBox(width: 2);
+  }
   /// Creates a horizontal [SizedBox] with a width of 4.
   static SizedBox hS4() {
     return const SizedBox(width: 4);

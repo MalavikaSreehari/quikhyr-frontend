@@ -10,7 +10,7 @@ import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
-import 'package:quikhyr/features/profile/presentation/screens/profile_screen.dart';
+import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
 
 class AppRouter {
@@ -23,8 +23,8 @@ class AppRouter {
       GlobalKey<NavigatorState>(debugLabel: 'shellChat');
   static final _shellNavigatorBookKey =
       GlobalKey<NavigatorState>(debugLabel: 'shellBook');
-  static final _shellNavigatorProfileKey =
-      GlobalKey<NavigatorState>(debugLabel: 'shellProfile');
+  static final _shellNavigatorSettingsKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
   static final GoRouter _router = GoRouter(
     initialLocation: Routes.homeNamedPage,
     debugLogDiagnostics: true,
@@ -119,13 +119,13 @@ class AppRouter {
               ],
             ),
             StatefulShellBranch(
-              navigatorKey: _shellNavigatorProfileKey,
+              navigatorKey: _shellNavigatorSettingsKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.profileNamedPage,
-                  name: Routes.profileNamedPageName,
+                  path: Routes.settingsNamedPage,
+                  name: Routes.settingsNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
-                    child: ProfileScreen(key: state.pageKey),
+                    child: SettingsScreen(key: state.pageKey),
                   ),
                 ),
               ],

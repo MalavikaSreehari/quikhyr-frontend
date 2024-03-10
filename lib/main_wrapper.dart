@@ -31,7 +31,7 @@ class _MainWrapperState extends State<MainWrapper> {
           SvgPicture.asset(
             AppAssetLinks.homeNavBarActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Home", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
@@ -47,7 +47,7 @@ class _MainWrapperState extends State<MainWrapper> {
           SvgPicture.asset(
             AppAssetLinks.exploreNavBarActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Explore", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
@@ -63,7 +63,7 @@ class _MainWrapperState extends State<MainWrapper> {
           SvgPicture.asset(
             AppAssetLinks.chatNavBarActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Chat", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
@@ -79,7 +79,7 @@ class _MainWrapperState extends State<MainWrapper> {
           SvgPicture.asset(
             AppAssetLinks.bookNavBarActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Book", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
@@ -93,25 +93,24 @@ class _MainWrapperState extends State<MainWrapper> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppAssetLinks.profileNavBarActiveSvg,
+            AppAssetLinks.settingsActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Profile", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
       icon: SvgPicture.asset(
-        AppAssetLinks.profileNavBarSvg,
+        AppAssetLinks.settingsSvg,
       ),
-      label: 'Profile',
+      label: 'Settings',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
-    
     setState(() {
       //!!RISKY CODE!!//
-      if (context.canPop()){
+      if (context.canPop()) {
         context.pop();
       }
     });
