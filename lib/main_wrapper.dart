@@ -108,6 +108,7 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    
     setState(() {
       //!!RISKY CODE!!//
       if (context.canPop()){
