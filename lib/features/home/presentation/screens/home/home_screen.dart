@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.location_pin, color: primary, size: 16),
+                      SvgPicture.asset(AppAssetLinks.locationFilledSvg),
                       AppSizing.hS6(),
                       Text(
                         "Irinjalakuda",
@@ -102,10 +102,11 @@ class HomeScreen extends StatelessWidget {
                             .headlineSmall
                             ?.copyWith(fontWeight: FontWeight.w700),
                       ),
-                      const Icon(
-                        Icons.arrow_drop_down_outlined,
-                        size: 16,
-                      )
+                      ClickableSvgIcon(
+                          svgAsset: AppAssetLinks.dropDownArrowSvg,
+                          height: 18,
+                          width: 18,
+                          onTap: () {}),
                     ],
                   ),
                   // AppSizing.vS16(), // This is your container
@@ -419,13 +420,11 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ),
                                   if (state.workers[index].isVerified)
-                                    const Positioned(
+                                    Positioned(
                                       top: 0,
                                       right: 0,
-                                      child: Icon(
-                                        Icons.verified_rounded,
-                                        color: primary,
-                                        size: 16,
+                                      child: SvgPicture.asset(
+                                        AppAssetLinks.verifiedBlueSvg,
                                       ),
                                     ),
                                   Positioned(

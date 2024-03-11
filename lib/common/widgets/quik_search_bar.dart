@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_colors.dart';
+import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 
 class QuikSearchBar extends StatefulWidget {
   final String hintText;
@@ -54,12 +56,20 @@ class _QuikSearchBarState extends State<QuikSearchBar> {
             color: textInputIconColor,
           ),
         ),
-        suffixIcon: IconButton(
-          icon: const Icon(
-            Icons.mic_none_rounded,
-            color: textInputIconColor,
+        suffixIcon: SizedBox(
+          width: 66,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 24,
+                child: VerticalDivider(color: textInputIconColor),
+              ),
+              ClickableSvgIcon(
+                  svgAsset: AppAssetLinks.searchMicSvg,
+                  onTap: widget.onMicPressed)
+            ],
           ),
-          onPressed: widget.onMicPressed,
         ),
         border: OutlineInputBorder(
           borderRadius: borderRadius,
@@ -68,24 +78,12 @@ class _QuikSearchBarState extends State<QuikSearchBar> {
           borderRadius: borderRadius,
           borderSide: const BorderSide(color: primary),
         ),
-        // disabledBorder: OutlineInputBorder(
-        //   borderRadius: borderRadius,
-        //   borderSide: const BorderSide(color: Colors.red),
-        // ),
-        // errorBorder: OutlineInputBorder(
-        //   borderRadius: borderRadius,
-        //   borderSide: const BorderSide(color: Colors.red),
-        // ),
-        // focusedErrorBorder: OutlineInputBorder(
-        //   borderRadius: borderRadius,
-        //   borderSide: const BorderSide(color: Colors.red),
-        // ),
         filled: true,
         fillColor: _focusNode.hasFocus
             ? textInputActiveBackgroundColor
             : textInputBackgroundColor,
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       ),
       onChanged: widget.onChanged,
       onSubmitted: widget.onSearch,

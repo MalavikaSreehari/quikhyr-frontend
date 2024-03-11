@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_colors.dart';
-import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/common/constants/app_theme.dart';
+import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+class ChatConversationScreen extends StatelessWidget {
+  const ChatConversationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,45 +25,45 @@ class ChatScreen extends StatelessWidget {
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Q',
-                          style:
-                              TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
-                        ),
-                        TextSpan(
-                          text: 'uik',
-                          style:
-                              TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
-                        ),
-                        TextSpan(
-                          text: 'Chat',
-                          style: TextStyle(
-                              fontFamily: 'Trap',
-                              fontSize: 24,
-                              letterSpacing: -1.5),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // RichText(
+                  //   text: const TextSpan(
+                  //     children: [
+                  //       TextSpan(
+                  //         text: 'Q',
+                  //         style:
+                  //             TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
+                  //       ),
+                  //       TextSpan(
+                  //         text: 'uik',
+                  //         style:
+                  //             TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
+                  //       ),
+                  //       TextSpan(
+                  //         text: 'Chat',
+                  //         style: TextStyle(
+                  //             fontFamily: 'Trap',
+                  //             fontSize: 24,
+                  //             letterSpacing: -1.5),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
-              // actions: [
-              //   ClickableSvgIcon(
-              //       svgAsset: AppAssetLinks.bellNotificationActiveSvg,
-              //       onTap: () {
-              //         //HANDLE GO TO NOTIFICATIONS
-              //       }),
-              //   AppSizing.hS10(),
-              //   ClickableSvgIcon(
-              //       svgAsset: AppAssetLinks.logoutSvg,
-              //       onTap: () {
-              //         // context.read<SignInBloc>().add(const SignOutRequired());
-              //       }),
-              //   AppSizing.hS24(),
-              // ],
+              actions: [
+                ClickableSvgIcon(
+                    svgAsset: AppAssetLinks.callingSvg,
+                    onTap: () {
+                      //HANDLE GO TO NOTIFICATIONS
+                    }),
+                AppSizing.hS10(),
+                ClickableSvgIcon(
+                    svgAsset: AppAssetLinks.cameraSvg,
+                    onTap: () {
+                      // context.read<SignInBloc>().add(const SignOutRequired());
+                    }),
+                AppSizing.hS24(),
+              ],
             ),
           ),
         ),
@@ -72,13 +71,6 @@ class ChatScreen extends StatelessWidget {
           padding:
               const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
           child: Column(children: [
-            QuikSearchBar(
-              onChanged: (String value) {}, // Default onChanged function
-              hintText: 'Search for chats..', // Default hintText value
-              onMicPressed: () {}, // Default onMicPressed function
-              onSearch: (String onSearch) {}, // Default onSearch function
-              controller: TextEditingController(), // Default controller
-            ),
             AppSizing.vS24(),
             Expanded(
               child: ListView(
@@ -126,8 +118,6 @@ class ChatScreen extends StatelessWidget {
                       "7:04 pm",
                       style: chatTrailingActive,
                     ),
-                    onTap: () =>
-                        context.pushNamed(Routes.chatConversationNamedPageName),
                   ),
                   const GradientSeparator(),
                   ListTile(

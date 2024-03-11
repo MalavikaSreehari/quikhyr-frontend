@@ -6,6 +6,7 @@ import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
+import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
 import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
@@ -27,7 +28,7 @@ class AppRouter {
   static final _shellNavigatorSettingsKey =
       GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
   static final GoRouter _router = GoRouter(
-    initialLocation: Routes.homeNamedPage,
+    initialLocation: Routes.homeNamedPagePath,
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     routes: [
@@ -65,7 +66,7 @@ class AppRouter {
                 navigatorKey: _shellNavigatorHomeKey,
                 routes: <RouteBase>[
                   GoRoute(
-                    path: Routes.homeNamedPage,
+                    path: Routes.homeNamedPagePath,
                     name: Routes.homeNamedPageName,
                     pageBuilder: (context, state) => NoTransitionPage(
                       child: HomeScreen(key: state.pageKey),
@@ -86,7 +87,7 @@ class AppRouter {
               navigatorKey: _shellNavigatorExploreKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.exploreNamedPage,
+                  path: Routes.exploreNamedPagePath,
                   name: Routes.exploreNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     //ADD FILTERCHIP PROVIDER TO TRY OUT NOT PUTTING ALL BLOCS IN MAIN FILE
@@ -104,19 +105,37 @@ class AppRouter {
               navigatorKey: _shellNavigatorChatKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.chatNamedPage,
-                  name: Routes.chatNamedPageName,
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    child: ChatScreen(key: state.pageKey),
-                  ),
-                ),
+                    path: Routes.chatNamedPagePath,
+                    name: Routes.chatNamedPageName,
+                    pageBuilder: (context, state) => NoTransitionPage(
+                          child: ChatScreen(key: state.pageKey),
+                        ),
+                    routes: [
+                      GoRoute(
+                          path: Routes.chatConversationNamedPagePath,
+                          name: Routes.chatConversationNamedPageName,
+                          pageBuilder: (context, state) =>
+                              CustomTransitionPage<void>(
+                                // key: state.pageKey,
+                                child: const ChatConversationScreen(),
+                                transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) =>
+                                    SlideTransition(
+                                  position: Tween<Offset>(
+                                          begin: const Offset(1, 0),
+                                          end: Offset.zero)
+                                      .animate(animation),
+                                  child: child,
+                                ),
+                              )),
+                    ]),
               ],
             ),
             StatefulShellBranch(
               navigatorKey: _shellNavigatorBookKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.bookNamedPage,
+                  path: Routes.bookNamedPagePath,
                   name: Routes.bookNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: BookingScreen(key: state.pageKey),
@@ -128,7 +147,7 @@ class AppRouter {
               navigatorKey: _shellNavigatorSettingsKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.settingsNamedPage,
+                  path: Routes.settingsNamedPagePath,
                   name: Routes.settingsNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: SettingsScreen(key: state.pageKey),

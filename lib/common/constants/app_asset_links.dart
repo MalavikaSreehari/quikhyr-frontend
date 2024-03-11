@@ -31,4 +31,14 @@ class AppAssetLinks {
   static const String lawnMangementSvg = 'assets/icons/lawn_management.svg';
   static const String closeRoundedSquareSvg =
       'assets/icons/close_rounded_square.svg';
+  static const String verifiedBlueSvg = 'assets/icons/verified_blue.svg';
+  static const String chatGreenBubbleSvg = 'assets/icons/chat_green_bubble.svg';
+  static const String chatGreyBubbleSvg = 'assets/icons/chat_grey_bubble.svg';
+  static const String searchMicSvg = 'assets/icons/search_mic.svg';
+  static const String searchSvg = 'assets/icons/search.svg';
+  static const String locationFilledSvg = 'assets/icons/location_filled.svg';
+  static const String dropDownArrowSvg = 'assets/icons/drop_down_arrow.svg';
+  static const String callingSvg = 'assets/icons/calling.svg';
+  static const String cameraSvg = 'assets/icons/camera.svg';
+
 }

@@ -11,6 +11,10 @@ class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
   @override
   Widget build(BuildContext context) {
+
+    final List<String> _mostSearched = [
+      "Lawn Management","Cleaning","Plumbing","Auto Repair","Electricals","Tree Climber"
+    ];
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: PreferredSize(
@@ -90,8 +94,7 @@ class ExploreScreen extends StatelessWidget {
                                 style: TextStyle(color: Colors.white),
                               ),
                               selected: state is AllState,
-                              selectedColor:
-                                  Theme.of(context).colorScheme.primary,
+                              selectedColor: buttonDark,
                               onSelected: (bool value) {
                                 context.read<FilterChipCubit>().selectAll();
                               },
@@ -112,8 +115,7 @@ class ExploreScreen extends StatelessWidget {
                                 style: TextStyle(color: Colors.white),
                               ),
                               selected: state is HighRatedState,
-                              selectedColor:
-                                  Theme.of(context).colorScheme.primary,
+                              selectedColor: buttonDark,
                               onSelected: (bool value) {
                                 context
                                     .read<FilterChipCubit>()
@@ -136,8 +138,7 @@ class ExploreScreen extends StatelessWidget {
                                 style: TextStyle(color: Colors.white),
                               ),
                               selected: state is LowBudgetState,
-                              selectedColor:
-                                  Theme.of(context).colorScheme.primary,
+                              selectedColor: buttonDark,
                               onSelected: (bool value) {
                                 context
                                     .read<FilterChipCubit>()
@@ -160,8 +161,7 @@ class ExploreScreen extends StatelessWidget {
                                 style: TextStyle(color: Colors.white),
                               ),
                               selected: state is MostPopularState,
-                              selectedColor:
-                                  Theme.of(context).colorScheme.primary,
+                              selectedColor: buttonDark,
                               onSelected: (bool value) {
                                 context
                                     .read<FilterChipCubit>()
@@ -204,7 +204,10 @@ class ExploreScreen extends StatelessWidget {
                                       .headlineSmall),
                               subtitle: Text(
                                 "Varsha Babu",
-                                style: Theme.of(context).textTheme.labelSmall,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                               trailing: ClickableSvgIcon(
                                 svgAsset: AppAssetLinks.closeRoundedSquareSvg,
@@ -219,7 +222,10 @@ class ExploreScreen extends StatelessWidget {
                                       .headlineSmall),
                               subtitle: Text(
                                 "Nikhit Kumar",
-                                style: Theme.of(context).textTheme.labelSmall,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                               trailing: ClickableSvgIcon(
                                 svgAsset: AppAssetLinks.closeRoundedSquareSvg,
@@ -234,7 +240,10 @@ class ExploreScreen extends StatelessWidget {
                                       .headlineSmall),
                               subtitle: Text(
                                 "Pranav Madhu",
-                                style: Theme.of(context).textTheme.labelSmall,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                               trailing: ClickableSvgIcon(
                                 svgAsset: AppAssetLinks.closeRoundedSquareSvg,
@@ -249,7 +258,10 @@ class ExploreScreen extends StatelessWidget {
                                       .headlineSmall),
                               subtitle: Text(
                                 "Varsha Babu",
-                                style: Theme.of(context).textTheme.labelSmall,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall
+                                    ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                               trailing: ClickableSvgIcon(
                                 svgAsset: AppAssetLinks.closeRoundedSquareSvg,
@@ -275,8 +287,9 @@ class ExploreScreen extends StatelessWidget {
                         crossAxisSpacing: 12.0,
                         crossAxisCount: 2,
                       ),
-                      itemCount: 6,
+                      itemCount: _mostSearched.length,
                       itemBuilder: (BuildContext context, int index) {
+                        final String itemName = _mostSearched[index];
                         return Container(
                           height: 64,
                           width: 150,
@@ -294,9 +307,12 @@ class ExploreScreen extends StatelessWidget {
                           ),
                           alignment: Alignment.center,
                           child: Text(
-                            "Lawn Management",
+                            itemName,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
                                   color: secondary,
                                 ),
                           ),

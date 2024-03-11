@@ -94,3 +94,39 @@ class AppTheme {
     ),
   );
 }
+
+const TextStyle chatSubTitle = TextStyle(
+  color: quikHyrBlue,
+  fontFamily: 'Trap',
+  fontSize: 12.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w400,
+  height: 1.0,
+);
+
+const TextStyle chatSubTitleRead = TextStyle(
+  color: placeHolderText,
+  fontFamily: 'Trap',
+  fontSize: 12.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w400,
+  height: 1.0,
+);
+
+const TextStyle chatTrailingActive = TextStyle(
+  color: quikHyrBlue,
+  fontFamily: 'Trap',
+  fontSize: 12.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+  height: 1.0,
+);
+
+const TextStyle chatTrailingInactive = TextStyle(
+  color: placeHolderText,
+  fontFamily: 'Trap',
+  fontSize: 12.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+  height: 1.0,
+);

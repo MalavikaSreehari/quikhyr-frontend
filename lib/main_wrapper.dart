@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
+import 'package:quikhyr/common/constants/app_colors.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/common/widgets/named_nav_bar_item_widget.dart';
 
@@ -108,31 +109,35 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      //!!RISKY CODE!!//
-      if (context.canPop()) {
-        context.pop();
-      }
-    });
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  });
 
     return Scaffold(
       body: widget.navigationShell,
       // bottomNavigationBar: _buildBottomNavigation(context, tabs),
-      bottomNavigationBar: BottomNavigationBar(
-        items: tabs,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        elevation: 0,
-        backgroundColor: Colors.black,
-        currentIndex: selectedIndex,
-        type: BottomNavigationBarType.shifting,
-        onTap: (index) {
-          setState(() {
-            selectedIndex = index;
-            //if having lag move _goToBranch(index) to the bottom of the setState
-            _goToBranch(index);
-          });
-        },
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+            border:
+                Border(top: BorderSide(color: placeHolderText, width: 0.3))),
+        child: BottomNavigationBar(
+          items: tabs,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          elevation: 0,
+          backgroundColor: Colors.black,
+          currentIndex: selectedIndex,
+          type: BottomNavigationBarType.shifting,
+          onTap: (index) {
+            setState(() {
+              selectedIndex = index;
+              //if having lag move _goToBranch(index) to the bottom of the setState
+              _goToBranch(index);
+            });
+          },
+        ),
       ),
     );
   }
