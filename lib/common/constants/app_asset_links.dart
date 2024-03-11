@@ -29,4 +29,6 @@ class AppAssetLinks {
   static const String settingsActiveSvg = 'assets/icons/settings_active.svg';
   static const String filterSvg = 'assets/icons/filter.svg';
   static const String lawnMangementSvg = 'assets/icons/lawn_management.svg';
+  static const String closeRoundedSquareSvg =
+      'assets/icons/close_rounded_square.svg';
 }

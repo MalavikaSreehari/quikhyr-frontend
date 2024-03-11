@@ -20,6 +20,14 @@ class AppTheme {
         fontWeight: FontWeight.w500,
         height: 1.0,
       ),
+      titleLarge: TextStyle(
+        color: secondary,
+        fontFamily: 'Trap',
+        fontSize: 16,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w700,
+        height: 1.0,
+      ),
       titleMedium: TextStyle(
         color: secondary,
         fontFamily: 'Trap',

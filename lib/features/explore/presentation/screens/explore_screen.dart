@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
+import 'package:quikhyr/common/constants/app_colors.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
+import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
@@ -57,96 +61,241 @@ class ExploreScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-          child: Column(
-            children: [
-              QuikSearchBar(
-                onChanged: (String onChanged) {},
-                hintText: 'Search for services..',
-                onMicPressed: () {},
-                onSearch: (String value) {},
-                controller: TextEditingController(),
-              ),
-              AppSizing.vS16(),
-              SizedBox(
-                height: 50,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+            child: Column(
+              children: [
+                QuikSearchBar(
+                  onChanged: (String onChanged) {},
+                  hintText: 'Search for services..',
+                  onMicPressed: () {},
+                  onSearch: (String value) {},
+                  controller: TextEditingController(),
+                ),
+                AppSizing.vS16(),
+                BlocBuilder<FilterChipCubit, FilterChipState>(
+                  builder: (context, state) {
+                    return SizedBox(
+                      height: 50,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        physics: const ClampingScrollPhysics(),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FilterChip(
+                              label: const Text(
+                                'All',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              selected: state is AllState,
+                              selectedColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onSelected: (bool value) {
+                                context.read<FilterChipCubit>().selectAll();
+                              },
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              showCheckmark: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FilterChip(
+                              label: const Text(
+                                'Highly Rated',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              selected: state is HighRatedState,
+                              selectedColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onSelected: (bool value) {
+                                context
+                                    .read<FilterChipCubit>()
+                                    .selectHighRated();
+                              },
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              showCheckmark: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FilterChip(
+                              label: const Text(
+                                'Low Budget',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              selected: state is LowBudgetState,
+                              selectedColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onSelected: (bool value) {
+                                context
+                                    .read<FilterChipCubit>()
+                                    .selectLowBudget();
+                              },
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              showCheckmark: false,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FilterChip(
+                              label: const Text(
+                                'Most Popular',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              selected: state is MostPopularState,
+                              selectedColor:
+                                  Theme.of(context).colorScheme.primary,
+                              onSelected: (bool value) {
+                                context
+                                    .read<FilterChipCubit>()
+                                    .selectMostPopular();
+                              },
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              showCheckmark: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                AppSizing.vS32(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FilterChip(
-                        label: const Text(
-                          'All',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        selected: true,
-                        selectedColor: Theme.of(context).colorScheme.primary,
-                        onSelected: (bool value) {
-                          // handle chip selection
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
+                    Text(
+                      "Recent Booking",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    SizedBox(
+                      height: 200,
+                      child: Align(
+                        child: ListView(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            children: [
+                              ListTile(
+                                title: Text("Electrical",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall),
+                                subtitle: Text(
+                                  "Varsha Babu",
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                trailing: ClickableSvgIcon(
+                                  svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                  onTap: () {},
+                                ),
+                              ),
+                              ListTile(
+                                title: Text("Tree Climber",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall),
+                                subtitle: Text(
+                                  "Nikhit Kumar",
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                trailing: ClickableSvgIcon(
+                                  svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                  onTap: () {},
+                                ),
+                              ),
+                              ListTile(
+                                title: Text("Mechanic",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall),
+                                subtitle: Text(
+                                  "Pranav Madhu",
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                trailing: ClickableSvgIcon(
+                                  svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                  onTap: () {},
+                                ),
+                              ),
+                              ListTile(
+                                title: Text("Electrical",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall),
+                                subtitle: Text(
+                                  "Varsha Babu",
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                trailing: ClickableSvgIcon(
+                                  svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                  onTap: () {},
+                                ),
+                              )
+                            ]),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FilterChip(
-                        label: const Text(
-                          'Highly Rated',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        selected: false,
-                        selectedColor: Theme.of(context).colorScheme.primary,
-                        onSelected: (bool value) {
-                          // handle chip selection
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                      ),
+                    AppSizing.vS24(),
+                    Text(
+                      "Most Searched",
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FilterChip(
-                        label: const Text(
-                          'Low Budget',
-                          style: TextStyle(color: Colors.white),
+                    AppSizing.vS24(),
+                    SizedBox(
+                      height: 216,
+                      child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          mainAxisSpacing:
+                              12, // Set the mainAxisSpacing to 0 or a smaller value
+                          crossAxisSpacing: 12.0,
+                          crossAxisCount: 2,
                         ),
-                        selected: true,
-                        selectedColor: Theme.of(context).colorScheme.primary,
-                        onSelected: (bool value) {
-                          // handle chip selection
+                        itemCount: 6,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 64,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(16),
+                              color: gridItemBackgroundColor,
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Lawn Management",
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.labelLarge,
+                            ),
+                          );
                         },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FilterChip(
-                        label: const Text(
-                          'Medium Budget',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        selected: false,
-                        selectedColor: Theme.of(context).colorScheme.primary,
-                        onSelected: (bool value) {
-                          // handle chip selection
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                      ),
-                    ),
+                    )
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ));
   }

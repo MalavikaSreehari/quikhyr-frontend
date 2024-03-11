@@ -7,6 +7,7 @@ import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_b
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
+import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
@@ -48,7 +49,8 @@ class AppRouter {
               builder: (context, authState) {
                 if (authState.status == AuthenticationStatus.authenticated) {
                   debugPrint("Going to Main Wrapper");
-                  debugPrint(navigationShell.shellRouteContext.route.toString());
+                  debugPrint(
+                      navigationShell.shellRouteContext.route.toString());
                   return MainWrapper(
                     navigationShell: navigationShell,
                   );
@@ -87,8 +89,12 @@ class AppRouter {
                   path: Routes.exploreNamedPage,
                   name: Routes.exploreNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
-                    child: ExploreScreen(
-                      key: state.pageKey,
+                    //ADD FILTERCHIP PROVIDER TO TRY OUT NOT PUTTING ALL BLOCS IN MAIN FILE
+                    child: BlocProvider(
+                      create: (context) => FilterChipCubit(),
+                      child: ExploreScreen(
+                        key: state.pageKey,
+                      ),
                     ),
                   ),
                 ),
