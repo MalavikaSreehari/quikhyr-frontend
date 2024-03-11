@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_colors.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
@@ -62,6 +61,7 @@ class ExploreScreen extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
             child: Column(
@@ -191,70 +191,72 @@ class ExploreScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       height: 200,
-                      child: Align(
-                        child: ListView(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            physics: const ClampingScrollPhysics(),
-                            children: [
-                              ListTile(
-                                title: Text("Electrical",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall),
-                                subtitle: Text(
-                                  "Varsha Babu",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                                trailing: ClickableSvgIcon(
-                                  svgAsset: AppAssetLinks.closeRoundedSquareSvg,
-                                  onTap: () {},
-                                ),
+                      child: ListView(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          children: [
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text("Electrical",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall),
+                              subtitle: Text(
+                                "Varsha Babu",
+                                style: Theme.of(context).textTheme.labelSmall,
                               ),
-                              ListTile(
-                                title: Text("Tree Climber",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall),
-                                subtitle: Text(
-                                  "Nikhit Kumar",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                                trailing: ClickableSvgIcon(
-                                  svgAsset: AppAssetLinks.closeRoundedSquareSvg,
-                                  onTap: () {},
-                                ),
+                              trailing: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                onTap: () {},
                               ),
-                              ListTile(
-                                title: Text("Mechanic",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall),
-                                subtitle: Text(
-                                  "Pranav Madhu",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                                trailing: ClickableSvgIcon(
-                                  svgAsset: AppAssetLinks.closeRoundedSquareSvg,
-                                  onTap: () {},
-                                ),
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text("Tree Climber",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall),
+                              subtitle: Text(
+                                "Nikhit Kumar",
+                                style: Theme.of(context).textTheme.labelSmall,
                               ),
-                              ListTile(
-                                title: Text("Electrical",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall),
-                                subtitle: Text(
-                                  "Varsha Babu",
-                                  style: Theme.of(context).textTheme.labelSmall,
-                                ),
-                                trailing: ClickableSvgIcon(
-                                  svgAsset: AppAssetLinks.closeRoundedSquareSvg,
-                                  onTap: () {},
-                                ),
-                              )
-                            ]),
-                      ),
+                              trailing: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                onTap: () {},
+                              ),
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text("Mechanic",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall),
+                              subtitle: Text(
+                                "Pranav Madhu",
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              trailing: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                onTap: () {},
+                              ),
+                            ),
+                            ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text("Electrical",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall),
+                              subtitle: Text(
+                                "Varsha Babu",
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              trailing: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                onTap: () {},
+                              ),
+                            )
+                          ]),
                     ),
                     AppSizing.vS24(),
                     Text(
@@ -262,35 +264,44 @@ class ExploreScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     AppSizing.vS24(),
-                    SizedBox(
-                      height: 216,
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisSpacing:
-                              12, // Set the mainAxisSpacing to 0 or a smaller value
-                          crossAxisSpacing: 12.0,
-                          crossAxisCount: 2,
-                        ),
-                        itemCount: 6,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: 64,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(16),
-                              color: gridItemBackgroundColor,
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Lawn Management",
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
-                          );
-                        },
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 150 / 64,
+                        mainAxisSpacing:
+                            12, // Set the mainAxisSpacing to 0 or a smaller value
+                        crossAxisSpacing: 12.0,
+                        crossAxisCount: 2,
                       ),
+                      itemCount: 6,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: 64,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(16),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color.fromRGBO(51, 153, 204, 0.32),
+                                Color.fromRGBO(26, 77, 102, 0.32),
+                              ],
+                            ),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Lawn Management",
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                  color: secondary,
+                                ),
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),
