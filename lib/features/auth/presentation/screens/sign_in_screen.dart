@@ -212,7 +212,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   ,
                               children: [
                                 TextSpan(
-                                  text: " Sign Up ",
+                                  text: " Sign up ",
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
                                 ),
                               ],
