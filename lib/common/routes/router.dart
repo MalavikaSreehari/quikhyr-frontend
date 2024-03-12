@@ -49,7 +49,7 @@ class AppRouter {
             return BlocBuilder<AuthenticationBloc, AuthenticationState>(
               builder: (context, authState) {
                 if (authState.status == AuthenticationStatus.authenticated) {
-                  debugPrint("Going to Main Wrapper");
+                  // debugPrint("Going to Main Wrapper");
                   debugPrint(
                       navigationShell.shellRouteContext.route.toString());
                   return MainWrapper(

@@ -97,7 +97,7 @@ class _MainWrapperState extends State<MainWrapper> {
             AppAssetLinks.settingsActiveSvg,
           ),
           AppSizing.hS2(),
-          Text("Profile", style: ThemeData.dark().textTheme.bodyLarge),
+          Text("Settings", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
       icon: SvgPicture.asset(
@@ -115,28 +115,50 @@ class _MainWrapperState extends State<MainWrapper> {
     }
   });
 
-    return Scaffold(
-      body: widget.navigationShell,
-      // bottomNavigationBar: _buildBottomNavigation(context, tabs),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-            border:
-                Border(top: BorderSide(color: placeHolderText, width: 0.3))),
-        child: BottomNavigationBar(
-          items: tabs,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 0,
-          backgroundColor: Colors.black,
-          currentIndex: selectedIndex,
-          type: BottomNavigationBarType.shifting,
-          onTap: (index) {
-            setState(() {
-              selectedIndex = index;
-              //if having lag move _goToBranch(index) to the bottom of the setState
-              _goToBranch(index);
-            });
-          },
+    return WillPopScope(
+      onWillPop: () async {
+        bool shouldClose = await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Confirmation'),
+            content: Text('Are you sure you want to close the app?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        );
+        return shouldClose ?? false;
+      },
+      child: Scaffold(
+        body: widget.navigationShell,
+        // bottomNavigationBar: _buildBottomNavigation(context, tabs),
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+              border:
+                  Border(top: BorderSide(color: placeHolderText, width: 0.3))),
+          child: BottomNavigationBar(
+            items: tabs,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            elevation: 0,
+            backgroundColor: Colors.black,
+            currentIndex: selectedIndex,
+            type: BottomNavigationBarType.shifting,
+            onTap: (index) {
+              setState(() {
+                selectedIndex = index;
+                //if having lag move _goToBranch(index) to the bottom of the setState
+                _goToBranch(index);
+              });
+            },
+          ),
         ),
       ),
     );
