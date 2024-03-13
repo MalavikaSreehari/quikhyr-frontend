@@ -12,7 +12,7 @@ class MyAppView extends StatelessWidget {
       routeInformationParser: AppRouter.router.routeInformationParser,
       routerDelegate: AppRouter.router.routerDelegate,
       debugShowCheckedModeBanner: false,
-      title: 'Firebase Auth',
+      title: 'QuikHyr',
       theme: AppTheme.appTheme,
     );
   }

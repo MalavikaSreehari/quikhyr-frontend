@@ -6,6 +6,8 @@ import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
+import 'package:quikhyr/features/chat/blocs/bloc/chat_list_bloc.dart';
+import 'package:quikhyr/features/chat/data/chat_repo.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
 import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
@@ -108,26 +110,35 @@ class AppRouter {
                     path: Routes.chatNamedPagePath,
                     name: Routes.chatNamedPageName,
                     pageBuilder: (context, state) => NoTransitionPage(
-                          child: ChatScreen(key: state.pageKey),
+                          child: RepositoryProvider<ChatRepository>(
+                              create: (context) => ChatRepository(),
+                              child: BlocProvider<ChatListBloc>(
+                                  create: (context) {
+                                    final chatRepository =
+                                        RepositoryProvider.of<ChatRepository>(
+                                            context);
+                                    return ChatListBloc(chatRepository: chatRepository)..add(LoadChats());
+                                  },
+                                  child: ChatScreen(key: state.pageKey))),
                         ),
                     routes: [
                       GoRoute(
-                          path: Routes.chatConversationNamedPagePath,
-                          name: Routes.chatConversationNamedPageName,
-                          pageBuilder: (context, state) =>
-                              CustomTransitionPage<void>(
-                                // key: state.pageKey,
-                                child: const ChatConversationScreen(),
-                                transitionsBuilder: (context, animation,
-                                        secondaryAnimation, child) =>
-                                    SlideTransition(
-                                  position: Tween<Offset>(
-                                          begin: const Offset(1, 0),
-                                          end: Offset.zero)
-                                      .animate(animation),
-                                  child: child,
-                                ),
-                              )),
+                        path: Routes.chatConversationNamedPagePath,
+                        name: Routes.chatConversationNamedPageName,
+                        pageBuilder: (context, state) =>
+                          CustomTransitionPage<void>(
+                            // key: state.pageKey,
+                            child: const ChatConversationScreen(),
+                            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+                              SlideTransition(
+                                position: Tween<Offset>(
+                                  begin: const Offset(-1, 0), // Modified: Start from left (-1, 0)
+                                  end: Offset.zero,
+                                ).animate(animation),
+                                child: child,
+                              ),
+                          ),
+                      ),
                     ]),
               ],
             ),
