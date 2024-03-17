@@ -15,6 +15,7 @@ import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
 import 'package:quikhyr/features/home/data/repository/search_repo.dart';
+import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
 import 'package:quikhyr/models/service_category_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -92,35 +93,100 @@ class HomeScreen extends StatelessWidget {
                 [
                   QuikSearchBar(
                       onChanged: (String searchString) {
-                        context
-                            .read<SearchBloc>()
-                            .add(SearchStarted(query: searchString));
+                        if (searchString.isEmpty) {
+                          context.read<SearchBloc>().add(const SearchCleared());
+                        } else {
+                          context
+                              .read<SearchBloc>()
+                              .add(SearchStarted(query: searchString));
+                        }
                       },
                       hintText: "Search for services..",
                       onMicPressed: () {},
                       onSearch: (String query) {},
                       controller: TextEditingController()),
+                  AppSizing.vS4(),
                   BlocBuilder<SearchBloc, SearchState>(
                     builder: (context, state) {
                       if (state is SearchLoading) {
                         return const CircularProgressIndicator();
                       } else if (state is SearchLoaded) {
                         return SizedBox(
-                          height: 300,
                           child: ListView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
                             itemCount: state.results.length,
                             itemBuilder: (context, index) {
-                              return ListTile(
-                                title: Text(
-                                  state.results[index],
-                                  style: chatSubTitle,
+                              final String service =
+                                  state.results[index]['service'] ?? "";
+                              final String subService =
+                                  state.results[index]['subservice'] ?? "All";
+                              final String tags =
+                                  state.results[index]['tag'] ?? "";
+                              return Container(
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    
+                                    context.read<SearchBloc>().add(
+                                        const SearchCleared()); // Clear search
+                                        //!! JANKY CODE, MAY BREAK, NEED TO USE BETTER LOGIC OR ENUMS
+                                    if (subService == "") {
+                                      context.pushNamed(
+                                          Routes.homeDetailsNamedPageName,
+                                          pathParameters: {'service': service});
+                                    } else {
+                                      context.pushNamed(
+                                          Routes.homeDetailsFromSearchNamedPageName,
+                                          pathParameters: {
+                                            'service': service,
+                                            'subService': subService
+                                          });
+                                    }
+                                  },
+                                  child: ListTile(
+                                    leading: Text(tags,
+                                        style: chatSubTitle.copyWith(
+                                            color: secondary)),
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(subService,
+                                            style: chatSubTitle.copyWith(
+                                                color: secondary)),
+                                        const SizedBox(
+                                          height: 24,
+                                          child: VerticalDivider(
+                                              color: textInputIconColor),
+                                        ),
+                                        Text(service,
+                                            style: chatSubTitle.copyWith(
+                                                color: secondary)),
+                                      ],
+                                    ),
+                                    tileColor: textInputBackgroundColor,
+                                    shape: RoundedRectangleBorder(
+                                      // side: const BorderSide(
+                                      //   color: primary,
+                                      //   width: 1,
+                                      // ),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                  ),
                                 ),
                               );
                             },
                           ),
                         );
+                      } else if (state is SearchEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text("No results found",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium),
+                        );
                       } else {
-                        return Container();
+                        return const SizedBox();
                       }
                     },
                   ),
@@ -244,11 +310,9 @@ class HomeScreen extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           context.pushNamed(Routes.homeDetailsNamedPageName,
-                              extra: ServiceCategoryModel(
-                                  id: state.servicesCategory[index].id,
-                                  title: state.servicesCategory[index].title,
-                                  iconPath:
-                                      state.servicesCategory[index].iconPath));
+                              pathParameters: {
+                                'service': state.servicesCategory[index].title,
+                              });
                         },
                         child: Column(
                           children: [

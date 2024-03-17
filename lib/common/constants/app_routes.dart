@@ -6,6 +6,7 @@ class Routes {
   static const root = '/';
   static const homeNamedPagePath = '/home';
   static const homeDetailsNamedPagePath = 'details';
+  static const homeDetailsFromSearchNamedPagePath = 'detailsFromSearch';
   static const profileNamedPagePath = '/profile';
   static const exploreNamedPagePath = '/explore';
   static const chatNamedPagePath = '/chat';
@@ -17,6 +18,7 @@ class Routes {
 
   static const homeNamedPageName = 'homeName';
   static const homeDetailsNamedPageName = 'homeDetailsName';
+  static const homeDetailsFromSearchNamedPageName = 'homeDetailsFromSearchName';
   static const profileNamedPageName = 'profileName';
   static const exploreNamedPageName = 'exploreName';
   static const chatNamedPageName = 'chatName';

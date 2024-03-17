@@ -12,5 +12,12 @@ class SearchStarted extends SearchEvent {
 
   const SearchStarted({required this.query});
 
+  @override
+  List<Object> get props => [query];
+
+}
+
+class SearchCleared extends SearchEvent {
+  const SearchCleared();
 }
 

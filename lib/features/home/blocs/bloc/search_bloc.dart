@@ -11,15 +11,26 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchRepo searchRepo;
   SearchBloc({required this.searchRepo}) : super(SearchInitial()) {
     on<SearchStarted>(_onSearchStarted);
+    on<SearchCleared>(_onSearchCleared);
   }
 
-  FutureOr<void> _onSearchStarted(SearchStarted event, Emitter<SearchState> emit) {
+  FutureOr<void> _onSearchStarted(
+      SearchStarted event, Emitter<SearchState> emit) {
     emit(SearchLoading());
-    try{
+    try {
       final results = searchRepo.search(event.query);
-      emit(SearchLoaded(results: results));
+      if (results.isEmpty) {
+        emit(SearchEmpty());
+      } else {
+        emit(SearchLoaded(results: results));
+      }
     } catch (e) {
       emit(SearchError());
+    }
   }
-}
+
+  FutureOr<void> _onSearchCleared(
+      SearchCleared event, Emitter<SearchState> emit) {
+    emit(SearchInitial());
+  }
 }

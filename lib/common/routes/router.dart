@@ -75,7 +75,9 @@ class AppRouter {
                     path: Routes.homeNamedPagePath,
                     name: Routes.homeNamedPageName,
                     pageBuilder: (context, state) {
-                      context.read<ServicesCategoryBloc>().add(LoadServicesCategories());
+                      context
+                          .read<ServicesCategoryBloc>()
+                          .add(LoadServicesCategories());
                       return NoTransitionPage(
                           child: HomeScreen(
                         key: state.pageKey,
@@ -83,13 +85,18 @@ class AppRouter {
                     },
                     routes: [
                       GoRoute(
-                        path: Routes.homeDetailsNamedPagePath,
-                        name: Routes.homeDetailsNamedPageName,
+                        path:
+                            '${Routes.homeDetailsFromSearchNamedPagePath}/:service/:subService',
+                        name: Routes.homeDetailsFromSearchNamedPageName,
                         //navigation is done through routes so please make sure to supply a name
 
                         pageBuilder: (context, state) {
-                          final ServiceCategoryModel serviceModel =
-                              state.extra as ServiceCategoryModel;
+                          // final ServiceCategoryModel serviceModel =
+                          // state.extra as ServiceCategoryModel;
+                          final service = state.pathParameters['service']!;
+                          final subService =
+                              state.pathParameters['subService'] ??
+                                  "No SubService";
                           return CustomTransitionPage<void>(
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
@@ -103,9 +110,39 @@ class AppRouter {
                                   child: child,
                                 );
                               },
-                              child: HomePopularServicesDetailScreen(
-                                serviceModel: serviceModel,
-                                key: state.pageKey,
+                              child: HomeDetailScreen(
+                                  // serviceModel: serviceModel,
+                                  key: state.pageKey,
+                                  service: service,
+                                  subService: subService));
+                        },
+                      ),
+                      GoRoute(
+                        path: '${Routes.homeDetailsNamedPagePath}/:service',
+                        name: Routes.homeDetailsNamedPageName,
+                        //navigation is done through routes so please make sure to supply a name
+
+                        pageBuilder: (context, state) {
+                          // final ServiceCategoryModel serviceModel =
+                          // state.extra as ServiceCategoryModel;
+                          final service =
+                              state.pathParameters['service'] ?? "No Service";
+                          return CustomTransitionPage<void>(
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(-1, 0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                              child: HomeDetailScreen(
+                                // serviceModel: serviceModel,
+                                key: state.pageKey, service: service,
                               ));
                         },
                       ),
