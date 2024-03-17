@@ -5,7 +5,7 @@ import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 class Routes {
   static const root = '/';
   static const homeNamedPagePath = '/home';
-  static const homeDetailsNamedPage = 'details';
+  static const homeDetailsNamedPagePath = 'details';
   static const profileNamedPagePath = '/profile';
   static const exploreNamedPagePath = '/explore';
   static const chatNamedPagePath = '/chat';

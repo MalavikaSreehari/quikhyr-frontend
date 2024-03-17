@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_colors.dart';
+import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
+import 'package:quikhyr/common/constants/app_theme.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 import 'package:quikhyr/common/widgets/rating_star_worker.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
+import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
+import 'package:quikhyr/features/home/data/repository/search_repo.dart';
+import 'package:quikhyr/models/service_category_model.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final SearchRepo searchRepo = SearchRepo();
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +91,39 @@ class HomeScreen extends StatelessWidget {
               delegate: SliverChildListDelegate(
                 [
                   QuikSearchBar(
-                      onChanged: (String value) {},
+                      onChanged: (String searchString) {
+                        context
+                            .read<SearchBloc>()
+                            .add(SearchStarted(query: searchString));
+                      },
                       hintText: "Search for services..",
                       onMicPressed: () {},
                       onSearch: (String query) {},
                       controller: TextEditingController()),
+                  BlocBuilder<SearchBloc, SearchState>(
+                    builder: (context, state) {
+                      if (state is SearchLoading) {
+                        return const CircularProgressIndicator();
+                      } else if (state is SearchLoaded) {
+                        return SizedBox(
+                          height: 300,
+                          child: ListView.builder(
+                            itemCount: state.results.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text(
+                                  state.results[index],
+                                  style: chatSubTitle,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
 
                   AppSizing.vS16(),
                   Row(
@@ -205,26 +241,36 @@ class HomeScreen extends StatelessWidget {
                     ),
                     delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Container(
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: gridItemBackgroundColor),
-                              alignment: Alignment.center,
-                              height: 64,
-                              width: 64,
-                              child: SvgPicture.asset(
-                                state.servicesCategory[index].iconPath,
-                                height: 24,
-                              )),
-                          AppSizing.vS8(),
-                          Text(
-                            state.servicesCategory[index].title,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.labelLarge,
-                          )
-                        ],
+                      return GestureDetector(
+                        onTap: () {
+                          context.pushNamed(Routes.homeDetailsNamedPageName,
+                              extra: ServiceCategoryModel(
+                                  id: state.servicesCategory[index].id,
+                                  title: state.servicesCategory[index].title,
+                                  iconPath:
+                                      state.servicesCategory[index].iconPath));
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                                decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: gridItemBackgroundColor),
+                                alignment: Alignment.center,
+                                height: 64,
+                                width: 64,
+                                child: SvgPicture.asset(
+                                  state.servicesCategory[index].iconPath,
+                                  height: 24,
+                                )),
+                            AppSizing.vS8(),
+                            Text(
+                              state.servicesCategory[index].title,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.labelLarge,
+                            )
+                          ],
+                        ),
                       );
                     }, childCount: state.servicesCategory.length),
                   );

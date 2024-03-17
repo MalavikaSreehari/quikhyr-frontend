@@ -32,7 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
           if (state is SignInSuccess) {
             signInRequired = false;
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+                MaterialPageRoute(builder: (context) => HomeScreen()));
           } else if (state is SignInProcess) {
             setState(() {
               signInRequired = true;

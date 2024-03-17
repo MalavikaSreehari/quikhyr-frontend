@@ -84,7 +84,6 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(56),
@@ -125,8 +124,7 @@ class ChatScreen extends StatelessWidget {
               actions: [
                 ClickableSvgIcon(
                     svgAsset: AppAssetLinks.bellNotificationActiveSvg,
-                    onTap: () {
-                    }),
+                    onTap: () {}),
                 AppSizing.hS10(),
                 ClickableSvgIcon(
                     svgAsset: AppAssetLinks.logoutSvg,
@@ -153,72 +151,79 @@ class ChatScreen extends StatelessWidget {
             Expanded(child: BlocBuilder<ChatListBloc, ChatListState>(
               builder: (context, state) {
                 if (state is ChatListLoading) {
-                  return SizedBox(
+                  return const SizedBox(
                     height: 50,
                     width: 50,
-                    child: Center(
-                        child: const CircularProgressIndicator.adaptive()),
+                    child: Center(child: CircularProgressIndicator.adaptive()),
                   );
                 } else if (state is ChatListLoaded) {
                   return ListView.builder(
                     itemCount: state.chats.length,
                     itemBuilder: (context, index) {
                       ChatModel chat = state.chats[index];
-                      String chatId = chat.id;
+                      //String chatId = chat.id;
                       Map<String, ChatMessageModel> messages = chat.messages;
-                      Map<String, bool> participants = chat.participants;
+                      // Map<String, bool> participants = chat.participants;
 
                       // Access a specific message
                       ChatMessageModel? message = messages['message1'];
                       // String profilePictureUrl = message?.profilePictureUrl ?? '';
-                      String senderName = message?.sender ?? '';
+                      String senderName = message?.senderName ?? '';
 
                       String lastMessage = message?.text ?? '';
                       DateTime timestamp = message?.timestamp ?? DateTime.now();
-                      return ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: gridItemBackgroundColor,
-                          ),
-                          alignment: Alignment.center,
-                          height: 64,
-                          width: 64,
-                          child: Stack(
-                            children: [
-                              const Positioned.fill(
-                                  child: CircleAvatar(
-                                foregroundColor: Colors.green,
-                                // backgroundImage: AssetImage(
-                                //   state.chats[index].
-                                // ),
-                              )),
-                              // if (state.workers[index].isVerified)
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: SvgPicture.asset(
-                                  AppAssetLinks.verifiedBlueSvg,
-                                ),
+                      return Column(
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: gridItemBackgroundColor,
                               ),
-                              Positioned(
-                                  bottom: 0,
-                                  left: 4,
-                                  child: SvgPicture.asset(
-                                      AppAssetLinks.chatGreenBubbleSvg)),
-                            ],
+                              alignment: Alignment.center,
+                              height: 64,
+                              width: 64,
+                              child: Stack(
+                                children: [
+                                  const Positioned.fill(
+                                      child: CircleAvatar(
+                                    // foregroundColor: textInputBackgroundColor,
+                                    backgroundColor: textInputBackgroundColor,
+                                    child: Icon(Icons.person),
+                                    // backgroundImage: AssetImage(
+                                    //   state.chats[index].
+                                    // ),
+                                  )),
+                                  // if (state.workers[index].isVerified)
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: SvgPicture.asset(
+                                      AppAssetLinks.verifiedBlueSvg,
+                                    ),
+                                  ),
+                                  Positioned(
+                                      bottom: 0,
+                                      left: 4,
+                                      child: SvgPicture.asset(
+                                          AppAssetLinks.chatGreenBubbleSvg)),
+                                ],
+                              ),
+                            ),
+                            title: Text(senderName,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall),
+                            subtitle: Text(lastMessage, style: chatSubTitle),
+                            trailing: Text(
+                              timestamp.toString().substring(0, 10),
+                              style: chatTrailingActive,
+                            ),
+                            onTap: () => context.pushNamed(
+                                Routes.chatConversationNamedPageName),
                           ),
-                        ),
-                        title: Text(senderName,
-                            style: Theme.of(context).textTheme.headlineSmall),
-                        subtitle: Text(lastMessage, style: chatSubTitle),
-                        trailing: Text(
-                          timestamp.toString(),
-                          style: chatTrailingActive,
-                        ),
-                        onTap: () => context
-                            .pushNamed(Routes.chatConversationNamedPageName),
+                          const GradientSeparator(),
+                        ],
                       );
                     },
                   );

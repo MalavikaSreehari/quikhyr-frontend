@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -12,10 +14,12 @@ import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_scr
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
 import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
+import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
+import 'package:quikhyr/models/service_category_model.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -70,17 +74,40 @@ class AppRouter {
                   GoRoute(
                     path: Routes.homeNamedPagePath,
                     name: Routes.homeNamedPageName,
-                    pageBuilder: (context, state) => NoTransitionPage(
-                      child: HomeScreen(key: state.pageKey),
-                    ),
+                    pageBuilder: (context, state) {
+                      context.read<ServicesCategoryBloc>().add(LoadServicesCategories());
+                      return NoTransitionPage(
+                          child: HomeScreen(
+                        key: state.pageKey,
+                      ));
+                    },
                     routes: [
                       GoRoute(
-                        path: Routes.homeDetailsNamedPage,
+                        path: Routes.homeDetailsNamedPagePath,
                         name: Routes.homeDetailsNamedPageName,
                         //navigation is done through routes so please make sure to supply a name
 
-                        pageBuilder: (context, state) => NoTransitionPage(
-                            child: HomeDetailsScreen(key: state.pageKey)),
+                        pageBuilder: (context, state) {
+                          final ServiceCategoryModel serviceModel =
+                              state.extra as ServiceCategoryModel;
+                          return CustomTransitionPage<void>(
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(-1, 0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                              child: HomePopularServicesDetailScreen(
+                                serviceModel: serviceModel,
+                                key: state.pageKey,
+                              ));
+                        },
                       ),
                     ],
                   ),
@@ -117,7 +144,9 @@ class AppRouter {
                                     final chatRepository =
                                         RepositoryProvider.of<ChatRepository>(
                                             context);
-                                    return ChatListBloc(chatRepository: chatRepository)..add(LoadChats());
+                                    return ChatListBloc(
+                                        chatRepository: chatRepository)
+                                      ..add(LoadChats());
                                   },
                                   child: ChatScreen(key: state.pageKey))),
                         ),
@@ -126,18 +155,20 @@ class AppRouter {
                         path: Routes.chatConversationNamedPagePath,
                         name: Routes.chatConversationNamedPageName,
                         pageBuilder: (context, state) =>
-                          CustomTransitionPage<void>(
-                            // key: state.pageKey,
-                            child: const ChatConversationScreen(),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-                              SlideTransition(
-                                position: Tween<Offset>(
-                                  begin: const Offset(-1, 0), // Modified: Start from left (-1, 0)
-                                  end: Offset.zero,
-                                ).animate(animation),
-                                child: child,
-                              ),
+                            CustomTransitionPage<void>(
+                          // key: state.pageKey,
+                          child: const ChatConversationScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) =>
+                                  SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(
+                                  -1, 0), // Modified: Start from left (-1, 0)
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
                           ),
+                        ),
                       ),
                     ]),
               ],

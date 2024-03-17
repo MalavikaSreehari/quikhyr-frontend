@@ -19,14 +19,15 @@ class ChatListBloc extends Bloc<ChatListEvent, ChatListState> {
   Future<void> _mapLoadChatsToState(
       LoadChats event, Emitter<ChatListState> emit) async {
     _chatsSubscription?.cancel();
-    _chatsSubscription = chatRepository.getChats().listen((chats) {
-      add(ChatUpdated(chats));
-    }, onError: (error) {
-      emit(ChatListError(error.toString()));
-    });
+    try {
+      List<ChatModel> chats = await chatRepository.getChats().first;
+      emit(ChatListLoaded(chats));
+    } catch (e) {
+      emit(ChatListError(e.toString()));
+    }
   }
 
-  void _mapChatUpdatedToState(ChatUpdated event, Emitter<ChatListState> emit) {
+    void _mapChatUpdatedToState(ChatUpdated event, Emitter<ChatListState> emit) {
     emit(ChatListLoaded(event.chats));
   }
 
