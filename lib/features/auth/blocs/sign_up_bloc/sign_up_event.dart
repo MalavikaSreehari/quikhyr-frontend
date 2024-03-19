@@ -11,5 +11,5 @@ class SignUpRequired extends SignUpEvent{
 	final UserModel user;
 	final String password;
 
-	const SignUpRequired(this.user, this.password);
+	const SignUpRequired({required this.user,required this.password});
 }
