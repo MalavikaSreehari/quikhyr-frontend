@@ -7,7 +7,6 @@ sealed class ServicesCategoryState extends Equatable {
   List<Object> get props => [];
 }
 
-
 final class ServicesCategoryLoading extends ServicesCategoryState {}
 
 final class ServicesCategoryLoaded extends ServicesCategoryState {

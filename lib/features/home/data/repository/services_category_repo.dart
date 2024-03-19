@@ -44,7 +44,6 @@ class ServicesCategoryRepo {
         title: 'Lawn Management',
         iconPath: 'assets/icons/lawn_management.svg',
       ),
-
     ];
   }
 }

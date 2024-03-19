@@ -109,32 +109,33 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
-  });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      }
+    });
 
     return WillPopScope(
       onWillPop: () async {
         bool shouldClose = await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Confirmation'),
-            content: Text('Are you sure you want to close the app?'),
+            title: const Text('Confirmation'),
+            content: const Text('Are you sure you want to close the app?'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text('No'),
+                child: const Text('No'),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text('Yes'),
+                child: const Text('Yes'),
               ),
             ],
           ),
         );
-        return shouldClose ?? false;
+        return shouldClose;
+        //return shouldClose ?? false
       },
       child: Scaffold(
         body: widget.navigationShell,

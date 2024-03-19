@@ -15,8 +15,6 @@ import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
 import 'package:quikhyr/features/home/data/repository/search_repo.dart';
-import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
-import 'package:quikhyr/models/service_category_model.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -111,6 +109,7 @@ class HomeScreen extends StatelessWidget {
                       if (state is SearchLoading) {
                         return const CircularProgressIndicator();
                       } else if (state is SearchLoaded) {
+                        
                         return SizedBox(
                           child: ListView.builder(
                             shrinkWrap: true,

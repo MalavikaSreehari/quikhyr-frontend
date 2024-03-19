@@ -33,7 +33,6 @@
 //   }
 // }
 
-import 'package:flutter/material.dart';
 import 'package:fuzzy/fuzzy.dart';
 
 class SearchRepo {

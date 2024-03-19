@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 class ServiceCategoryModel extends Equatable {
   final String id;
   final String title;
+  
   final String iconPath;
   const ServiceCategoryModel({
     required this.id,
