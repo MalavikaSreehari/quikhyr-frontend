@@ -7,25 +7,40 @@ class UserModel extends Equatable {
   final String userId;
   final String email;
   final String name;
-  
+  final String phone;
+  final String dob;
+  final String? gender;
+  final String address;
 
   const UserModel({
     required this.userId,
     required this.email,
     required this.name,
+    required this.phone,
+    required this.dob,
+    required this.address,
+    this.gender
   });
 
-  static const empty = UserModel(userId: '', email: '', name: '');
+  static const empty = UserModel(userId: '', email: '', name: '', phone: '', dob: '', address: '');
 
   UserModel copyWith({
     String? userId,
     String? email,
     String? name,
+    String? phone,
+    String? dob,
+    String? address,
+    String? gender
   }) {
     return UserModel(
       userId: userId ?? this.userId,
       email: email ?? this.email,
-      name: name ?? this.name,
+      name: name ?? this.name, 
+      phone: phone ?? this.phone,
+      dob: dob ?? this.dob,
+      address: address ?? this.address,
+      gender: gender ?? this.gender,
     );
   }
 
@@ -34,6 +49,10 @@ class UserModel extends Equatable {
       'userId': userId,
       'email': email,
       'name': name,
+      'phone': phone,
+      'dob': dob,
+      'address': address,
+
     };
   }
 
@@ -42,6 +61,10 @@ class UserModel extends Equatable {
       userId: map['userId'] as String,
       email: map['email'] as String,
       name: map['name'] as String,
+      phone: map['phone'] as String,
+      dob: map['dob'] as String,
+      address: map['address'] as String,
+      gender: map['gender'] as String,
     );
   }
 
@@ -53,5 +76,5 @@ class UserModel extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [userId, email, name];
+  List<Object> get props => [userId, email, name, phone, dob, address, gender!];
 }
