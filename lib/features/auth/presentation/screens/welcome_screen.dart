@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:quikhyr/common/LongIconButton.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
+import 'package:quikhyr/common/widgets/longIconButton.dart';
 import 'package:quikhyr/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:quikhyr/features/auth/presentation/screens/sign_up_screen.dart';
 

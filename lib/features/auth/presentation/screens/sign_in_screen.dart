@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/longIconButton.dart';
+import 'package:quikhyr/common/widgets/longIconButton.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
             if (state is SignInSuccess) {
               signInRequired = false;
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+                  MaterialPageRoute(builder: (context) =>  HomeScreen()));
             } else if (state is SignInProcess) {
               setState(() {
                 signInRequired = true;

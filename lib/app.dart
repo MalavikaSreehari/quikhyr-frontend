@@ -4,6 +4,12 @@ import 'package:quikhyr/app_view.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
+import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
+import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
+import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
+import 'package:quikhyr/features/home/data/repository/most_rated_workers_repo.dart';
+import 'package:quikhyr/features/home/data/repository/search_repo.dart';
+import 'package:quikhyr/features/home/data/repository/services_category_repo.dart';
 
 class MyApp extends StatelessWidget {
   final FirebaseUserRepo userRepository;
@@ -11,17 +17,46 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider<AuthenticationBloc>(
-          create: (context) =>
-              AuthenticationBloc(userRepository: userRepository),
+        RepositoryProvider<MostRatedWorkersRepo>(
+          create: (context) => MostRatedWorkersRepo(),
         ),
-        BlocProvider(
-          create: (context) => SignInBloc(userRepository: userRepository),
+        RepositoryProvider<ServicesCategoryRepo>(
+          create: (context) => ServicesCategoryRepo(),
         ),
+        RepositoryProvider<SearchRepo>(create: (context) => SearchRepo()),
       ],
-      child: const MyAppView(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthenticationBloc>(
+            create: (context) =>
+                AuthenticationBloc(userRepository: userRepository),
+          ),
+          BlocProvider(
+            create: (context) => SignInBloc(userRepository: userRepository),
+          ),
+          BlocProvider<ServicesCategoryBloc>(create: (context) {
+            final servicesCategoryRepo =
+                RepositoryProvider.of<ServicesCategoryRepo>(context);
+            return ServicesCategoryBloc(
+                servicesCategoryRepo: servicesCategoryRepo)
+              ..add(LoadServicesCategories());
+          }),
+          BlocProvider<MostRatedWorkersBloc>(create: (context) {
+            final repo = RepositoryProvider.of<MostRatedWorkersRepo>(context);
+            return MostRatedWorkersBloc(repo: repo)
+              ..add(FetchMostRatedWorkers());
+          }),
+          BlocProvider<SearchBloc>(
+            create: (context) {
+              final searchRepo = RepositoryProvider.of<SearchRepo>(context);
+              return SearchBloc(searchRepo: searchRepo);
+            },
+          ),
+        ],
+        child: const MyAppView(),
+      ),
     );
   }
 }

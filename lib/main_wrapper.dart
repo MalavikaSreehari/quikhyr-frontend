@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
+import 'package:quikhyr/common/constants/app_colors.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
 import 'package:quikhyr/common/widgets/named_nav_bar_item_widget.dart';
 
@@ -31,7 +32,7 @@ class _MainWrapperState extends State<MainWrapper> {
           SvgPicture.asset(
             AppAssetLinks.homeNavBarActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Home", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
@@ -47,7 +48,7 @@ class _MainWrapperState extends State<MainWrapper> {
           SvgPicture.asset(
             AppAssetLinks.exploreNavBarActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Explore", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
@@ -63,7 +64,7 @@ class _MainWrapperState extends State<MainWrapper> {
           SvgPicture.asset(
             AppAssetLinks.chatNavBarActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Chat", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
@@ -79,7 +80,7 @@ class _MainWrapperState extends State<MainWrapper> {
           SvgPicture.asset(
             AppAssetLinks.bookNavBarActiveSvg,
           ),
-          AppSizing.hS8(),
+          AppSizing.hS2(),
           Text("Book", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
@@ -93,46 +94,73 @@ class _MainWrapperState extends State<MainWrapper> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppAssetLinks.profileNavBarActiveSvg,
+            AppAssetLinks.settingsActiveSvg,
           ),
-          AppSizing.hS8(),
-          Text("Profile", style: ThemeData.dark().textTheme.bodyLarge),
+          AppSizing.hS2(),
+          Text("Settings", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
       icon: SvgPicture.asset(
-        AppAssetLinks.profileNavBarSvg,
+        AppAssetLinks.settingsSvg,
       ),
-      label: 'Profile',
+      label: 'Settings',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      //!!RISKY CODE!!//
-      if (context.canPop()){
-        context.pop();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
       }
     });
 
-    return Scaffold(
-      body: widget.navigationShell,
-      // bottomNavigationBar: _buildBottomNavigation(context, tabs),
-      bottomNavigationBar: BottomNavigationBar(
-        items: tabs,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        elevation: 0,
-        backgroundColor: Colors.black,
-        currentIndex: selectedIndex,
-        type: BottomNavigationBarType.shifting,
-        onTap: (index) {
-          setState(() {
-            selectedIndex = index;
-            //if having lag move _goToBranch(index) to the bottom of the setState
-            _goToBranch(index);
-          });
-        },
+    return WillPopScope(
+      onWillPop: () async {
+        bool shouldClose = await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Confirmation'),
+            content: const Text('Are you sure you want to close the app?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('Yes'),
+              ),
+            ],
+          ),
+        );
+        return shouldClose;
+        //return shouldClose ?? false
+      },
+      child: Scaffold(
+        body: widget.navigationShell,
+        // bottomNavigationBar: _buildBottomNavigation(context, tabs),
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+              border:
+                  Border(top: BorderSide(color: placeHolderText, width: 0.3))),
+          child: BottomNavigationBar(
+            items: tabs,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            elevation: 0,
+            backgroundColor: Colors.black,
+            currentIndex: selectedIndex,
+            type: BottomNavigationBarType.shifting,
+            onTap: (index) {
+              setState(() {
+                selectedIndex = index;
+                //if having lag move _goToBranch(index) to the bottom of the setState
+                _goToBranch(index);
+              });
+            },
+          ),
+        ),
       ),
     );
   }
