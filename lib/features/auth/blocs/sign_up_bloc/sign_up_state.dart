@@ -10,5 +10,9 @@ sealed class SignUpState extends Equatable {
 final class SignUpInitial extends SignUpState {}
 
 class SignUpSuccess extends SignUpState {}
-class SignUpFailure extends SignUpState {}
+class SignUpFailure extends SignUpState {
+  final String message;
+
+  const SignUpFailure({required this.message});
+}
 class SignUpProcess extends SignUpState {}
