@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -6,12 +8,18 @@ import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
+import 'package:quikhyr/features/chat/blocs/bloc/chat_list_bloc.dart';
+import 'package:quikhyr/features/chat/data/chat_repo.dart';
+import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
+import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
+import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
-import 'package:quikhyr/features/profile/presentation/screens/profile_screen.dart';
+import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
+import 'package:quikhyr/models/service_category_model.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -23,10 +31,10 @@ class AppRouter {
       GlobalKey<NavigatorState>(debugLabel: 'shellChat');
   static final _shellNavigatorBookKey =
       GlobalKey<NavigatorState>(debugLabel: 'shellBook');
-  static final _shellNavigatorProfileKey =
-      GlobalKey<NavigatorState>(debugLabel: 'shellProfile');
+  static final _shellNavigatorSettingsKey =
+      GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
   static final GoRouter _router = GoRouter(
-    initialLocation: Routes.homeNamedPage,
+    initialLocation: Routes.homeNamedPagePath,
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     routes: [
@@ -47,8 +55,9 @@ class AppRouter {
             return BlocBuilder<AuthenticationBloc, AuthenticationState>(
               builder: (context, authState) {
                 if (authState.status == AuthenticationStatus.authenticated) {
-                  debugPrint("Going to Main Wrapper");
-                  debugPrint(navigationShell.shellRouteContext.route.toString());
+                  // debugPrint("Going to Main Wrapper");
+                  debugPrint(
+                      navigationShell.shellRouteContext.route.toString());
                   return MainWrapper(
                     navigationShell: navigationShell,
                   );
@@ -63,19 +72,79 @@ class AppRouter {
                 navigatorKey: _shellNavigatorHomeKey,
                 routes: <RouteBase>[
                   GoRoute(
-                    path: Routes.homeNamedPage,
+                    path: Routes.homeNamedPagePath,
                     name: Routes.homeNamedPageName,
-                    pageBuilder: (context, state) => NoTransitionPage(
-                      child: HomeScreen(key: state.pageKey),
-                    ),
+                    pageBuilder: (context, state) {
+                      context
+                          .read<ServicesCategoryBloc>()
+                          .add(LoadServicesCategories());
+                      return NoTransitionPage(
+                          child: HomeScreen(
+                        key: state.pageKey,
+                      ));
+                    },
                     routes: [
                       GoRoute(
-                        path: Routes.homeDetailsNamedPage,
+                        path:
+                            '${Routes.homeDetailsFromSearchNamedPagePath}/:service/:subService',
+                        name: Routes.homeDetailsFromSearchNamedPageName,
+                        //navigation is done through routes so please make sure to supply a name
+
+                        pageBuilder: (context, state) {
+                          // final ServiceCategoryModel serviceModel =
+                          // state.extra as ServiceCategoryModel;
+                          final service = state.pathParameters['service']!;
+                          final subService =
+                              state.pathParameters['subService'] ??
+                                  "No SubService";
+                          return CustomTransitionPage<void>(
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(-1, 0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                              child: HomeDetailScreen(
+                                  // serviceModel: serviceModel,
+                                  key: state.pageKey,
+                                  service: service,
+                                  subService: subService));
+                        },
+                      ),
+                      GoRoute(
+                        path: '${Routes.homeDetailsNamedPagePath}/:service',
                         name: Routes.homeDetailsNamedPageName,
                         //navigation is done through routes so please make sure to supply a name
 
-                        pageBuilder: (context, state) => NoTransitionPage(
-                            child: HomeDetailsScreen(key: state.pageKey)),
+                        pageBuilder: (context, state) {
+                          // final ServiceCategoryModel serviceModel =
+                          // state.extra as ServiceCategoryModel;
+                          final service =
+                              state.pathParameters['service'] ?? "No Service";
+                          return CustomTransitionPage<void>(
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(-1, 0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                              child: HomeDetailScreen(
+                                // serviceModel: serviceModel,
+                                key: state.pageKey, service: service,
+                              ));
+                        },
                       ),
                     ],
                   ),
@@ -84,11 +153,15 @@ class AppRouter {
               navigatorKey: _shellNavigatorExploreKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.exploreNamedPage,
+                  path: Routes.exploreNamedPagePath,
                   name: Routes.exploreNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
-                    child: ExploreScreen(
-                      key: state.pageKey,
+                    //ADD FILTERCHIP PROVIDER TO TRY OUT NOT PUTTING ALL BLOCS IN MAIN FILE
+                    child: BlocProvider(
+                      create: (context) => FilterChipCubit(),
+                      child: ExploreScreen(
+                        key: state.pageKey,
+                      ),
                     ),
                   ),
                 ),
@@ -98,19 +171,50 @@ class AppRouter {
               navigatorKey: _shellNavigatorChatKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.chatNamedPage,
-                  name: Routes.chatNamedPageName,
-                  pageBuilder: (context, state) => NoTransitionPage(
-                    child: ChatScreen(key: state.pageKey),
-                  ),
-                ),
+                    path: Routes.chatNamedPagePath,
+                    name: Routes.chatNamedPageName,
+                    pageBuilder: (context, state) => NoTransitionPage(
+                          child: RepositoryProvider<ChatRepository>(
+                              create: (context) => ChatRepository(),
+                              child: BlocProvider<ChatListBloc>(
+                                  create: (context) {
+                                    final chatRepository =
+                                        RepositoryProvider.of<ChatRepository>(
+                                            context);
+                                    return ChatListBloc(
+                                        chatRepository: chatRepository)
+                                      ..add(LoadChats());
+                                  },
+                                  child: ChatScreen(key: state.pageKey))),
+                        ),
+                    routes: [
+                      GoRoute(
+                        path: Routes.chatConversationNamedPagePath,
+                        name: Routes.chatConversationNamedPageName,
+                        pageBuilder: (context, state) =>
+                            CustomTransitionPage<void>(
+                          // key: state.pageKey,
+                          child: const ChatConversationScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) =>
+                                  SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(
+                                  -1, 0), // Modified: Start from left (-1, 0)
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
+                          ),
+                        ),
+                      ),
+                    ]),
               ],
             ),
             StatefulShellBranch(
               navigatorKey: _shellNavigatorBookKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.bookNamedPage,
+                  path: Routes.bookNamedPagePath,
                   name: Routes.bookNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: BookingScreen(key: state.pageKey),
@@ -119,13 +223,13 @@ class AppRouter {
               ],
             ),
             StatefulShellBranch(
-              navigatorKey: _shellNavigatorProfileKey,
+              navigatorKey: _shellNavigatorSettingsKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.profileNamedPage,
-                  name: Routes.profileNamedPageName,
+                  path: Routes.settingsNamedPagePath,
+                  name: Routes.settingsNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
-                    child: ProfileScreen(key: state.pageKey),
+                    child: SettingsScreen(key: state.pageKey),
                   ),
                 ),
               ],
