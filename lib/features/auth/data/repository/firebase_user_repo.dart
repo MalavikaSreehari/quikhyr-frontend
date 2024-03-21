@@ -19,6 +19,7 @@ class FirebaseUserRepo {
   }
 
   Future<void> signIn(String email, String password) async {
+    
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
         email: email, 
@@ -31,33 +32,33 @@ class FirebaseUserRepo {
   }
 
   Future<UserModel> signUp(UserModel userModel, String password) async {
-    try {
-      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: userModel.email, 
-        password: password
-      );
+  try {
+    UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+      email: userModel.email, 
+      password: password
+    );
 
-      UserModel newUser = userModel.copyWith(
-        userId: userCredential.user!.uid
-      );
+    UserModel newUser = userModel.copyWith(
+      id: userCredential.user!.uid,
+    );
 
-      return newUser;
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
+    return newUser;
+  } catch (e) {
+    log(e.toString());
+    rethrow;
   }
+}
 
   Future<void> setUserData(UserModel user) async {
-    try {
-      await usersCollection
-        .doc(user.userId)
-        .set(user.toMap());
-    } catch (e) {
-      log(e.toString());
-      rethrow;
-    }
+  try {
+    await usersCollection
+      .doc(user.id)
+      .set(user.toMap());
+  } catch (e) {
+    log(e.toString());
+    rethrow;
   }
+}
 
   Future<void> logOut() async {
     await _firebaseAuth.signOut();

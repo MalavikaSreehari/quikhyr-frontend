@@ -4,67 +4,68 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class UserModel extends Equatable {
-  final String userId;
+  final String id;
   final String email;
   final String name;
   final String phone;
-  final String dob;
   final String? gender;
   final String address;
+  final int age;
 
   const UserModel({
-    required this.userId,
+    required this.id,
     required this.email,
     required this.name,
     required this.phone,
-    required this.dob,
     required this.address,
-    this.gender
+    this.gender,
+    required this.age
   });
 
-  static const empty = UserModel(userId: '', email: '', name: '', phone: '', dob: '', address: '');
+  static const empty = UserModel(id: '', email: '', name: '', phone: '', address: '',age: 0);
 
   UserModel copyWith({
-    String? userId,
+    String? id,
     String? email,
     String? name,
     String? phone,
-    String? dob,
     String? address,
-    String? gender
+    String? gender,
+    int? age
   }) {
     return UserModel(
-      userId: userId ?? this.userId,
+      id: id ?? this.id,
       email: email ?? this.email,
       name: name ?? this.name, 
       phone: phone ?? this.phone,
-      dob: dob ?? this.dob,
       address: address ?? this.address,
       gender: gender ?? this.gender,
+      age: age ?? this.age
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'userId': userId,
+      'id': id,
       'email': email,
       'name': name,
       'phone': phone,
-      'dob': dob,
       'address': address,
+      'gender' : gender,
+      'age' : age
 
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      userId: map['userId'] as String,
+      id: map['id'] as String,
       email: map['email'] as String,
       name: map['name'] as String,
       phone: map['phone'] as String,
-      dob: map['dob'] as String,
       address: map['address'] as String,
       gender: map['gender'] as String,
+      age: map['age'] as int
     );
   }
 
@@ -76,5 +77,5 @@ class UserModel extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [userId, email, name, phone, dob, address, gender!];
+  List<Object> get props => [id, email, name, phone, address, gender!];
 }
