@@ -1,88 +1,62 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/bloc/client_bloc.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
-import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/constants/app_sizing.dart';
-import 'package:quikhyr/common/constants/app_theme.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:quikhyr/features/chat/blocs/bloc/chat_list_bloc.dart';
-import 'package:quikhyr/models/chat_message_model.dart';
-import 'package:quikhyr/models/chat_model.dart';
+import 'package:quikhyr/features/chat/firebase_provider.dart';
+import 'package:quikhyr/features/chat/presentation/components/user_item.dart';
+import 'package:quikhyr/models/location_model.dart';
+import 'package:quikhyr/models/worker_model.dart';
 
-class Message {
-  final String sender;
-  final String message;
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
 
-  Message(this.sender, this.message);
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key});
+class _ChatScreenState extends State<ChatScreen> {
+  @override
+  void initState() {
+    Provider.of<FirebaseProvider>(context, listen: false);
+    super.initState();
+  }
 
-  final databaseReference = FirebaseDatabase.instance.ref();
-  // void pushData() {
-  //   final databaseReference = FirebaseDatabase.instance.ref();
-
-  //   databaseReference.child("chats").set({
-  //     'chat1': {
-  //       'participants': {'user1': true, 'user2': true},
-  //       'messages': {
-  //         'message1': {
-  //           'sender': 'user1',
-  //           'text': 'Will meet you tomorrow.',
-  //           'timestamp': DateTime.now().toIso8601String()
-  //         }
-  //       }
-  //     },
-  //     'chat2': {
-  //       'participants': {'user2': true, 'user3': true},
-  //       'messages': {
-  //         'message1': {
-  //           'sender': 'user2',
-  //           'text': 'Payment has been transferred.',
-  //           'timestamp': DateTime.now().toIso8601String()
-  //         }
-  //       }
-  //     },
-  //     'chat3': {
-  //       'participants': {'user1': true, 'user3': true},
-  //       'messages': {
-  //         'message1': {
-  //           'sender': 'user1',
-  //           'text': 'Thank you for choosing me.',
-  //           'timestamp': DateTime.now().toIso8601String()
-  //         }
-  //       }
-  //     }
-  //   });
-
-  //   databaseReference.child("users").set({
-  //     'user1': {
-  //       'name': 'Kenny Kirk',
-  //       'avatar': 'assets/images/ratedWorker2.png',
-  //       'isVerified': true
-  //     },
-  //     'user2': {
-  //       'name': 'Henry Kal',
-  //       'avatar': 'assets/images/ratedWorker3.png',
-  //       'isVerified': true
-  //     },
-  //     'user3': {
-  //       'name': 'John Burke',
-  //       'avatar': 'assets/images/ratedWorker1.png',
-  //       'isVerified': true
-  //     }
-  //   });
-  // }
-
+  final userData = [
+    WorkerModel(
+      id: '1',
+      name: 'John Doe',
+      age: 35,
+      available: true,
+      avatar: AppAssetLinks.placeholderImage,
+      email: 'john.doe@example.com',
+      gender: 'Male',
+      location: LocationModel(
+        latitude: "40.7348",
+        longitude: "74.3360",
+      ),
+      phone: '123-456-7890',
+      pincode: '10001',
+      subservices: const ["ZbpkeckdBSht7GOR1T9y"],
+    ),
+    WorkerModel(
+      id: '2',
+      name: 'Jane Smith',
+      age: 30,
+      available: false,
+      avatar: AppAssetLinks.placeholderImage,
+      email: 'jane.smith@example.com',
+      gender: 'Female',
+      location: LocationModel(
+        latitude: "40.7128",
+        longitude: "74.0060",
+      ),
+      phone: '098-765-4321',
+      pincode: '90001',
+      subservices: const ["ZbpkeckdBSht7GOR1T9y"],
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,68 +123,67 @@ class ChatScreen extends StatelessWidget {
               controller: TextEditingController(), // Default controller
             ),
             AppSizing.vS24(),
-            Expanded(child: Center(child: BlocBuilder<ClientBloc, ClientState>(
-              builder: (context, state) {
-                if (state is ClientError) {
-                  return Text(state.error);
-                } else if (state is ClientLoaded) {
-                  return Text(state.client.name);
-                }
-                else {
-                  return const CircularProgressIndicator.adaptive();
-                }
+            Expanded(
+                child: ListView.separated(
+              separatorBuilder: (context, index) => const GradientSeparator(),
+              itemBuilder: (context, index) {
+                return UserItem(
+                  worker: userData.elementAt(index),
+                );
               },
-            )))
+              itemCount: userData.length,
+            )),
+
             // Expanded(
             //   child: ListView(
             //     shrinkWrap: true,
             //     children: [
-            //       ListTile(
-            //         contentPadding: EdgeInsets.zero,
-            //         leading: Container(
-            //           decoration: const BoxDecoration(
-            //             shape: BoxShape.circle,
-            //             color: gridItemBackgroundColor,
+            // ListTile(
+            //   contentPadding: EdgeInsets.zero,
+            //   leading: Container(
+            //     decoration: const BoxDecoration(
+            //       shape: BoxShape.circle,
+            //       color: gridItemBackgroundColor,
+            //     ),
+            //     alignment: Alignment.center,
+            //     height: 64,
+            //     width: 64,
+            //     child: Stack(
+            //       children: [
+            //         const Positioned.fill(
+            //             child: CircleAvatar(
+            //           backgroundImage: AssetImage(
+            //             "assets/images/ratedWorker2.png",
             //           ),
-            //           alignment: Alignment.center,
-            //           height: 64,
-            //           width: 64,
-            //           child: Stack(
-            //             children: [
-            //               const Positioned.fill(
-            //                   child: CircleAvatar(
-            //                 backgroundImage: AssetImage(
-            //                   "assets/images/ratedWorker2.png",
-            //                 ),
-            //               )),
-            //               // if (state.workers[index].isVerified)
-            //               Positioned(
-            //                 top: 0,
-            //                 right: 0,
-            //                 child: SvgPicture.asset(
-            //                   AppAssetLinks.verifiedBlueSvg,
-            //                 ),
-            //               ),
-            //               Positioned(
-            //                   bottom: 0,
-            //                   left: 4,
-            //                   child: SvgPicture.asset(
-            //                       AppAssetLinks.chatGreenBubbleSvg)),
-            //             ],
+            //         )),
+            //         // if (state.workers[index].isVerified)
+            //         Positioned(
+            //           top: 0,
+            //           right: 0,
+            //           child: SvgPicture.asset(
+            //             AppAssetLinks.verifiedBlueSvg,
             //           ),
             //         ),
-            //         title: Text("Kenny Kirk",
-            //             style: Theme.of(context).textTheme.headlineSmall),
-            //         subtitle: const Text("Will meet you tomorrow.",
-            //             style: chatSubTitle),
-            //         trailing: const Text(
-            //           "7:04 pm",
-            //           style: chatTrailingActive,
-            //         ),
-            //         onTap: () =>
-            //             context.pushNamed(Routes.chatConversationNamedPageName),
-            //       ),
-            //       const GradientSeparator(),
+            //         Positioned(
+            //             bottom: 0,
+            //             left: 4,
+            //             child: SvgPicture.asset(
+            //                 AppAssetLinks.chatGreenBubbleSvg)),
+            //       ],
+            //     ),
+            //   ),
+            //   title: Text("Kenny Kirk",
+            //       style: Theme.of(context).textTheme.headlineSmall),
+            //   subtitle: const Text("Will meet you tomorrow.",
+            //       style: chatSubTitle),
+            //   trailing: const Text(
+            //     "7:04 pm",
+            //     style: chatTrailingActive,
+            //   ),
+            //   onTap: () =>
+            //       context.pushNamed(Routes.chatConversationNamedPageName),
+            // ),
+            // const GradientSeparator(),
             //       ListTile(
             //         contentPadding: EdgeInsets.zero,
             //         leading: Container(

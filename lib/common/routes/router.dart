@@ -174,18 +174,7 @@ class AppRouter {
                     path: Routes.chatNamedPagePath,
                     name: Routes.chatNamedPageName,
                     pageBuilder: (context, state) => NoTransitionPage(
-                          child: RepositoryProvider<ChatRepository>(
-                              create: (context) => ChatRepository(),
-                              child: BlocProvider<ChatListBloc>(
-                                  create: (context) {
-                                    final chatRepository =
-                                        RepositoryProvider.of<ChatRepository>(
-                                            context);
-                                    return ChatListBloc(
-                                        chatRepository: chatRepository)
-                                      ..add(LoadChats());
-                                  },
-                                  child: ChatScreen(key: state.pageKey))),
+                          child: ChatScreen(key: state.pageKey),
                         ),
                     routes: [
                       GoRoute(

@@ -109,7 +109,6 @@ class HomeScreen extends StatelessWidget {
                       if (state is SearchLoading) {
                         return const CircularProgressIndicator();
                       } else if (state is SearchLoaded) {
-                        
                         return SizedBox(
                           child: ListView.builder(
                             shrinkWrap: true,
@@ -126,17 +125,17 @@ class HomeScreen extends StatelessWidget {
                                 margin: const EdgeInsets.symmetric(vertical: 5),
                                 child: GestureDetector(
                                   onTap: () {
-                                    
                                     context.read<SearchBloc>().add(
                                         const SearchCleared()); // Clear search
-                                        //!! JANKY CODE, MAY BREAK, NEED TO USE BETTER LOGIC OR ENUMS
+                                    //!! JANKY CODE, MAY BREAK, NEED TO USE BETTER LOGIC OR ENUMS
                                     if (subService == "") {
                                       context.pushNamed(
                                           Routes.homeDetailsNamedPageName,
                                           pathParameters: {'service': service});
                                     } else {
                                       context.pushNamed(
-                                          Routes.homeDetailsFromSearchNamedPageName,
+                                          Routes
+                                              .homeDetailsFromSearchNamedPageName,
                                           pathParameters: {
                                             'service': service,
                                             'subService': subService
@@ -508,58 +507,59 @@ class HomeScreen extends StatelessWidget {
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: gridItemBackgroundColor,
-                              ),
-                              alignment: Alignment.center,
-                              height: 64,
-                              width: 64,
-                              child: Stack(
-                                children: [
-                                  Positioned.fill(
-                                    child: ClipOval(
-                                      child: Image.asset(
-                                        state.workers[index].profileImageUrl,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  if (state.workers[index].isVerified)
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: SvgPicture.asset(
-                                        AppAssetLinks.verifiedBlueSvg,
-                                      ),
-                                    ),
-                                  Positioned(
-                                    bottom: 0,
-                                    left: 0,
-                                    child: RatingStar(
-                                        rating: state.workers[index].rating
-                                            .toString()),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            AppSizing.vS8(),
-                            Text(
-                              state.workers[index].name,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
-                            AppSizing.vS4(),
-                            Text(
-                              state.workers[index].category,
-                              // overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.labelSmall,
-                            )
-                          ],
-                        );
+                        return const Placeholder();
+                        // Column(
+                        //   children: [
+                        //     Container(
+                        //       decoration: const BoxDecoration(
+                        //         shape: BoxShape.circle,
+                        //         color: gridItemBackgroundColor,
+                        //       ),
+                        //       alignment: Alignment.center,
+                        //       height: 64,
+                        //       width: 64,
+                        //       child: Stack(
+                        //         children: [
+                        //           Positioned.fill(
+                        //             child: ClipOval(
+                        //               child: Image.asset(
+                        //                 state.workers[index].profileImageUrl,
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           if (state.workers[index].isVerified)
+                        //             Positioned(
+                        //               top: 0,
+                        //               right: 0,
+                        //               child: SvgPicture.asset(
+                        //                 AppAssetLinks.verifiedBlueSvg,
+                        //               ),
+                        //             ),
+                        //           Positioned(
+                        //             bottom: 0,
+                        //             left: 0,
+                        //             child: RatingStar(
+                        //                 rating: state.workers[index].rating
+                        //                     .toString()),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     AppSizing.vS8(),
+                        //     Text(
+                        //       state.workers[index].name,
+                        //       overflow: TextOverflow.ellipsis,
+                        //       style: Theme.of(context).textTheme.labelLarge,
+                        //     ),
+                        //     AppSizing.vS4(),
+                        //     Text(
+                        //       state.workers[index].category,
+                        //       // overflow: TextOverflow.ellipsis,
+                        //       style: Theme.of(context).textTheme.labelSmall,
+                        //     )
+                        //   ],
+                        // );
                       },
                       childCount: state.workers.length,
                     ),

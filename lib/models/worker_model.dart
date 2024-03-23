@@ -2,38 +2,60 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:quikhyr/common/constants/app_asset_links.dart';
+import 'package:quikhyr/models/location_model.dart';
 
 class WorkerModel extends Equatable {
   final String id;
   final String name;
-  final String profileImageUrl;
-  final bool isVerified;
-  final String category;
-  final double rating;
+  final int? age;
+  final bool available;
+  final String avatar;
+  final String email;
+  final String gender;
+  final LocationModel location;
+  final String phone;
+  final String pincode;
+  final List<String> subservices;
   const WorkerModel({
     required this.id,
     required this.name,
-    required this.profileImageUrl,
-    required this.isVerified,
-    required this.category,
-    required this.rating,
+    this.age,
+    required this.available,
+    this.avatar = AppAssetLinks.placeholderImage,
+    required this.email,
+    required this.gender,
+    required this.location,
+    required this.phone,
+    required this.pincode,
+    required this.subservices,
   });
 
   WorkerModel copyWith({
     String? id,
     String? name,
-    String? profileImageUrl,
-    bool? isVerified,
-    String? category,
-    double? rating,
+    int? age,
+    bool? available,
+    String? avatar,
+    String? email,
+    String? gender,
+    LocationModel? location,
+    String? phone,
+    String? pincode,
+    List<String>? subservices,
   }) {
     return WorkerModel(
       id: id ?? this.id,
       name: name ?? this.name,
-      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
-      isVerified: isVerified ?? this.isVerified,
-      category: category ?? this.category,
-      rating: rating ?? this.rating,
+      age: age ?? this.age,
+      available: available ?? this.available,
+      avatar: avatar ?? this.avatar,
+      email: email ?? this.email,
+      gender: gender ?? this.gender,
+      location: location ?? this.location,
+      phone: phone ?? this.phone,
+      pincode: pincode ?? this.pincode,
+      subservices: subservices ?? this.subservices,
     );
   }
 
@@ -41,10 +63,15 @@ class WorkerModel extends Equatable {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'profileImageUrl': profileImageUrl,
-      'isVerified': isVerified,
-      'category': category,
-      'rating': rating,
+      'age': age,
+      'available': available,
+      'avatar': avatar,
+      'email': email,
+      'gender': gender,
+      'location': location.toMap(),
+      'phone': phone,
+      'pincode': pincode,
+      'subservices': subservices,
     };
   }
 
@@ -52,29 +79,45 @@ class WorkerModel extends Equatable {
     return WorkerModel(
       id: map['id'] as String,
       name: map['name'] as String,
-      profileImageUrl: map['profileImageUrl'] as String,
-      isVerified: map['isVerified'] as bool,
-      category: map['category'] as String,
-      rating: map['rating'] as double,
+      age: map['age'] != null ? map['age'] as int : null,
+      available: map['available'] as bool,
+      avatar: map['avatar'] as String,
+      email: map['email'] as String,
+      gender: map['gender'] as String,
+      location: LocationModel.fromMap(map['location'] as Map<String, dynamic>),
+      phone: map['phone'] as String,
+      pincode: map['pincode'] as String,
+subservices: (map['subservices'] as List).map((item) => item as String).toList(),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory WorkerModel.fromJson(String source) => WorkerModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory WorkerModel.fromJson(String source) =>
+      WorkerModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'WorkerModel{id: $id, name: $name, age: $age, available: $available, avatar: $avatar, email: $email, gender: $gender, location: $location, phone: $phone, pincode: $pincode, subservices: $subservices}';
+  }
 
   @override
   bool get stringify => true;
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       id,
       name,
-      profileImageUrl,
-      isVerified,
-      category,
-      rating,
+      age,
+      available,
+      avatar,
+      email,
+      gender,
+      location,
+      phone,
+      pincode,
+      subservices,
     ];
   }
 }
