@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quikhyr/app_view.dart';
+import 'package:quikhyr/common/bloc/client_bloc.dart';
+import 'package:quikhyr/common/data/repositories/client_repo.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
@@ -19,9 +21,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<MostRatedWorkersRepo>(
-          create: (context) => MostRatedWorkersRepo(),
+        RepositoryProvider<ClientRepo>(
+          create: (context) => ClientRepo(),
         ),
+        RepositoryProvider<MostRatedWorkersRepo>(
+            create: (context) => MostRatedWorkersRepo()),
         RepositoryProvider<ServicesCategoryRepo>(
           create: (context) => ServicesCategoryRepo(),
         ),
@@ -52,6 +56,13 @@ class MyApp extends StatelessWidget {
             create: (context) {
               final searchRepo = RepositoryProvider.of<SearchRepo>(context);
               return SearchBloc(searchRepo: searchRepo);
+            },
+          ),
+          BlocProvider<ClientBloc>(
+            create: (context) {
+              final clientRepo = RepositoryProvider.of<ClientRepo>(context);
+              return ClientBloc(
+                  clientRepo: clientRepo, firebaseUserRepo: userRepository)..add(FetchClient());
             },
           ),
         ],

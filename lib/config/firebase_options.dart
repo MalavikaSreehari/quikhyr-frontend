@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,43 +49,20 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB154NmyP-1nBsOxmpaQqyuIoIwfxTQL40',
-    appId: '1:12387052869:web:0d920648ad6aa24083e22c',
-    messagingSenderId: '12387052869',
-    projectId: 'quikhyr',
-    authDomain: 'quikhyr.firebaseapp.com',
-    databaseURL: 'https://quikhyr-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'quikhyr.appspot.com',
-    measurementId: 'G-B5ZTGGZ1W6',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBGglKv24u9fZTjpWnBq_xszQTFN_Qs-_U',
-    appId: '1:12387052869:android:47d07852427ce97d83e22c',
-    messagingSenderId: '12387052869',
-    projectId: 'quikhyr',
-    databaseURL: 'https://quikhyr-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'quikhyr.appspot.com',
+    apiKey: 'AIzaSyAsnQAux59LsFvG0mL5PZdB6HGtICm0Hp0',
+    appId: '1:623622835479:android:e4b26d22653458cbc47b52',
+    messagingSenderId: '623622835479',
+    projectId: 'quikhyr-app',
+    storageBucket: 'quikhyr-app.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB6WpfVBzJACFcxtz2TZLCS9u0kzLlRgIQ',
-    appId: '1:12387052869:ios:d5a14a43849706d283e22c',
-    messagingSenderId: '12387052869',
-    projectId: 'quikhyr',
-    databaseURL: 'https://quikhyr-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'quikhyr.appspot.com',
+    apiKey: 'AIzaSyB0v8NAJAxKln6mfSpTfkQ1pcM9A6TTY6c',
+    appId: '1:623622835479:ios:7fe78ab5df2f9412c47b52',
+    messagingSenderId: '623622835479',
+    projectId: 'quikhyr-app',
+    storageBucket: 'quikhyr-app.appspot.com',
     iosBundleId: 'com.example.quikhyr',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB6WpfVBzJACFcxtz2TZLCS9u0kzLlRgIQ',
-    appId: '1:12387052869:ios:36000cecc594e84083e22c',
-    messagingSenderId: '12387052869',
-    projectId: 'quikhyr',
-    databaseURL: 'https://quikhyr-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'quikhyr.appspot.com',
-    iosBundleId: 'com.example.quikhyr.RunnerTests',
   );
 }

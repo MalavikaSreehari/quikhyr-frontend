@@ -40,7 +40,7 @@ class _MyTextFieldState extends State<MyTextField> {
     return Focus(
       onFocusChange: (hasFocus) {
         setState(() {
-          backgroundColor = hasFocus ? Color.fromRGBO(51, 153, 204, 0.12) : const Color(0xFF313131);
+          backgroundColor = hasFocus ? const Color.fromRGBO(51, 153, 204, 0.12) : const Color(0xFF313131);
         });
       },
       child: Builder(
@@ -75,7 +75,7 @@ class _MyTextFieldState extends State<MyTextField> {
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
                 ),
-                fillColor: Color.fromRGBO(51, 153, 204, 0.12),
+                fillColor: const Color.fromRGBO(51, 153, 204, 0.12),
                 filled: true,
                 //focusColor: Color(0xFF3399CC),
                 hintText: widget.hintText,
