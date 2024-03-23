@@ -1,0 +1,73 @@
+name: quikhyr
+description: A new Flutter project.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
+  bloc: ^8.1.3
+  flutter_bloc: ^8.1.4
+  equatable: ^2.0.5
+  cupertino_icons: ^1.0.6
+  cloud_firestore: ^4.15.6
+  flutter_svg: ^2.0.10+1
+  google_nav_bar: ^5.0.6
+  go_router: ^12.1.3
+  http: ^1.2.0
+  dartz: ^0.10.1
+  shared_preferences: ^2.2.2
+  flutter_launcher_icons: ^0.13.1
+  firebase_database: ^10.4.9
+  fuzzy: ^0.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.3.10
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/play_store_512.png"
+  min_sdk_android: 21
+
+flutter_native_splash:
+  image: assets/images/logo.png
+  color: "000000"
+  
+  android_12:
+    image: assets/images/logo.png
+    color: "000000"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+  fonts:
+    - family: Moonhouse
+      fonts:
+        - asset: assets/fonts/moonhouse.ttf
+    - family: Trap
+      fonts:
+        - asset: assets/fonts/Trap-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Trap-Bold.otf
+          weight: 700
+        - asset: assets/fonts/Trap-Light.otf
+          weight: 300
+        - asset: assets/fonts/Trap-Medium.otf
+          weight: 500
+        - asset: assets/fonts/Trap-SemiBold.otf
+          weight: 600
+        - asset: assets/fonts/Trap-Black.otf
+          weight: 900
+        - asset: assets/fonts/Trap-ExtraBold.otf
+          weight: 800
