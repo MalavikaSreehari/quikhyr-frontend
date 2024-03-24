@@ -77,8 +77,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             phone: _phoneController.text,
             gender: _genderController.text,
             location: LocationModel(
-              latitude: "70",
-              longitude: "80",
+              latitude: 70,
+              longitude: 80,
             ),
 
             age: age, pincode: '680686', // Set age

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:quikhyr/app_view.dart';
 import 'package:quikhyr/common/bloc/client_bloc.dart';
 import 'package:quikhyr/common/data/repositories/client_repo.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
+import 'package:quikhyr/features/chat/firebase_provider.dart';
 import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
@@ -66,7 +68,7 @@ class MyApp extends StatelessWidget {
             },
           ),
         ],
-        child: const MyAppView(),
+        child: ChangeNotifierProvider(create: (_) => FirebaseProvider(),child: const MyAppView()),
       ),
     );
   }

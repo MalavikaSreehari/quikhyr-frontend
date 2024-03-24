@@ -20,6 +20,7 @@ import 'package:quikhyr/features/home/presentation/screens/home_detail/home_deta
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
 import 'package:quikhyr/models/service_category_model.dart';
+import 'package:quikhyr/models/worker_model.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -173,9 +174,16 @@ class AppRouter {
                 GoRoute(
                     path: Routes.chatNamedPagePath,
                     name: Routes.chatNamedPageName,
-                    pageBuilder: (context, state) => NoTransitionPage(
+                    pageBuilder: (context, state) {
+                      // final WorkerModel worker =
+                      //     state.extra as WorkerModel;
+                      //!? I guess not needed above 2 lines
+return NoTransitionPage(
                           child: ChatScreen(key: state.pageKey),
-                        ),
+                       
+
+                        );
+                    } ,
                     routes: [
                       GoRoute(
                         path: Routes.chatConversationNamedPagePath,
@@ -183,7 +191,7 @@ class AppRouter {
                         pageBuilder: (context, state) =>
                             CustomTransitionPage<void>(
                           // key: state.pageKey,
-                          child: const ChatConversationScreen(),
+                          child: ChatConversationScreen(worker: state.extra as WorkerModel,),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) =>
                                   SlideTransition(

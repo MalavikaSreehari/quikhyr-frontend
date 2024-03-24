@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
+import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/constants/app_theme.dart';
 import 'package:quikhyr/models/worker_model.dart';
 
@@ -53,7 +54,9 @@ class _UserItemState extends State<UserItem> {
         "7:04 pm",
         style: chatTrailingActive,
       ),
-      onTap: () {},
+      onTap: () {
+        context.pushNamed(Routes.chatConversationNamedPageName, extra: widget.worker);
+      },
     );
   }
 }
