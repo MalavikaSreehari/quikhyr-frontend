@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/widgets/named_nav_bar_item_widget.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -30,14 +30,14 @@ class _MainWrapperState extends State<MainWrapper> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppAssetLinks.homeNavBarActiveSvg,
+            QuikAssetConstants.homeNavBarActiveSvg,
           ),
-          AppSizing.hS2(),
+          QuikSpacing.hS2(),
           Text("Home", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
       icon: SvgPicture.asset(
-        AppAssetLinks.homeNavBarSvg,
+        QuikAssetConstants.homeNavBarSvg,
       ),
       label: 'Home',
     ),
@@ -46,14 +46,14 @@ class _MainWrapperState extends State<MainWrapper> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppAssetLinks.exploreNavBarActiveSvg,
+            QuikAssetConstants.exploreNavBarActiveSvg,
           ),
-          AppSizing.hS2(),
+          QuikSpacing.hS2(),
           Text("Explore", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
       icon: SvgPicture.asset(
-        AppAssetLinks.exploreNavBarSvg,
+        QuikAssetConstants.exploreNavBarSvg,
       ),
       label: 'Explore',
     ),
@@ -62,14 +62,14 @@ class _MainWrapperState extends State<MainWrapper> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppAssetLinks.chatNavBarActiveSvg,
+            QuikAssetConstants.chatNavBarActiveSvg,
           ),
-          AppSizing.hS2(),
+          QuikSpacing.hS2(),
           Text("Chat", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
       icon: SvgPicture.asset(
-        AppAssetLinks.chatNavBarSvg,
+        QuikAssetConstants.chatNavBarSvg,
       ),
       label: 'Chat',
     ),
@@ -78,14 +78,14 @@ class _MainWrapperState extends State<MainWrapper> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppAssetLinks.bookNavBarActiveSvg,
+            QuikAssetConstants.bookNavBarActiveSvg,
           ),
-          AppSizing.hS2(),
+          QuikSpacing.hS2(),
           Text("Book", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
       icon: SvgPicture.asset(
-        AppAssetLinks.bookNavBarSvg,
+        QuikAssetConstants.bookNavBarSvg,
       ),
       label: 'Bookmark',
     ),
@@ -94,14 +94,14 @@ class _MainWrapperState extends State<MainWrapper> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppAssetLinks.settingsActiveSvg,
+            QuikAssetConstants.settingsActiveSvg,
           ),
-          AppSizing.hS2(),
+          QuikSpacing.hS2(),
           Text("Settings", style: ThemeData.dark().textTheme.bodyLarge),
         ],
       ),
       icon: SvgPicture.asset(
-        AppAssetLinks.settingsSvg,
+        QuikAssetConstants.settingsSvg,
       ),
       label: 'Settings',
     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 
 class QuikSearchBar extends StatefulWidget {
@@ -66,7 +66,7 @@ class _QuikSearchBarState extends State<QuikSearchBar> {
                 child: VerticalDivider(color: textInputIconColor),
               ),
               ClickableSvgIcon(
-                  svgAsset: AppAssetLinks.searchMicSvg,
+                  svgAsset: QuikAssetConstants.searchMicSvg,
                   onTap: widget.onMicPressed)
             ],
           ),

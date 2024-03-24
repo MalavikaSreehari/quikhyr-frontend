@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -26,13 +26,11 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: 'Q',
-                        style: TextStyle(
-                            fontFamily: 'Moonhouse', fontSize: 32),
+                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
                       ),
                       TextSpan(
                         text: 'uik',
-                        style: TextStyle(
-                            fontFamily: 'Moonhouse', fontSize: 24),
+                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
                       ),
                       TextSpan(
                         text: 'Settings',
@@ -48,17 +46,17 @@ class SettingsScreen extends StatelessWidget {
             ),
             actions: [
               ClickableSvgIcon(
-                  svgAsset: AppAssetLinks.bellNotificationActiveSvg,
+                  svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
                   onTap: () {
                     //HANDLE GO TO NOTIFICATIONS
                   }),
-              AppSizing.hS10(),
+              QuikSpacing.hS10(),
               ClickableSvgIcon(
-                  svgAsset: AppAssetLinks.logoutSvg,
+                  svgAsset: QuikAssetConstants.logoutSvg,
                   onTap: () {
                     // context.read<SignInBloc>().add(const SignOutRequired());
                   }),
-              AppSizing.hS24(),
+              QuikSpacing.hS24(),
             ],
           ),
         ),

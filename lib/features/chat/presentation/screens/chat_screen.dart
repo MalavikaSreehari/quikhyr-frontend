@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
@@ -20,8 +20,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
-        Provider.of<FirebaseProvider>(context, listen: false)
-        .getAllWorkers();
+    Provider.of<FirebaseProvider>(context, listen: false).getAllWorkers();
     super.initState();
   }
 
@@ -71,15 +70,15 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               actions: [
                 ClickableSvgIcon(
-                    svgAsset: AppAssetLinks.bellNotificationActiveSvg,
+                    svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
                     onTap: () {}),
-                AppSizing.hS10(),
+                QuikSpacing.hS10(),
                 ClickableSvgIcon(
-                    svgAsset: AppAssetLinks.logoutSvg,
+                    svgAsset: QuikAssetConstants.logoutSvg,
                     onTap: () {
                       // context.read<SignInBloc>().add(const SignOutRequired());
                     }),
-                AppSizing.hS24(),
+                QuikSpacing.hS24(),
               ],
             ),
           ),
@@ -96,7 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 onSearch: (String onSearch) {}, // Default onSearch function
                 controller: TextEditingController(), // Default controller
               ),
-              AppSizing.vS24(),
+              QuikSpacing.vS24(),
               Expanded(
                   child: ListView.separated(
                 separatorBuilder: (context, index) => const GradientSeparator(),

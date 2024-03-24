@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// A class that provides static methods to create [SizedBox] widgets with predefined heights and widths.
-class AppSizing {
+class QuikSpacing {
   /// Creates a vertical [SizedBox] with the given [height].
   static SizedBox vS(double height) {
     return SizedBox(height: height);
@@ -46,22 +46,27 @@ class AppSizing {
   static SizedBox vS30() {
     return const SizedBox(height: 30);
   }
+
   /// Creates a vertical [SizedBox] with a height of 32.
   static SizedBox vS32() {
     return const SizedBox(height: 32);
   }
+
   /// Creates a vertical [SizedBox] with a height of 48.
   static SizedBox vS48() {
     return const SizedBox(height: 48);
   }
+
   /// Creates a horizontal [SizedBox] with the given [width].
   static SizedBox hS(double width) {
     return SizedBox(width: width);
   }
+
   /// Creates a horizontal [SizedBox] with a width of 2.
   static SizedBox hS2() {
     return const SizedBox(width: 2);
   }
+
   /// Creates a horizontal [SizedBox] with a width of 4.
   static SizedBox hS4() {
     return const SizedBox(width: 4);

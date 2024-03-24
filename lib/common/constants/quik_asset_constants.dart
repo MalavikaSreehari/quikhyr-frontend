@@ -1,4 +1,4 @@
-class AppAssetLinks {
+class QuikAssetConstants {
   static const String placeholderImage =
       "https://firebasestorage.googleapis.com/v0/b/quikhyr-app.appspot.com/o/assets%2Favatar_placeholder.png?alt=media&token=6f22f53a-d775-4691-b1ba-1fa31e6cf1ec";
   static const String rightArrowSvg = 'assets/icons/right_arrow.svg';
@@ -42,5 +42,4 @@ class AppAssetLinks {
   static const String dropDownArrowSvg = 'assets/icons/drop_down_arrow.svg';
   static const String callingSvg = 'assets/icons/calling.svg';
   static const String cameraSvg = 'assets/icons/camera.svg';
-
 }

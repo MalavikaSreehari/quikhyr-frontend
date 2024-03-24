@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/models/chat_message_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

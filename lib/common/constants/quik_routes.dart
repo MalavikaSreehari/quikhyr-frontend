@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 
-class Routes {
+class QuikRoutes {
   static const root = '/';
   static const homeNamedPagePath = '/home';
   static const homeDetailsNamedPagePath = 'details';
@@ -28,6 +28,6 @@ class Routes {
   static const signUpNamePageName = 'signupName';
   static const settingsNamedPageName = 'settingsName';
 
-
-    static Widget errorWidget(BuildContext context, GoRouterState state) => const NotFoundScreen();
+  static Widget errorWidget(BuildContext context, GoRouterState state) =>
+      const NotFoundScreen();
 }

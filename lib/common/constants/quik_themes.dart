@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
 
 class AppTheme {
   static ThemeData appTheme = ThemeData(

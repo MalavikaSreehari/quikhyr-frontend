@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
-import 'package:quikhyr/common/constants/app_theme.dart';
-
+import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
+import 'package:quikhyr/common/constants/quik_themes.dart';
 
 class HomeDetailScreen extends StatelessWidget {
   // final ServiceCategoryModel serviceModel;
@@ -49,7 +48,7 @@ class HomeDetailScreen extends StatelessWidget {
                   //     //   // serviceModel.iconPath,
                   //     // )),
                   //     ,
-                  AppSizing.hS12(),
+                  QuikSpacing.hS12(),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +57,7 @@ class HomeDetailScreen extends StatelessWidget {
                           // serviceModel.title,
                           service,
                           style: Theme.of(context).textTheme.titleLarge),
-                      AppSizing.vS8(),
+                      QuikSpacing.vS8(),
                       const Text("Service", style: chatSubTitle),
                     ],
                   )

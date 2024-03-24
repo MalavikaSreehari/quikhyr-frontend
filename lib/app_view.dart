@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/app_theme.dart';
+import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/routes/router.dart';
 
 class MyAppView extends StatelessWidget {

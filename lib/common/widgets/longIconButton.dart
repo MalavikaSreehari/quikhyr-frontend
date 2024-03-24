@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
 
 class LongIconButton extends StatelessWidget {
   final String text;
@@ -27,7 +27,8 @@ class LongIconButton extends StatelessWidget {
       height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.primary,
+          backgroundColor:
+              backgroundColor ?? Theme.of(context).colorScheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -36,15 +37,17 @@ class LongIconButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              text,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: foregroundColor ?? Theme.of(context).colorScheme.onPrimary,)
-            ),
+            Text(text,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: foregroundColor ??
+                          Theme.of(context).colorScheme.onPrimary,
+                    )),
             if (svgPath != null) ...[
-              AppSizing.hS6(),
+              QuikSpacing.hS6(),
               SvgPicture.asset(
-                colorFilter: ColorFilter.mode(foregroundColor ?? Theme.of(context).colorScheme.onPrimary, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                    foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
+                    BlendMode.srcIn),
                 svgPath!,
                 height: 14,
                 width: 14,

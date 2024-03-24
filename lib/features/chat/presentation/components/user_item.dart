@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_routes.dart';
-import 'package:quikhyr/common/constants/app_theme.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_routes.dart';
+import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/models/worker_model.dart';
 
 class UserItem extends StatefulWidget {
@@ -29,7 +29,7 @@ class _UserItemState extends State<UserItem> {
             const Positioned.fill(
                 child: CircleAvatar(
               backgroundImage: NetworkImage(
-                AppAssetLinks.placeholderImage,
+                QuikAssetConstants.placeholderImage,
               ),
             )),
             // if (state.workers[index].isVerified)
@@ -37,13 +37,13 @@ class _UserItemState extends State<UserItem> {
               top: 0,
               right: 0,
               child: SvgPicture.asset(
-                AppAssetLinks.verifiedBlueSvg,
+                QuikAssetConstants.verifiedBlueSvg,
               ),
             ),
             Positioned(
                 bottom: 0,
                 left: 4,
-                child: SvgPicture.asset(AppAssetLinks.chatGreenBubbleSvg)),
+                child: SvgPicture.asset(QuikAssetConstants.chatGreenBubbleSvg)),
           ],
         ),
       ),
@@ -55,7 +55,8 @@ class _UserItemState extends State<UserItem> {
         style: chatTrailingActive,
       ),
       onTap: () {
-        context.pushNamed(Routes.chatConversationNamedPageName, extra: widget.worker);
+        context.pushNamed(QuikRoutes.chatConversationNamedPageName,
+            extra: widget.worker);
       },
     );
   }

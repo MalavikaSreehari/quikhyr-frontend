@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
@@ -11,9 +11,13 @@ class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
   @override
   Widget build(BuildContext context) {
-
     final List<String> _mostSearched = [
-      "Lawn Management","Cleaning","Plumbing","Auto Repair","Electricals","Tree Climber"
+      "Lawn Management",
+      "Cleaning",
+      "Plumbing",
+      "Auto Repair",
+      "Electricals",
+      "Tree Climber"
     ];
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -55,11 +59,11 @@ class ExploreScreen extends StatelessWidget {
               ),
               actions: [
                 ClickableSvgIcon(
-                    svgAsset: AppAssetLinks.filterSvg,
+                    svgAsset: QuikAssetConstants.filterSvg,
                     onTap: () {
                       //HANDLE GO TO NOTIFICATIONS
                     }),
-                AppSizing.hS24(),
+                QuikSpacing.hS24(),
               ],
             ),
           ),
@@ -77,7 +81,7 @@ class ExploreScreen extends StatelessWidget {
                   onSearch: (String value) {},
                   controller: TextEditingController(),
                 ),
-                AppSizing.vS16(),
+                QuikSpacing.vS16(),
                 BlocBuilder<FilterChipCubit, FilterChipState>(
                   builder: (context, state) {
                     return SizedBox(
@@ -181,7 +185,7 @@ class ExploreScreen extends StatelessWidget {
                     );
                   },
                 ),
-                AppSizing.vS32(),
+                QuikSpacing.vS32(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -210,7 +214,8 @@ class ExploreScreen extends StatelessWidget {
                                     ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                               trailing: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                svgAsset:
+                                    QuikAssetConstants.closeRoundedSquareSvg,
                                 onTap: () {},
                               ),
                             ),
@@ -228,7 +233,8 @@ class ExploreScreen extends StatelessWidget {
                                     ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                               trailing: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                svgAsset:
+                                    QuikAssetConstants.closeRoundedSquareSvg,
                                 onTap: () {},
                               ),
                             ),
@@ -246,7 +252,8 @@ class ExploreScreen extends StatelessWidget {
                                     ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                               trailing: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                svgAsset:
+                                    QuikAssetConstants.closeRoundedSquareSvg,
                                 onTap: () {},
                               ),
                             ),
@@ -264,18 +271,19 @@ class ExploreScreen extends StatelessWidget {
                                     ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                               trailing: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.closeRoundedSquareSvg,
+                                svgAsset:
+                                    QuikAssetConstants.closeRoundedSquareSvg,
                                 onTap: () {},
                               ),
                             )
                           ]),
                     ),
-                    AppSizing.vS24(),
+                    QuikSpacing.vS24(),
                     Text(
                       "Most Searched",
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    AppSizing.vS24(),
+                    QuikSpacing.vS24(),
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),

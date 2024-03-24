@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/app_routes.dart';
+import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
@@ -35,7 +35,7 @@ class AppRouter {
   static final _shellNavigatorSettingsKey =
       GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
   static final GoRouter _router = GoRouter(
-    initialLocation: Routes.homeNamedPagePath,
+    initialLocation: QuikRoutes.homeNamedPagePath,
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     routes: [
@@ -73,8 +73,8 @@ class AppRouter {
                 navigatorKey: _shellNavigatorHomeKey,
                 routes: <RouteBase>[
                   GoRoute(
-                    path: Routes.homeNamedPagePath,
-                    name: Routes.homeNamedPageName,
+                    path: QuikRoutes.homeNamedPagePath,
+                    name: QuikRoutes.homeNamedPageName,
                     pageBuilder: (context, state) {
                       context
                           .read<ServicesCategoryBloc>()
@@ -87,8 +87,8 @@ class AppRouter {
                     routes: [
                       GoRoute(
                         path:
-                            '${Routes.homeDetailsFromSearchNamedPagePath}/:service/:subService',
-                        name: Routes.homeDetailsFromSearchNamedPageName,
+                            '${QuikRoutes.homeDetailsFromSearchNamedPagePath}/:service/:subService',
+                        name: QuikRoutes.homeDetailsFromSearchNamedPageName,
                         //navigation is done through routes so please make sure to supply a name
 
                         pageBuilder: (context, state) {
@@ -119,8 +119,8 @@ class AppRouter {
                         },
                       ),
                       GoRoute(
-                        path: '${Routes.homeDetailsNamedPagePath}/:service',
-                        name: Routes.homeDetailsNamedPageName,
+                        path: '${QuikRoutes.homeDetailsNamedPagePath}/:service',
+                        name: QuikRoutes.homeDetailsNamedPageName,
                         //navigation is done through routes so please make sure to supply a name
 
                         pageBuilder: (context, state) {
@@ -154,8 +154,8 @@ class AppRouter {
               navigatorKey: _shellNavigatorExploreKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.exploreNamedPagePath,
-                  name: Routes.exploreNamedPageName,
+                  path: QuikRoutes.exploreNamedPagePath,
+                  name: QuikRoutes.exploreNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     //ADD FILTERCHIP PROVIDER TO TRY OUT NOT PUTTING ALL BLOCS IN MAIN FILE
                     child: BlocProvider(
@@ -172,26 +172,26 @@ class AppRouter {
               navigatorKey: _shellNavigatorChatKey,
               routes: <RouteBase>[
                 GoRoute(
-                    path: Routes.chatNamedPagePath,
-                    name: Routes.chatNamedPageName,
+                    path: QuikRoutes.chatNamedPagePath,
+                    name: QuikRoutes.chatNamedPageName,
                     pageBuilder: (context, state) {
                       // final WorkerModel worker =
                       //     state.extra as WorkerModel;
                       //!? I guess not needed above 2 lines
-return NoTransitionPage(
-                          child: ChatScreen(key: state.pageKey),
-                       
-
-                        );
-                    } ,
+                      return NoTransitionPage(
+                        child: ChatScreen(key: state.pageKey),
+                      );
+                    },
                     routes: [
                       GoRoute(
-                        path: Routes.chatConversationNamedPagePath,
-                        name: Routes.chatConversationNamedPageName,
+                        path: QuikRoutes.chatConversationNamedPagePath,
+                        name: QuikRoutes.chatConversationNamedPageName,
                         pageBuilder: (context, state) =>
                             CustomTransitionPage<void>(
                           // key: state.pageKey,
-                          child: ChatConversationScreen(worker: state.extra as WorkerModel,),
+                          child: ChatConversationScreen(
+                            worker: state.extra as WorkerModel,
+                          ),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) =>
                                   SlideTransition(
@@ -211,8 +211,8 @@ return NoTransitionPage(
               navigatorKey: _shellNavigatorBookKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.bookNamedPagePath,
-                  name: Routes.bookNamedPageName,
+                  path: QuikRoutes.bookNamedPagePath,
+                  name: QuikRoutes.bookNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: BookingScreen(key: state.pageKey),
                   ),
@@ -223,8 +223,8 @@ return NoTransitionPage(
               navigatorKey: _shellNavigatorSettingsKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: Routes.settingsNamedPagePath,
-                  name: Routes.settingsNamedPageName,
+                  path: QuikRoutes.settingsNamedPagePath,
+                  name: QuikRoutes.settingsNamedPageName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: SettingsScreen(key: state.pageKey),
                   ),

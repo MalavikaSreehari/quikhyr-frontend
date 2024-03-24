@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
 import 'package:quikhyr/features/chat/media_service.dart';
 import 'custom_text_form_field.dart';

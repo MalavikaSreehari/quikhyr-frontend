@@ -2,13 +2,17 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/models/location_model.dart';
 
 class WorkerModel extends Equatable {
   final String id;
   final String name;
-  final int? age;
+  final String fcmToken;
+  final bool isVerified;
+  final bool isActive;
+  final DateTime lastOnline;
+  final num? age;
   final bool available;
   final String avatar;
   final String email;
@@ -16,25 +20,36 @@ class WorkerModel extends Equatable {
   final LocationModel location;
   final String phone;
   final String pincode;
-  final List<String> subservices;
+  final List<String> subserviceIds;
+  final List<String> serviceIds;
+
   const WorkerModel({
+    required this.fcmToken,
+    required this.isVerified,
+    required this.isActive,
+    required this.lastOnline,
     required this.id,
     required this.name,
     this.age,
     required this.available,
-    this.avatar = AppAssetLinks.placeholderImage,
+    this.avatar = QuikAssetConstants.placeholderImage,
     required this.email,
     required this.gender,
     required this.location,
     required this.phone,
     required this.pincode,
-    required this.subservices,
+    required this.subserviceIds,
+    required this.serviceIds,
   });
 
   WorkerModel copyWith({
+    String? fcmToken,
+    bool? isVerified,
+    bool? isActive,
+    DateTime? lastOnline,
     String? id,
     String? name,
-    int? age,
+    num? age,
     bool? available,
     String? avatar,
     String? email,
@@ -42,7 +57,8 @@ class WorkerModel extends Equatable {
     LocationModel? location,
     String? phone,
     String? pincode,
-    List<String>? subservices,
+    List<String>? subserviceIds,
+    List<String>? serviceIds,
   }) {
     return WorkerModel(
       id: id ?? this.id,
@@ -55,13 +71,22 @@ class WorkerModel extends Equatable {
       location: location ?? this.location,
       phone: phone ?? this.phone,
       pincode: pincode ?? this.pincode,
-      subservices: subservices ?? this.subservices,
+      subserviceIds: subserviceIds ?? this.subserviceIds,
+      serviceIds: serviceIds ?? this.serviceIds,
+      fcmToken: fcmToken ?? this.fcmToken,
+      isVerified: isVerified ?? this.isVerified,
+      isActive: isActive ?? this.isActive,
+      lastOnline: lastOnline ?? this.lastOnline,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'fcmToken': fcmToken,
+      'isVerified': isVerified,
+      'isActive': isActive,
+      'lastOnline': lastOnline.toIso8601String(),
       'name': name,
       'age': age,
       'available': available,
@@ -71,15 +96,25 @@ class WorkerModel extends Equatable {
       'location': location.toMap(),
       'phone': phone,
       'pincode': pincode,
-      'subservices': subservices,
+      'subserviceIds': subserviceIds,
+      'serviceIds': serviceIds,
     };
   }
 
   factory WorkerModel.fromMap(Map<String, dynamic> map) {
     return WorkerModel(
+      fcmToken: map['fcmToken'] as String,
+      isVerified: map['isVerified'] as bool,
+      isActive: map['isActive'] as bool,
+      lastOnline: DateTime.fromMillisecondsSinceEpoch(
+        ((map['lastOnline'] as Map<String, dynamic>)['_seconds'] * 1000 +
+                (map['lastOnline'] as Map<String, dynamic>)['_nanoseconds'] /
+                    1000000)
+            .round(),
+      ),
       id: map['id'] as String,
       name: map['name'] as String,
-      age: map['age'] != null ? map['age'] as int : null,
+      age: map['age'] as num,
       available: map['available'] as bool,
       avatar: map['avatar'] as String,
       email: map['email'] as String,
@@ -87,7 +122,10 @@ class WorkerModel extends Equatable {
       location: LocationModel.fromMap(map['location'] as Map<String, dynamic>),
       phone: map['phone'] as String,
       pincode: map['pincode'] as String,
-subservices: (map['subservices'] as List).map((item) => item as String).toList(),
+      subserviceIds:
+          (map['subserviceIds'] as List).map((item) => item as String).toList(),
+      serviceIds:
+          (map['serviceIds'] as List).map((item) => item as String).toList(),
     );
   }
 
@@ -95,11 +133,6 @@ subservices: (map['subservices'] as List).map((item) => item as String).toList()
 
   factory WorkerModel.fromJson(String source) =>
       WorkerModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'WorkerModel{id: $id, name: $name, age: $age, available: $available, avatar: $avatar, email: $email, gender: $gender, location: $location, phone: $phone, pincode: $pincode, subservices: $subservices}';
-  }
 
   @override
   bool get stringify => true;
@@ -117,7 +150,12 @@ subservices: (map['subservices'] as List).map((item) => item as String).toList()
       location,
       phone,
       pincode,
-      subservices,
+      subserviceIds,
+      serviceIds,
+      fcmToken,
+      isVerified,
+      isActive,
+      lastOnline,
     ];
   }
 }

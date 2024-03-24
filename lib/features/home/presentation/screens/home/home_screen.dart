@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_colors.dart';
-import 'package:quikhyr/common/constants/app_routes.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
-import 'package:quikhyr/common/constants/app_theme.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_routes.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
+import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 import 'package:quikhyr/common/widgets/rating_star_worker.dart';
@@ -61,17 +61,17 @@ class HomeScreen extends StatelessWidget {
             ),
             actions: [
               ClickableSvgIcon(
-                  svgAsset: AppAssetLinks.bellNotificationActiveSvg,
+                  svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
                   onTap: () {
                     //HANDLE GO TO NOTIFICATIONS
                   }),
-              AppSizing.hS10(),
+              QuikSpacing.hS10(),
               ClickableSvgIcon(
-                  svgAsset: AppAssetLinks.logoutSvg,
+                  svgAsset: QuikAssetConstants.logoutSvg,
                   onTap: () {
                     context.read<SignInBloc>().add(const SignOutRequired());
                   }),
-              AppSizing.hS24(),
+              QuikSpacing.hS24(),
             ],
           ),
         ),
@@ -103,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                       onMicPressed: () {},
                       onSearch: (String query) {},
                       controller: TextEditingController()),
-                  AppSizing.vS4(),
+                  QuikSpacing.vS4(),
                   BlocBuilder<SearchBloc, SearchState>(
                     builder: (context, state) {
                       if (state is SearchLoading) {
@@ -130,11 +130,11 @@ class HomeScreen extends StatelessWidget {
                                     //!! JANKY CODE, MAY BREAK, NEED TO USE BETTER LOGIC OR ENUMS
                                     if (subService == "") {
                                       context.pushNamed(
-                                          Routes.homeDetailsNamedPageName,
+                                          QuikRoutes.homeDetailsNamedPageName,
                                           pathParameters: {'service': service});
                                     } else {
                                       context.pushNamed(
-                                          Routes
+                                          QuikRoutes
                                               .homeDetailsFromSearchNamedPageName,
                                           pathParameters: {
                                             'service': service,
@@ -189,12 +189,12 @@ class HomeScreen extends StatelessWidget {
                     },
                   ),
 
-                  AppSizing.vS16(),
+                  QuikSpacing.vS16(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(AppAssetLinks.locationFilledSvg),
-                      AppSizing.hS6(),
+                      SvgPicture.asset(QuikAssetConstants.locationFilledSvg),
+                      QuikSpacing.hS6(),
                       Text(
                         "Irinjalakuda",
                         style: Theme.of(context)
@@ -203,7 +203,7 @@ class HomeScreen extends StatelessWidget {
                             ?.copyWith(fontWeight: FontWeight.w700),
                       ),
                       ClickableSvgIcon(
-                          svgAsset: AppAssetLinks.dropDownArrowSvg,
+                          svgAsset: QuikAssetConstants.dropDownArrowSvg,
                           height: 18,
                           width: 18,
                           onTap: () {}),
@@ -255,7 +255,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                AppSizing.vS16(),
+                QuikSpacing.vS16(),
                 Container(
                   width: 40,
                   height: 2,
@@ -265,7 +265,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: AppSizing.vS30(),
+            child: QuikSpacing.vS30(),
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -287,7 +287,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: AppSizing.vS24(),
+            child: QuikSpacing.vS24(),
           ),
 
           SliverPadding(
@@ -307,7 +307,7 @@ class HomeScreen extends StatelessWidget {
                         (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          context.pushNamed(Routes.homeDetailsNamedPageName,
+                          context.pushNamed(QuikRoutes.homeDetailsNamedPageName,
                               pathParameters: {
                                 'service': state.servicesCategory[index].title,
                               });
@@ -325,7 +325,7 @@ class HomeScreen extends StatelessWidget {
                                   state.servicesCategory[index].iconPath,
                                   height: 24,
                                 )),
-                            AppSizing.vS8(),
+                            QuikSpacing.vS8(),
                             Text(
                               state.servicesCategory[index].title,
                               overflow: TextOverflow.ellipsis,
@@ -358,7 +358,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: AppSizing.vS48(),
+            child: QuikSpacing.vS48(),
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -380,7 +380,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: AppSizing.vS24(),
+            child: QuikSpacing.vS24(),
           ),
           SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -402,10 +402,10 @@ class HomeScreen extends StatelessWidget {
                           height: 64,
                           width: 64,
                           child: SvgPicture.asset(
-                            AppAssetLinks.cleaningSvg,
+                            QuikAssetConstants.cleaningSvg,
                             height: 24,
                           )),
-                      AppSizing.vS8(),
+                      QuikSpacing.vS8(),
                       Text(
                         "Plumbing",
                         overflow: TextOverflow.ellipsis,
@@ -430,13 +430,13 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      AppSizing.vS8(),
+                      QuikSpacing.vS8(),
                       Text(
                         "Henry Kal",
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
-                      AppSizing.vS4(),
+                      QuikSpacing.vS4(),
                       Text(
                         "Electrician",
                         // overflow: TextOverflow.ellipsis,
@@ -454,10 +454,10 @@ class HomeScreen extends StatelessWidget {
                           height: 64,
                           width: 64,
                           child: SvgPicture.asset(
-                            AppAssetLinks.lawnMangementSvg,
+                            QuikAssetConstants.lawnMangementSvg,
                             height: 24,
                           )),
-                      AppSizing.vS8(),
+                      QuikSpacing.vS8(),
                       Text(
                         "Lawn Management",
                         overflow: TextOverflow.ellipsis,
@@ -468,7 +468,7 @@ class HomeScreen extends StatelessWidget {
                 ]),
               )),
           SliverToBoxAdapter(
-            child: AppSizing.vS48(),
+            child: QuikSpacing.vS48(),
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -490,7 +490,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: AppSizing.vS24(),
+            child: QuikSpacing.vS24(),
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
