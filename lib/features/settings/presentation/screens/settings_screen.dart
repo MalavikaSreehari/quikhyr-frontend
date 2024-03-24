@@ -79,11 +79,14 @@ class SettingsScreen extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text('PROFILE',style: Theme.of(context).textTheme.titleMedium,)),
               const SizedBox(height: 24,),
-              const Row(
+               Row(
+                
                 children: [
-                  CircleAvatar(radius: 32,),
-                  SizedBox(width: 16,),
-                  Column(
+                  const CircleAvatar(radius: 32,
+                  backgroundImage: AssetImage(AppAssetLinks.placeholderImage),
+                  ),
+                  const SizedBox(width: 16,),
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Noah Johny',style: TextStyle(
@@ -97,14 +100,15 @@ class SettingsScreen extends StatelessWidget {
 SizedBox(height: 12,),
                       Text('MEMBER',
                       style: TextStyle(
-  color: Color(0xFF0039CC), 
+  color: Color(0xFF3399CC), 
   fontFamily: 'Trap', 
   fontSize: 14, 
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w500, 
   height: 1.0, 
 ),),],),
-Text('Edit')
+const SizedBox(width: 12,),
+OutlinedButton.icon(onPressed: (){}, icon: const Icon(Icons.edit,color: secondary,), label: const Text('Edit',style: TextStyle(color: secondary,),), style: OutlinedButton.styleFrom(side: const BorderSide(color: secondary)),)
                 ],
               ),
               const SizedBox(height: 24,),
