@@ -17,7 +17,7 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Align(
-        alignment: isMe ? Alignment.topRight : Alignment.bottomRight,
+        alignment: isMe ? Alignment.topRight : Alignment.topLeft,
         child: Container(
           decoration: BoxDecoration(
             color: isMe ? primary : Colors.grey,

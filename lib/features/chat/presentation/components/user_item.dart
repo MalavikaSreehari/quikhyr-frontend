@@ -49,7 +49,7 @@ class _UserItemState extends State<UserItem> {
       ),
       title: Text(widget.worker.name,
           style: Theme.of(context).textTheme.headlineSmall),
-      subtitle: const Text("Will meet you tomorrow.", style: chatSubTitle),
+      subtitle: Text(widget.worker.id, style: chatSubTitle),
       trailing: const Text(
         "7:04 pm",
         style: chatTrailingActive,
