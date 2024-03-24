@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/models/location_model.dart';
@@ -11,7 +12,6 @@ class ClientModel extends Equatable {
   final String fcmToken;
   final bool isVerified;
   final bool isActive;
-  final DateTime lastOnline;
   final num? age;
   final String avatar;
   final String email;
@@ -24,7 +24,6 @@ class ClientModel extends Equatable {
     required this.fcmToken,
     required this.isVerified,
     required this.isActive,
-    required this.lastOnline,
     required this.id,
     required this.name,
     this.age,
@@ -40,7 +39,6 @@ class ClientModel extends Equatable {
     String? fcmToken,
     bool? isVerified,
     bool? isActive,
-    DateTime? lastOnline,
     String? id,
     String? name,
     num? age,
@@ -64,7 +62,6 @@ class ClientModel extends Equatable {
       fcmToken: fcmToken ?? this.fcmToken,
       isVerified: isVerified ?? this.isVerified,
       isActive: isActive ?? this.isActive,
-      lastOnline: lastOnline ?? this.lastOnline,
     );
   }
 
@@ -74,7 +71,6 @@ class ClientModel extends Equatable {
       'fcmToken': fcmToken,
       'isVerified': isVerified,
       'isActive': isActive,
-      'lastOnline': lastOnline.toIso8601String(),
       'name': name,
       'age': age,
       'avatar': avatar,
@@ -86,28 +82,24 @@ class ClientModel extends Equatable {
     };
   }
 
-  factory ClientModel.fromMap(Map<String, dynamic> map) {
-    return ClientModel(
-      fcmToken: map['fcmToken'] as String,
-      isVerified: map['isVerified'] as bool,
-      isActive: map['isActive'] as bool,
-      lastOnline: DateTime.fromMillisecondsSinceEpoch(
-        ((map['lastOnline'] as Map<String, dynamic>)['_seconds'] * 1000 +
-                (map['lastOnline'] as Map<String, dynamic>)['_nanoseconds'] /
-                    1000000)
-            .round(),
-      ),
-      id: map['id'] as String,
-      name: map['name'] as String,
-      age: map['age'] as num,
-      avatar: map['avatar'] as String,
-      email: map['email'] as String,
-      gender: map['gender'] as String,
-      location: LocationModel.fromMap(map['location'] as Map<String, dynamic>),
-      phone: map['phone'] as String,
-      pincode: map['pincode'] as String,
-    );
-  }
+factory ClientModel.fromMap(Map<String, dynamic> map) {
+
+
+  return ClientModel(
+    fcmToken: map['fcmToken'] as String,
+    isVerified: map['isVerified'] as bool,
+    isActive: map['isActive'] as bool,
+    id: map['id'] as String,
+    name: map['name'] as String,
+    age: map['age'] as num,
+    avatar: map['avatar'] as String,
+    email: map['email'] as String,
+    gender: map['gender'] as String,
+    location: LocationModel.fromMap(map['location'] as Map<String, dynamic>),
+    phone: map['phone'] as String,
+    pincode: map['pincode'] as String,
+  );
+}
 
   String toJson() => json.encode(toMap());
 
@@ -133,7 +125,6 @@ class ClientModel extends Equatable {
       fcmToken,
       isVerified,
       isActive,
-      lastOnline,
     ];
   }
 }
