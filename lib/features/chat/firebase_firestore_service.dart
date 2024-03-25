@@ -61,6 +61,9 @@ class FirebaseFirestoreService {
   static Future<void> _addMessageToChat(
     String receiverId,
     ChatMessageModel message,
+
+    //!!Remove the 2nd await firestore if unnecessary amounts of chats are being added to 
+    //!!Wrong receiver
   ) async {
     await firestore
         .collection('clients')
@@ -71,6 +74,13 @@ class FirebaseFirestoreService {
         .add(message.toJson());
 
     await firestore
+        .collection('clients')
+        .doc(receiverId)
+        .collection('chat')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('messages')
+        .add(message.toJson());
+    await firestore
         .collection('workers')
         .doc(receiverId)
         .collection('chat')
@@ -79,22 +89,18 @@ class FirebaseFirestoreService {
         .add(message.toJson());
   }
 
-  static Future<void> updateUserData(
-          Map<String, dynamic> data) async =>
+  static Future<void> updateUserData(Map<String, dynamic> data) async =>
       await firestore
           .collection('workers')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update(data);
 
-  static Future<List<WorkerModel>> searchUser(
-      String name) async {
+  static Future<List<WorkerModel>> searchUser(String name) async {
     final snapshot = await FirebaseFirestore.instance
         .collection('workers')
         .where("name", isGreaterThanOrEqualTo: name)
         .get();
 
-    return snapshot.docs
-        .map((doc) => WorkerModel.fromMap(doc.data()))
-        .toList();
+    return snapshot.docs.map((doc) => WorkerModel.fromMap(doc.data())).toList();
   }
 }

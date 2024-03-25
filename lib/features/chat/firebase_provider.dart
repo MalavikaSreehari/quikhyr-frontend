@@ -3,36 +3,44 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
 import 'package:quikhyr/models/chat_message_model.dart';
-import 'package:quikhyr/models/worker_model.dart';
+import 'package:quikhyr/models/client_model.dart';
 
 class FirebaseProvider extends ChangeNotifier {
   ScrollController scrollController = ScrollController();
 
-  List<WorkerModel> users = [];
-  WorkerModel? user;
+  List<ClientModel> users = [];
+  ClientModel? user;
   List<ChatMessageModel> messages = [];
-  List<WorkerModel> search = [];
+  List<ClientModel> search = [];
 
-  List<WorkerModel> getAllWorkers() {
-    FirebaseFirestore.instance
-        .collection('workers')
-        .snapshots(includeMetadataChanges: true)
-        .listen((users) {
-      this.users = users.docs
-          .map((doc) => WorkerModel.fromMap(doc.data()))
-          .toList();
-      notifyListeners();
-    });
+  Future<List<ClientModel>> getAllWorkers() async {
+    var workersCollection = FirebaseFirestore.instance.collection('workers');
+    var clientsCollection = FirebaseFirestore.instance.collection('clients');
+
+    var workersSnapshot = await workersCollection.get();
+    var clientsSnapshot = await clientsCollection.get();
+
+    var workers = workersSnapshot.docs
+        .map((doc) => ClientModel.fromMap(doc.data()))
+        .toList();
+
+    var clients = clientsSnapshot.docs
+        .map((doc) => ClientModel.fromMap(doc.data()))
+        .toList();
+
+    users = [...workers, ...clients];
+    notifyListeners();
+
     return users;
   }
 
-  WorkerModel? getWorkerById(String userId) {
+  ClientModel? getWorkerById(String userId) {
     FirebaseFirestore.instance
         .collection('workers')
         .doc(userId)
         .snapshots(includeMetadataChanges: true)
         .listen((user) {
-      this.user = WorkerModel.fromMap(user.data()!);
+      this.user = ClientModel.fromMap(user.data()!);
       notifyListeners();
     });
     return user;
@@ -58,17 +66,15 @@ class FirebaseProvider extends ChangeNotifier {
     return messages;
   }
 
-  void scrollDown() =>
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+  void scrollDown() => WidgetsBinding.instance.addPostFrameCallback((_) {
         if (scrollController.hasClients) {
-          scrollController.jumpTo(
-              scrollController.position.maxScrollExtent);
+          scrollController.jumpTo(scrollController.position.maxScrollExtent);
         }
       });
 
-  Future<void> searchUser(String name) async {
-    search =
-        await FirebaseFirestoreService.searchUser(name);
-    notifyListeners();
-  }
+  // Future<void> searchUser(String name) async {
+  //   search =
+  //       await FirebaseFirestoreService.searchUser(name);
+  //   notifyListeners();
+  // }
 }

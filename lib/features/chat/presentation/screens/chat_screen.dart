@@ -100,15 +100,19 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: ListView.separated(
                 separatorBuilder: (context, index) => const GradientSeparator(),
                 itemBuilder: (context, index) {
-                  return value.users[index].id !=
-                          FirebaseAuth.instance.currentUser?.uid
-                      ? UserItem(
-                          worker: value.users.elementAt(index),
-                        )
-                      : const SizedBox();
+                  var users = value.users
+                      .where((user) =>
+                          user.id != FirebaseAuth.instance.currentUser?.uid)
+                      .toList();
+                  return UserItem(
+                    worker: users[index],
+                  );
                 },
-                itemCount: value.users.length,
-              )),
+                itemCount: value.users
+                    .where((user) =>
+                        user.id != FirebaseAuth.instance.currentUser?.uid)
+                    .length,
+              ))
 
               // Expanded(
               //   child: ListView(

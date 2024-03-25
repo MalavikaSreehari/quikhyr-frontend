@@ -1,9 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/widgets/longIconButton.dart';
 import 'package:quikhyr/features/auth/presentation/components/my_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:quikhyr/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:quikhyr/models/location_model.dart';
 import 'package:quikhyr/models/client_model.dart';
 import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
@@ -80,7 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               longitude: 76.210751,
             ),
             pincode: _pincodeController.text.trim(),
-            fcmToken: "testWorker1fcmToken", isVerified: false, isActive: false, lastOnline: DateTime(2000, 1, 1),
+            fcmToken: "testWorker1fcmToken", isVerified: false, isActive: false,
           );
           context.read<SignUpBloc>().add(
               SignUpRequired(user: user, password: _passwordController.text));
@@ -459,20 +462,21 @@ class Pages extends StatelessWidget {
                     height: 20.0,
                   ),
                   RichText(
-                    text: TextSpan(
-                      text: "Already have an account?",
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      children: [
-                        TextSpan(
-                          text: " Log in ",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.w700),
-                        ),
-                      ],
+                      text: TextSpan(
+                        text: "Already have an account?",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        children: [
+                          TextSpan(
+                            text: " Log in ",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                  
                 ],
               ),
             ],
