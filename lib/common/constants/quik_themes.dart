@@ -133,10 +133,28 @@ const TextStyle chatTrailingInactive = TextStyle(
 
 //same as above but with different color
 const TextStyle availabilityTextStyle = TextStyle(
-  color: quikHyrBlue,
+  color: quikHyrGreen,
   fontFamily: 'Trap',
   fontSize: 12.0,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
   height: 1.0,
+);
+const TextStyle serviceImageOverlayTextStyle = TextStyle(
+  color: quikHyrSilverGradient,
+  fontFamily: 'Trap',
+  fontSize: 20.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w800,
+  height: 1.0,
+);
+
+const TextStyle descriptionTextStyle = TextStyle(
+  color: placeHolderText,
+  letterSpacing: 0.5,
+  fontFamily: 'Trap',
+  fontSize: 12.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w400,
+  height: 1.28,
 );

@@ -21,7 +21,10 @@ class QuikSpacing {
   static SizedBox vS8() {
     return const SizedBox(height: 8);
   }
-
+  /// Creates a vertical [SizedBox] with a height of 10.
+  static SizedBox vS10() {
+    return const SizedBox(height: 10);
+  }
   /// Creates a vertical [SizedBox] with a height of 12.
   static SizedBox vS12() {
     return const SizedBox(height: 12);

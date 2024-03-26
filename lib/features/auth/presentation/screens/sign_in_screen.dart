@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/widgets/longIconButton.dart';
+import 'package:quikhyr/common/widgets/long_icon_button.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

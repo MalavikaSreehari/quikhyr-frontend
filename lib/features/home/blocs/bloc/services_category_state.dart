@@ -10,11 +10,11 @@ sealed class ServicesState extends Equatable {
 final class ServicesLoading extends ServicesState {}
 
 final class ServicesLoaded extends ServicesState {
-  final List<ServiceModel> servicesCategory;
-  const ServicesLoaded(this.servicesCategory);
+  final List<ServiceModel> services;
+  const ServicesLoaded(this.services);
 
   @override
-  List<Object> get props => [servicesCategory];
+  List<Object> get props => [services];
 }
 
 final class ServicesError extends ServicesState {

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 const Color background = Color(0xFF000307);
 const Color onBackground = Color(0xFFFFFFFF);
+//Text(Light) is equal to primary
 const Color primary = Color(0xFF297AA3);
 const Color onPrimary = Color(0xFFFFFFFF);
 const Color secondary = Color(0xFFFAFFFF);
@@ -25,5 +26,7 @@ const Color quikHyrNotificationGreen = Color(0xff6ec531);
 const Color quikHyrNotificationGrey = Color(0xffc0c0c0);
 
 const Color quikHyrBlue = Color(0xff3399cc);
+const Color quikHyrGreen = Color(0xff6ec531);
+const Color quikHyrSilverGradient = Color(0xffbababa);
 const Color placeHolderText = Color(0xffa0a4a6);
 const Color buttonDark = Color(0xff297aa3);

@@ -144,7 +144,7 @@ class AppRouter {
                                 );
                               },
                               child: HomeDetailScreen(
-                                // serviceModel: serviceModel,
+                                serviceModel: state.extra as ServiceModel?,
                                 key: state.pageKey, service: service,
                               ));
                         },

@@ -148,22 +148,22 @@ class HomeScreen extends StatelessWidget {
                                     leading: Text(tags,
                                         style: chatSubTitle.copyWith(
                                             color: secondary)),
-                                    // trailing: Row(
-                                    //   mainAxisSize: MainAxisSize.min,
-                                    //   children: [
-                                    //     Text(subService,
-                                    //         style: chatSubTitle.copyWith(
-                                    //             color: secondary)),
-                                    //     const SizedBox(
-                                    //       height: 24,
-                                    //       child: VerticalDivider(
-                                    //           color: textInputIconColor),
-                                    //     ),
-                                    //     Text(service,
-                                    //         style: chatSubTitle.copyWith(
-                                    //             color: secondary)),
-                                    //   ],
-                                    // ),
+                                    trailing: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(subService,
+                                            style: chatSubTitle.copyWith(
+                                                color: secondary)),
+                                        const SizedBox(
+                                          height: 24,
+                                          child: VerticalDivider(
+                                              color: textInputIconColor),
+                                        ),
+                                        Text(service,
+                                            style: chatSubTitle.copyWith(
+                                                color: secondary)),
+                                      ],
+                                    ),
                                     tileColor: textInputBackgroundColor,
                                     shape: RoundedRectangleBorder(
                                       // side: const BorderSide(
@@ -310,8 +310,9 @@ class HomeScreen extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           context.pushNamed(QuikRoutes.homeDetailsNamedPageName,
+                              extra: state.services[index],
                               pathParameters: {
-                                'service': state.servicesCategory[index].name,
+                                'service': state.services[index].name,
                               });
                         },
                         child: Column(
@@ -324,7 +325,7 @@ class HomeScreen extends StatelessWidget {
                               height: 64,
                               width: 64,
                               child: SvgPicture.network(
-                                state.servicesCategory[index].avatar,
+                                state.services[index].avatar,
                                 height: 24,
                                 placeholderBuilder: (BuildContext context) =>
                                     Shimmer.fromColors(
@@ -335,14 +336,14 @@ class HomeScreen extends StatelessWidget {
                             ),
                             QuikSpacing.vS8(),
                             Text(
-                              state.servicesCategory[index].name,
+                              state.services[index].name,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.labelLarge,
                             )
                           ],
                         ),
                       );
-                    }, childCount: state.servicesCategory.length),
+                    }, childCount: state.services.length),
                   );
                 } else if (state is ServicesLoading) {
                   return const SliverToBoxAdapter(
