@@ -109,11 +109,11 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (Navigator.canPop(context)) {
-        Navigator.pop(context);
-      }
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (Navigator.canPop(context)) {
+    //     Navigator.pop(context);
+    //   }
+    // });
 
     return WillPopScope(
       onWillPop: () async {

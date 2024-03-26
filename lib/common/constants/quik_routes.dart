@@ -12,7 +12,7 @@ class QuikRoutes {
   static const chatNamedPagePath = '/chat';
   static const chatConversationNamedPagePath = 'conversation';
   static const bookNamedPagePath = '/book';
-  static const loginNamedPagePath = '/login';
+  static const loginNamedPagePath = 'login';
   static const signUpNamedPagePath = '/signup';
   static const settingsNamedPagePath = '/settings';
 

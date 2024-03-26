@@ -11,6 +11,7 @@ import 'package:quikhyr/features/chat/firebase_provider.dart';
 import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
+import 'package:quikhyr/features/home/data/data_provider/services_category_data_provider.dart';
 import 'package:quikhyr/features/home/data/repository/most_rated_workers_repo.dart';
 import 'package:quikhyr/features/home/data/repository/search_repo.dart';
 import 'package:quikhyr/features/home/data/repository/services_category_repo.dart';
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<MostRatedWorkersRepo>(
             create: (context) => MostRatedWorkersRepo()),
-        RepositoryProvider<ServicesCategoryRepo>(
-          create: (context) => ServicesCategoryRepo(),
+        RepositoryProvider<ServicesRepo>(
+          create: (context) => ServicesRepo(ServicesCategoryProvider()),
         ),
         RepositoryProvider<SearchRepo>(create: (context) => SearchRepo()),
       ],
@@ -42,12 +43,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => SignInBloc(userRepository: userRepository),
           ),
-          BlocProvider<ServicesCategoryBloc>(create: (context) {
+          BlocProvider<ServicesBloc>(create: (context) {
             final servicesCategoryRepo =
-                RepositoryProvider.of<ServicesCategoryRepo>(context);
-            return ServicesCategoryBloc(
-                servicesCategoryRepo: servicesCategoryRepo)
-              ..add(LoadServicesCategories());
+                RepositoryProvider.of<ServicesRepo>(context);
+            return ServicesBloc(servicesRepo: servicesCategoryRepo)
+              ..add(LoadServices());
           }),
           BlocProvider<MostRatedWorkersBloc>(create: (context) {
             final repo = RepositoryProvider.of<MostRatedWorkersRepo>(context);
@@ -64,11 +64,13 @@ class MyApp extends StatelessWidget {
             create: (context) {
               final clientRepo = RepositoryProvider.of<ClientRepo>(context);
               return ClientBloc(
-                  clientRepo: clientRepo, firebaseUserRepo: userRepository)..add(FetchClient());
+                  clientRepo: clientRepo, firebaseUserRepo: userRepository)
+                ..add(FetchClient());
             },
           ),
         ],
-        child: ChangeNotifierProvider(create: (_) => FirebaseProvider(),child: const MyAppView()),
+        child: ChangeNotifierProvider(
+            create: (_) => FirebaseProvider(), child: const MyAppView()),
       ),
     );
   }

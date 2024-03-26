@@ -1,10 +1,10 @@
 part of 'services_category_bloc.dart';
 
-sealed class ServicesCategoryEvent extends Equatable {
-  const ServicesCategoryEvent();
+sealed class ServicesEvent extends Equatable {
+  const ServicesEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class LoadServicesCategories extends ServicesCategoryEvent {}
+class LoadServices extends ServicesEvent {}

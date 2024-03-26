@@ -3,65 +3,71 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class ServiceCategoryModel extends Equatable {
+class ServiceModel extends Equatable {
   final String id;
-  final String title;
-  
-  final String iconPath;
-  const ServiceCategoryModel({
+  final String name;
+  final String avatar;
+  final String image;
+  final String description;
+  const ServiceModel({
     required this.id,
-    required this.title,
-    required this.iconPath,
+    required this.name,
+    required this.avatar,
+    required this.image,
+    required this.description,
   });
 
-  ServiceCategoryModel copyWith({
+  ServiceModel copyWith({
     String? id,
-    String? title,
-    String? iconPath,
+    String? name,
+    String? avatar,
+    String? image,
+    String? description,
   }) {
-    return ServiceCategoryModel(
+    return ServiceModel(
       id: id ?? this.id,
-      title: title ?? this.title,
-      iconPath: iconPath ?? this.iconPath,
+      name: name ?? this.name,
+      avatar: avatar ?? this.avatar,
+      image: image ?? this.image,
+      description: description ?? this.description,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'title': title,
-      'iconPath': iconPath,
+      'name': name,
+      'avatar': avatar,
+      'image': image,
+      'description': description,
     };
   }
 
-  factory ServiceCategoryModel.fromMap(Map<String, dynamic> map) {
-    return ServiceCategoryModel(
+  factory ServiceModel.fromMap(Map<String, dynamic> map) {
+    return ServiceModel(
       id: map['id'] as String,
-      title: map['title'] as String,
-      iconPath: map['iconPath'] as String,
+      name: map['name'] as String,
+      avatar: map['avatar'] as String,
+      image: map['image'] as String,
+      description: map['description'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory ServiceCategoryModel.fromJson(String source) => ServiceCategoryModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ServiceModel.fromJson(String source) => ServiceModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'ServiceCategoryModel(id: $id, title: $title, iconPath: $iconPath)';
+  bool get stringify => true;
 
   @override
-  bool operator ==(covariant ServiceCategoryModel other) {
-    if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.title == title &&
-      other.iconPath == iconPath;
+  List<Object> get props {
+    return [
+      id,
+      name,
+      avatar,
+      image,
+      description,
+    ];
   }
-
-  @override
-  int get hashCode => id.hashCode ^ title.hashCode ^ iconPath.hashCode;
-  
-  @override
-  List<Object?> get props => [id, title, iconPath];
 }

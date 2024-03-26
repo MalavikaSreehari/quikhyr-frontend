@@ -6,19 +6,23 @@ import 'package:quikhyr/models/service_category_model.dart';
 part 'services_category_event.dart';
 part 'services_category_state.dart';
 
-class ServicesCategoryBloc
-    extends Bloc<ServicesCategoryEvent, ServicesCategoryState> {
-      final ServicesCategoryRepo servicesCategoryRepo;
-  ServicesCategoryBloc({required this.servicesCategoryRepo}) : super(ServicesCategoryLoading()) {
-    on<LoadServicesCategories>((event, emit) async {
-      emit(ServicesCategoryLoading());
+class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
+  final ServicesRepo servicesRepo;
+  ServicesBloc({required this.servicesRepo}) : super(ServicesLoading()) {
+    on<LoadServices>((event, emit) async {
+      emit(ServicesLoading());
       try {
-        final servicesCategoryModelList = await servicesCategoryRepo.getServicesCategory();
-        emit(ServicesCategoryLoaded(servicesCategoryModelList));
+        final servicesModelList = await servicesRepo.getServices();
+
+        servicesModelList.fold(
+          (error) =>
+              emit(const ServicesError('Failed to load services category')),
+          (list) => emit(ServicesLoaded(list)),
+        );
       } catch (e) {
-        emit(const ServicesCategoryError('Failed to load services category'));
+        emit(
+            const ServicesError('Exception: Failed to load services category'));
       }
     });
   }
 }
-

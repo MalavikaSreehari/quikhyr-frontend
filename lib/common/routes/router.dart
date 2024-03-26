@@ -18,6 +18,7 @@ import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
+import 'package:quikhyr/login_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
 import 'package:quikhyr/models/client_model.dart';
 import 'package:quikhyr/models/service_category_model.dart';
@@ -77,9 +78,9 @@ class AppRouter {
                     path: QuikRoutes.homeNamedPagePath,
                     name: QuikRoutes.homeNamedPageName,
                     pageBuilder: (context, state) {
-                      context
-                          .read<ServicesCategoryBloc>()
-                          .add(LoadServicesCategories());
+                      // context
+                      //     .read<ServicesCategoryBloc>()
+                      //     .add(LoadServicesCategories());
                       return NoTransitionPage(
                           child: HomeScreen(
                         key: state.pageKey,
@@ -148,6 +149,7 @@ class AppRouter {
                               ));
                         },
                       ),
+
                     ],
                   ),
                 ]),
@@ -185,6 +187,7 @@ class AppRouter {
                     },
                     routes: [
                       GoRoute(
+                        parentNavigatorKey: _rootNavigatorKey,
                         path: QuikRoutes.chatConversationNamedPagePath,
                         name: QuikRoutes.chatConversationNamedPageName,
                         pageBuilder: (context, state) =>
@@ -232,7 +235,8 @@ class AppRouter {
                 ),
               ],
             ),
-          ])
+          ]),
+
       //It is not necessary to provide a navigatorKey if it isn't also
       //needed elsewhere. If not provided, a default key will be used.
     ],

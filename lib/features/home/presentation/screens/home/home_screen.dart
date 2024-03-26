@@ -15,6 +15,8 @@ import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
 import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
 import 'package:quikhyr/features/home/data/repository/search_repo.dart';
+import 'package:quikhyr/features/home/presentation/components/shimmer_circle_small.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -63,7 +65,7 @@ class HomeScreen extends StatelessWidget {
               ClickableSvgIcon(
                   svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
                   onTap: () {
-                    //HANDLE GO TO NOTIFICATIONS
+                    context.pushNamed(QuikRoutes.loginNamedPageName);
                   }),
               QuikSpacing.hS10(),
               ClickableSvgIcon(
@@ -146,22 +148,22 @@ class HomeScreen extends StatelessWidget {
                                     leading: Text(tags,
                                         style: chatSubTitle.copyWith(
                                             color: secondary)),
-                                    trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(subService,
-                                            style: chatSubTitle.copyWith(
-                                                color: secondary)),
-                                        const SizedBox(
-                                          height: 24,
-                                          child: VerticalDivider(
-                                              color: textInputIconColor),
-                                        ),
-                                        Text(service,
-                                            style: chatSubTitle.copyWith(
-                                                color: secondary)),
-                                      ],
-                                    ),
+                                    // trailing: Row(
+                                    //   mainAxisSize: MainAxisSize.min,
+                                    //   children: [
+                                    //     Text(subService,
+                                    //         style: chatSubTitle.copyWith(
+                                    //             color: secondary)),
+                                    //     const SizedBox(
+                                    //       height: 24,
+                                    //       child: VerticalDivider(
+                                    //           color: textInputIconColor),
+                                    //     ),
+                                    //     Text(service,
+                                    //         style: chatSubTitle.copyWith(
+                                    //             color: secondary)),
+                                    //   ],
+                                    // ),
                                     tileColor: textInputBackgroundColor,
                                     shape: RoundedRectangleBorder(
                                       // side: const BorderSide(
@@ -292,9 +294,9 @@ class HomeScreen extends StatelessWidget {
 
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            sliver: BlocBuilder<ServicesCategoryBloc, ServicesCategoryState>(
+            sliver: BlocBuilder<ServicesBloc, ServicesState>(
               builder: (context, state) {
-                if (state is ServicesCategoryLoaded) {
+                if (state is ServicesLoaded) {
                   return SliverGrid(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -309,25 +311,31 @@ class HomeScreen extends StatelessWidget {
                         onTap: () {
                           context.pushNamed(QuikRoutes.homeDetailsNamedPageName,
                               pathParameters: {
-                                'service': state.servicesCategory[index].title,
+                                'service': state.servicesCategory[index].name,
                               });
                         },
                         child: Column(
                           children: [
                             Container(
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: gridItemBackgroundColor),
-                                alignment: Alignment.center,
-                                height: 64,
-                                width: 64,
-                                child: SvgPicture.asset(
-                                  state.servicesCategory[index].iconPath,
-                                  height: 24,
-                                )),
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: gridItemBackgroundColor),
+                              alignment: Alignment.center,
+                              height: 64,
+                              width: 64,
+                              child: SvgPicture.network(
+                                state.servicesCategory[index].avatar,
+                                height: 24,
+                                placeholderBuilder: (BuildContext context) =>
+                                    Shimmer.fromColors(
+                                        baseColor: gridItemBackgroundColor,
+                                        highlightColor: Colors.grey[100]!,
+                                        child: shimmerCard()),
+                              ),
+                            ),
                             QuikSpacing.vS8(),
                             Text(
-                              state.servicesCategory[index].title,
+                              state.servicesCategory[index].name,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.labelLarge,
                             )
@@ -336,13 +344,13 @@ class HomeScreen extends StatelessWidget {
                       );
                     }, childCount: state.servicesCategory.length),
                   );
-                } else if (state is ServicesCategoryLoading) {
+                } else if (state is ServicesLoading) {
                   return const SliverToBoxAdapter(
                     child: Center(
                       child: CircularProgressIndicator(),
                     ),
                   );
-                } else if (state is ServicesCategoryError) {
+                } else if (state is ServicesError) {
                   return SliverToBoxAdapter(
                     child: Center(
                       child: Text(state.message),
