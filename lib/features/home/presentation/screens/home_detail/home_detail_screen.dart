@@ -14,11 +14,11 @@ import 'package:shimmer/shimmer.dart';
 
 class HomeDetailScreen extends StatelessWidget {
   final ServiceModel? serviceModel;
-  final String service;
+  final String? service;
   final String? subService;
   const HomeDetailScreen({
     Key? key,
-    required this.service,
+    this.service,
     this.serviceModel,
     this.subService,
     // required this.serviceModel,
@@ -70,8 +70,11 @@ class HomeDetailScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(serviceModel?.name ?? service,
-                          style: Theme.of(context).textTheme.titleLarge),
+                      Text(
+                        serviceModel?.name ?? "NameNotFound",
+                        style: Theme.of(context).textTheme.titleLarge,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                       QuikSpacing.vS8(),
                       const Text("Service", style: chatSubTitle),
                     ],
@@ -163,7 +166,8 @@ class HomeDetailScreen extends StatelessWidget {
                           bottom: 16,
                           right: 32,
                           child: Text(
-                              serviceModel?.name.toUpperCase() ?? service,
+                              serviceModel?.name.toUpperCase() ??
+                                  "NAME NOT FOUND",
                               style: serviceImageOverlayTextStyle)),
                     ],
                   ),
@@ -188,7 +192,7 @@ class HomeDetailScreen extends StatelessWidget {
                 const Text(
                   "Make use in case of urgent service requirements.",
                   style: descriptionTextStyle,
-                )
+                ),
               ],
             ),
           ),

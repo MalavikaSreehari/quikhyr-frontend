@@ -9,11 +9,10 @@ import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
-import 'package:quikhyr/common/widgets/rating_star_worker.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
-import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
-import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
+import 'package:quikhyr/features/home/bloc/most_rated_workers_bloc.dart';
+import 'package:quikhyr/features/home/bloc/search_bloc.dart';
+import 'package:quikhyr/features/home/bloc/services_bloc.dart';
 import 'package:quikhyr/features/home/data/repository/search_repo.dart';
 import 'package:quikhyr/features/home/presentation/components/shimmer_circle_small.dart';
 import 'package:shimmer/shimmer.dart';
@@ -309,11 +308,10 @@ class HomeScreen extends StatelessWidget {
                         (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          context.pushNamed(QuikRoutes.homeDetailsNamedPageName,
-                              extra: state.services[index],
-                              pathParameters: {
-                                'service': state.services[index].name,
-                              });
+                          context.pushNamed(
+                            QuikRoutes.homeDetailsNamedPageName,
+                            extra: state.services[index],
+                          );
                         },
                         child: Column(
                           children: [

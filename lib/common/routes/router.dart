@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,21 +6,19 @@ import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
-import 'package:quikhyr/features/chat/blocs/bloc/chat_list_bloc.dart';
-import 'package:quikhyr/features/chat/data/chat_repo.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
 import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
-import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
+import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
+import 'package:quikhyr/features/home/data/data_provider/subservices_data_provider.dart';
+import 'package:quikhyr/features/home/data/repository/subservices_repo.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
-import 'package:quikhyr/login_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
 import 'package:quikhyr/models/client_model.dart';
 import 'package:quikhyr/models/service_category_model.dart';
-import 'package:quikhyr/models/worker_model.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -121,15 +117,13 @@ class AppRouter {
                         },
                       ),
                       GoRoute(
-                        path: '${QuikRoutes.homeDetailsNamedPagePath}/:service',
+                        path: QuikRoutes.homeDetailsNamedPagePath,
                         name: QuikRoutes.homeDetailsNamedPageName,
                         //navigation is done through routes so please make sure to supply a name
 
                         pageBuilder: (context, state) {
                           // final ServiceCategoryModel serviceModel =
                           // state.extra as ServiceCategoryModel;
-                          final service =
-                              state.pathParameters['service'] ?? "No Service";
                           return CustomTransitionPage<void>(
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
@@ -143,13 +137,21 @@ class AppRouter {
                                   child: child,
                                 );
                               },
-                              child: HomeDetailScreen(
-                                serviceModel: state.extra as ServiceModel?,
-                                key: state.pageKey, service: service,
+                              child: RepositoryProvider(
+                                create: (context) => SubservicesRepo(SubservicesCategoryProvider()),
+                                child: BlocProvider(
+                                  create: (context) {
+                                    final subservicesRepo = RepositoryProvider.of<SubservicesRepo>(context);
+                                    return SubserviceCubit(subservicesRepo);
+                                  } ,
+                                  child: HomeDetailScreen(
+                                    serviceModel: state.extra as ServiceModel?,
+                                    key: state.pageKey,
+                                  ),
+                                ),
                               ));
                         },
                       ),
-
                     ],
                   ),
                 ]),

@@ -1,4 +1,4 @@
-part of 'services_category_bloc.dart';
+part of 'services_bloc.dart';
 
 sealed class ServicesEvent extends Equatable {
   const ServicesEvent();

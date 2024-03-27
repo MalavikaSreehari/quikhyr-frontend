@@ -8,9 +8,9 @@ import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_b
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
 import 'package:quikhyr/features/chat/firebase_provider.dart';
-import 'package:quikhyr/features/home/blocs/bloc/most_rated_workers_bloc.dart';
-import 'package:quikhyr/features/home/blocs/bloc/search_bloc.dart';
-import 'package:quikhyr/features/home/blocs/bloc/services_category_bloc.dart';
+import 'package:quikhyr/features/home/bloc/most_rated_workers_bloc.dart';
+import 'package:quikhyr/features/home/bloc/search_bloc.dart';
+import 'package:quikhyr/features/home/bloc/services_bloc.dart';
 import 'package:quikhyr/features/home/data/data_provider/services_category_data_provider.dart';
 import 'package:quikhyr/features/home/data/repository/most_rated_workers_repo.dart';
 import 'package:quikhyr/features/home/data/repository/search_repo.dart';
