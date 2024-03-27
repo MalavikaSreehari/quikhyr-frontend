@@ -158,3 +158,47 @@ const TextStyle descriptionTextStyle = TextStyle(
   fontWeight: FontWeight.w400,
   height: 1.28,
 );
+
+const TextStyle filterDropDownMediumTextStyle = TextStyle(
+  color: secondary,
+  letterSpacing: 0.5,
+  fontFamily: 'Trap',
+  fontSize: 12.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+);
+const TextStyle workerListNameTextStyle = TextStyle(
+  color: secondary,
+  letterSpacing: 0.5,
+  fontFamily: 'Trap',
+  fontSize: 16.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+);
+
+const TextStyle workerListSubtitleTextStyle = TextStyle(
+  color: placeHolderText,
+  fontFamily: 'Trap',
+  fontSize: 10,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w400,
+  height: 1.0,
+);
+
+const TextStyle workerListPriceTextStyle = TextStyle(
+  color: quikHyrBlue,
+  letterSpacing: 0.5,
+  fontFamily: 'Trap',
+  fontSize: 16.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+);
+
+const TextStyle workerListUnitTextStyle = TextStyle(
+  color: secondary,
+  fontFamily: 'Trap',
+  fontSize: 13,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w700,
+  height: 1.0,
+);

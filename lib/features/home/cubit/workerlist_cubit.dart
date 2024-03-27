@@ -1,0 +1,20 @@
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:quikhyr/features/home/data/repository/worker_list_repo.dart';
+import 'package:quikhyr/models/worker_model.dart';
+
+part 'workerlist_state.dart';
+
+class WorkerlistCubit extends Cubit<WorkerlistState> {
+  final WorkerListRepo _workerListRepo;
+  WorkerlistCubit(this._workerListRepo) : super(WorkerlistInitial());
+  void getWorkersByServiceId({required String serviceId}) async {
+    emit(WorkerlistLoading());
+    final workerList =
+        await _workerListRepo.getWorkersByServiceId(serviceId);
+    workerList.fold(
+      (error) => emit(WorkerlistError(error)),
+      (workers) => emit(WorkerlistLoaded(workers)),
+    );
+  }
+}

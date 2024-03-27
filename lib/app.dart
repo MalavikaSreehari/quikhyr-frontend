@@ -12,12 +12,15 @@ import 'package:quikhyr/features/home/bloc/most_rated_workers_bloc.dart';
 import 'package:quikhyr/features/home/bloc/search_bloc.dart';
 import 'package:quikhyr/features/home/bloc/services_bloc.dart';
 import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
+import 'package:quikhyr/features/home/cubit/workerlist_cubit.dart';
 import 'package:quikhyr/features/home/data/data_provider/services_category_data_provider.dart';
 import 'package:quikhyr/features/home/data/data_provider/subservices_data_provider.dart';
+import 'package:quikhyr/features/home/data/data_provider/worker_list_data_provider.dart';
 import 'package:quikhyr/features/home/data/repository/most_rated_workers_repo.dart';
 import 'package:quikhyr/features/home/data/repository/search_repo.dart';
 import 'package:quikhyr/features/home/data/repository/services_category_repo.dart';
 import 'package:quikhyr/features/home/data/repository/subservices_repo.dart';
+import 'package:quikhyr/features/home/data/repository/worker_list_repo.dart';
 
 class MyApp extends StatelessWidget {
   final FirebaseUserRepo userRepository;
@@ -36,9 +39,12 @@ class MyApp extends StatelessWidget {
           create: (context) => ServicesRepo(ServicesCategoryProvider()),
         ),
         RepositoryProvider<SearchRepo>(create: (context) => SearchRepo()),
-        RepositoryProvider(
+        RepositoryProvider<SubservicesRepo>(
           create: (context) => SubservicesRepo(SubservicesCategoryProvider()),
         ),
+        RepositoryProvider<WorkerListRepo>(
+          create: (context) => WorkerListRepo(WorkerListDataProvider()),
+        )
       ],
       child: MultiBlocProvider(
         providers: [
@@ -80,6 +86,12 @@ class MyApp extends StatelessWidget {
             return SubserviceCubit(
               subservicesRepo,
             );
+          }
+          ),
+          BlocProvider<WorkerlistCubit>(create: (context) {
+            final workerListRepo =
+                RepositoryProvider.of<WorkerListRepo>(context);
+            return WorkerlistCubit(workerListRepo);
           }),
         ],
         child: ChangeNotifierProvider(

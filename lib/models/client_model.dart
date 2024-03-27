@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/models/location_model.dart';
@@ -115,7 +114,6 @@ factory ClientModel.fromMap(Map<String, dynamic> map) {
       id,
       name,
       age,
-
       avatar,
       email,
       gender,

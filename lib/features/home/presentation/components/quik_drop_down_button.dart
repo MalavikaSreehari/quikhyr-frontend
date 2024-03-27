@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/models/sub_service_category_model.dart';
 
 class QuikDropDownButtonSubservice extends StatefulWidget {
@@ -39,11 +40,17 @@ class _QuikDropDownButtonSubserviceState
             borderRadius: BorderRadius.circular(16),
           ),
           child: DropdownButton<SubserviceModel>(
-            icon: SvgPicture.asset(
-              QuikAssetConstants.dropDownArrowSvg,
-              colorFilter: ColorFilter.mode(
-                  widget.foregroundColor ?? textInputIconColor,
-                  BlendMode.srcIn),
+            borderRadius: BorderRadius.circular(16),
+            icon: Row(
+              children: [
+                SvgPicture.asset(
+                  QuikAssetConstants.dropDownArrowSvg,
+                  colorFilter: ColorFilter.mode(
+                      widget.foregroundColor ?? textInputIconColor,
+                      BlendMode.srcIn),
+                ),
+                QuikSpacing.hS24(),
+              ],
             ),
             isExpanded: true,
             dropdownColor: widget.backgroundColor ?? textInputBackgroundColor,
@@ -55,7 +62,12 @@ class _QuikDropDownButtonSubserviceState
             items: widget.subservices.map((SubserviceModel subservice) {
               return DropdownMenuItem<SubserviceModel>(
                 value: subservice,
-                child: Text(subservice.name),
+                child: Row(
+                  children: [
+                    QuikSpacing.hS20(),
+                    Text(subservice.name),
+                  ],
+                ),
               );
             }).toList(),
             onChanged: (SubserviceModel? newSubservice) {
