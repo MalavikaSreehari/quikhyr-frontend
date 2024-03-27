@@ -49,13 +49,15 @@ class SubserviceModel {
       serviceName: map['serviceName'] as String,
       name: map['name'] as String,
       description: map['description'] as String,
-      tags: List<String>.from((map['tags'] as List<String>),)
+      tags: List<String>.from(
+          (map['tags'] as List<dynamic>).map((e) => e.toString())),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory SubserviceModel.fromJson(String source) => SubserviceModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory SubserviceModel.fromJson(String source) =>
+      SubserviceModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -65,21 +67,20 @@ class SubserviceModel {
   @override
   bool operator ==(covariant SubserviceModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.serviceId == serviceId &&
-      other.serviceName == serviceName &&
-      other.name == name &&
-      other.description == description &&
-      listEquals(other.tags, tags);
+
+    return other.serviceId == serviceId &&
+        other.serviceName == serviceName &&
+        other.name == name &&
+        other.description == description &&
+        listEquals(other.tags, tags);
   }
 
   @override
   int get hashCode {
     return serviceId.hashCode ^
-      serviceName.hashCode ^
-      name.hashCode ^
-      description.hashCode ^
-      tags.hashCode;
+        serviceName.hashCode ^
+        name.hashCode ^
+        description.hashCode ^
+        tags.hashCode;
   }
 }

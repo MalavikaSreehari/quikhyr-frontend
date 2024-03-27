@@ -10,9 +10,6 @@ import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_scr
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
 import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
-import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
-import 'package:quikhyr/features/home/data/data_provider/subservices_data_provider.dart';
-import 'package:quikhyr/features/home/data/repository/subservices_repo.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
@@ -137,18 +134,9 @@ class AppRouter {
                                   child: child,
                                 );
                               },
-                              child: RepositoryProvider(
-                                create: (context) => SubservicesRepo(SubservicesCategoryProvider()),
-                                child: BlocProvider(
-                                  create: (context) {
-                                    final subservicesRepo = RepositoryProvider.of<SubservicesRepo>(context);
-                                    return SubserviceCubit(subservicesRepo);
-                                  } ,
-                                  child: HomeDetailScreen(
-                                    serviceModel: state.extra as ServiceModel?,
-                                    key: state.pageKey,
-                                  ),
-                                ),
+                              child: HomeDetailScreen(
+                                serviceModel: state.extra as ServiceModel?,
+                                key: state.pageKey,
                               ));
                         },
                       ),

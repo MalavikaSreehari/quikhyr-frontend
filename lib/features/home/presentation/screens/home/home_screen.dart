@@ -13,6 +13,7 @@ import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:quikhyr/features/home/bloc/most_rated_workers_bloc.dart';
 import 'package:quikhyr/features/home/bloc/search_bloc.dart';
 import 'package:quikhyr/features/home/bloc/services_bloc.dart';
+import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
 import 'package:quikhyr/features/home/data/repository/search_repo.dart';
 import 'package:quikhyr/features/home/presentation/components/shimmer_circle_small.dart';
 import 'package:shimmer/shimmer.dart';
@@ -308,6 +309,8 @@ class HomeScreen extends StatelessWidget {
                         (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
+                          context.read<SubserviceCubit>().fetchSubservices(
+                              state.services[index].id);
                           context.pushNamed(
                             QuikRoutes.homeDetailsNamedPageName,
                             extra: state.services[index],

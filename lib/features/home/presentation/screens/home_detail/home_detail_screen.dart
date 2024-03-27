@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
@@ -8,8 +9,11 @@ import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/long_icon_button.dart';
+import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
+import 'package:quikhyr/features/home/presentation/components/quik_drop_down_button.dart';
 import 'package:quikhyr/features/home/presentation/components/shimmer_circle_small.dart';
 import 'package:quikhyr/models/service_category_model.dart';
+import 'package:quikhyr/models/sub_service_category_model.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeDetailScreen extends StatelessWidget {
@@ -193,6 +197,24 @@ class HomeDetailScreen extends StatelessWidget {
                   "Make use in case of urgent service requirements.",
                   style: descriptionTextStyle,
                 ),
+                QuikSpacing.vS24(),
+                BlocBuilder<SubserviceCubit, SubserviceState>(
+                  builder: (context, state) {
+                    if (state is SubservicesLoading) {
+                      return const QuikDropDownButtonSubservice(
+                        subservices: [],
+                      );
+                    } else if (state is SubservicesLoaded) {
+                      return QuikDropDownButtonSubservice(
+                        subservices: state.subservices,
+                      );
+                    } else if (state is SubservicesError) {
+                      return Text(state.message);
+                    } else {
+                      return const Text("Unknown Error");
+                    }
+                  },
+                )
               ],
             ),
           ),
