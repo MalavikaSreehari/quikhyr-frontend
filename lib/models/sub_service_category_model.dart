@@ -1,15 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-class SubserviceModel {
+class SubserviceModel extends Equatable {
+  final String id;
   final String serviceId;
   final String serviceName;
   final String name;
   final String description;
   final List<String> tags;
   SubserviceModel({
+    required this.id,
     required this.serviceId,
     required this.serviceName,
     required this.name,
@@ -18,6 +21,7 @@ class SubserviceModel {
   });
 
   SubserviceModel copyWith({
+    String? id,
     String? serviceId,
     String? serviceName,
     String? name,
@@ -25,6 +29,7 @@ class SubserviceModel {
     List<String>? tags,
   }) {
     return SubserviceModel(
+      id: id ?? this.id,
       serviceId: serviceId ?? this.serviceId,
       serviceName: serviceName ?? this.serviceName,
       name: name ?? this.name,
@@ -35,6 +40,7 @@ class SubserviceModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'serviceId': serviceId,
       'serviceName': serviceName,
       'name': name,
@@ -45,6 +51,7 @@ class SubserviceModel {
 
   factory SubserviceModel.fromMap(Map<String, dynamic> map) {
     return SubserviceModel(
+      id: map['id'] as String,
       serviceId: map['serviceId'] as String,
       serviceName: map['serviceName'] as String,
       name: map['name'] as String,
@@ -61,26 +68,18 @@ class SubserviceModel {
 
   @override
   String toString() {
-    return 'SubserviceModel(serviceId: $serviceId, serviceName: $serviceName, name: $name, description: $description, tags: $tags)';
+    return 'SubserviceModel(id: $id, serviceId: $serviceId, serviceName: $serviceName, name: $name, description: $description, tags: $tags)';
   }
 
   @override
-  bool operator ==(covariant SubserviceModel other) {
-    if (identical(this, other)) return true;
-
-    return other.serviceId == serviceId &&
-        other.serviceName == serviceName &&
-        other.name == name &&
-        other.description == description &&
-        listEquals(other.tags, tags);
-  }
-
-  @override
-  int get hashCode {
-    return serviceId.hashCode ^
-        serviceName.hashCode ^
-        name.hashCode ^
-        description.hashCode ^
-        tags.hashCode;
+  List<Object> get props {
+    return [
+      id,
+      serviceId,
+      serviceName,
+      name,
+      description,
+      tags,
+    ];
   }
 }

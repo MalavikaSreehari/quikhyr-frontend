@@ -22,5 +22,18 @@ class WorkerListRepo {
       return Left((error.toString()));
     }
   }
+    Future<Either<String, List<WorkerModel>>> getWorkersBySubserviceId(String subserviceId) async {
+    try {
+      final workerListString = await _workerListDataProvider.getWorkersBySubserviceId(subserviceId);
+      final workerList = jsonDecode(workerListString) as List;
+      final workers = workerList.map((workerMap) {
+        return WorkerModel.fromMap(workerMap as Map<String, dynamic>);
+      }).toList();
+
+      return Right(workers);
+    } catch (error) {
+      return Left((error.toString()));
+    }
+  }
 
 }

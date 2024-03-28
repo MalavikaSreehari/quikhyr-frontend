@@ -28,3 +28,25 @@ final class WorkerlistError extends WorkerlistState {
   @override
   List<Object> get props => [error];
 }
+
+final class WorkerlistDropDown extends WorkerlistState {}
+
+final class WorkerlistDropDownLoading extends WorkerlistState {}
+
+final class WorkerlistDropDownLoaded extends WorkerlistState {
+  final List<WorkerModel> workers;
+
+  const WorkerlistDropDownLoaded(this.workers);
+
+  @override
+  List<Object> get props => [workers];
+}
+
+final class WorkerlistDropDownError extends WorkerlistState {
+  final String error;
+
+  const WorkerlistDropDownError(this.error);
+
+  @override
+  List<Object> get props => [error];
+}

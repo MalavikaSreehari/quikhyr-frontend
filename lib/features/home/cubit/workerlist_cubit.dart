@@ -17,4 +17,13 @@ class WorkerlistCubit extends Cubit<WorkerlistState> {
       (workers) => emit(WorkerlistLoaded(workers)),
     );
   }
+  void getWorkersBySubserviceId({required String subserviceId}) async {
+    emit(WorkerlistDropDownLoading());
+    final workerList =
+        await _workerListRepo.getWorkersBySubserviceId(subserviceId);
+    workerList.fold(
+      (error) => emit(WorkerlistDropDownError(error)),
+      (workers) => emit(WorkerlistDropDownLoaded(workers)),
+    );
+  }
 }

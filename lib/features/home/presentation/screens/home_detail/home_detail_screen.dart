@@ -304,6 +304,69 @@ class HomeDetailScreen extends StatelessWidget {
                       );
                     } else if (state is WorkerlistError) {
                       return Text(state.error);
+                    } else if (state is WorkerlistDropDownLoading) {
+                      return const CircularProgressIndicator.adaptive();
+                    }
+                    else if (state is WorkerlistDropDownLoaded) {
+                      return Column(
+                        children: state.workers
+                            .map((worker) => ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  radius: 32,
+                                  backgroundImage: NetworkImage(worker.avatar),
+                                ),
+                                title: Text(
+                                  worker.name,
+                                  style: workerListNameTextStyle,
+                                ),
+                                subtitle: Text(
+                                  worker.phone,
+                                  style: workerListSubtitleTextStyle,
+                                ),
+                                trailing: Column(
+                                  children: [
+                                    RichText(
+                                      text: const TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: 'Rs.',
+                                            style: workerListUnitTextStyle,
+                                          ),
+                                          TextSpan(
+                                            text: '200',
+                                            style: workerListPriceTextStyle,
+                                          ),
+                                          TextSpan(
+                                            text: '/hr',
+                                            style: workerListUnitTextStyle,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    QuikSpacing.vS10(),
+                                    SizedBox(
+                                      width: 135,
+                                      child: Row(
+                                        children: [
+                                          const QuikSmallTextWithBorder(
+                                            text: 'Available',
+                                          ),
+                                          QuikSpacing.hS8(),
+                                          SvgPicture.asset(
+                                            QuikAssetConstants.arrowRightUpSvg,
+                                            width: 28,
+                                            height: 28,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )))
+                            .toList(),
+                      );
+                    } else if (state is WorkerlistDropDownError) {
+                      return Text(state.error);
                     } else {
                       return const Text("Unknown Error");
                     }
