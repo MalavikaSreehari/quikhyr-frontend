@@ -15,6 +15,7 @@ import 'package:quikhyr/features/home/cubit/workerlist_cubit.dart';
 import 'package:quikhyr/features/home/presentation/components/quik_drop_down_button.dart';
 import 'package:quikhyr/features/home/presentation/components/shimmer_circle_small.dart';
 import 'package:quikhyr/models/service_category_model.dart';
+import 'package:quikhyr/models/sub_service_category_model.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeDetailScreen extends StatelessWidget {
@@ -206,6 +207,15 @@ class HomeDetailScreen extends StatelessWidget {
                         subservices: [],
                       );
                     } else if (state is SubservicesLoaded) {
+                      state.subservices.insert(
+                          0,
+                          SubserviceModel(
+                              id: "0",
+                              serviceId: state.subservices[1].serviceId,
+                              serviceName: "All",
+                              name: "All Subservices",
+                              description: "All",
+                              tags: const []));
                       return QuikDropDownButtonSubservice(
                         subservices: state.subservices,
                       );
@@ -306,8 +316,7 @@ class HomeDetailScreen extends StatelessWidget {
                       return Text(state.error);
                     } else if (state is WorkerlistDropDownLoading) {
                       return const CircularProgressIndicator.adaptive();
-                    }
-                    else if (state is WorkerlistDropDownLoaded) {
+                    } else if (state is WorkerlistDropDownLoaded) {
                       return Column(
                         children: state.workers
                             .map((worker) => ListTile(

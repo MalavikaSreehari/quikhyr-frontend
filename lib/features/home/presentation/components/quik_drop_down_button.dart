@@ -42,6 +42,19 @@ class _QuikDropDownButtonSubserviceState
             borderRadius: BorderRadius.circular(16),
           ),
           child: DropdownButton<SubserviceModel>(
+            hint: DropdownMenuItem(
+              // onTap: () {
+              //   // context.read<WorkerlistCubit>().getWorkersBySubserviceId(
+              //   //     subserviceId: subservice.id);
+              // },
+              value: "All Subservices",
+              child: Row(
+                children: [
+                  QuikSpacing.hS20(),
+                  const Text("All Subservices"),
+                ],
+              ),
+            ),
             borderRadius: BorderRadius.circular(16),
             icon: Row(
               children: [
@@ -64,8 +77,15 @@ class _QuikDropDownButtonSubserviceState
             items: widget.subservices.map((SubserviceModel subservice) {
               return DropdownMenuItem<SubserviceModel>(
                 onTap: () {
-                  context.read<WorkerlistCubit>().getWorkersBySubserviceId(
-                      subserviceId: subservice.id);
+                  if (subservice.serviceName == "All") {
+                    context
+                        .read<WorkerlistCubit>()
+                        .getWorkersByServiceId(serviceId: subservice.serviceId);
+                  } else {
+                    context
+                        .read<WorkerlistCubit>()
+                        .getWorkersBySubserviceId(subserviceId: subservice.id);
+                  }
                 },
                 value: subservice,
                 child: Row(
