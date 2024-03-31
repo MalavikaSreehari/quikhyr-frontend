@@ -86,7 +86,7 @@ class ClientModel extends Equatable {
 
   factory ClientModel.fromMap(Map<String, dynamic> map) {
     return ClientModel(
-      locationName: map['locationName'] as String,
+      locationName: map['locationName'] != null ? map['locationName'] as String : 'Location not found',
       id: map['id'] as String,
       name: map['name'] as String,
       fcmToken: map['fcmToken'] as String,

@@ -103,7 +103,7 @@ class WorkerModel extends Equatable {
 
   factory WorkerModel.fromMap(Map<String, dynamic> map) {
     return WorkerModel(
-      locationName: map['locationName'] as String,
+      locationName: map['locationName'] != null ? map['locationName'] as String : 'Location not found',
       fcmToken: map['fcmToken'] as String,
       isVerified: map['isVerified'] as bool,
       isActive: map['isActive'] as bool,

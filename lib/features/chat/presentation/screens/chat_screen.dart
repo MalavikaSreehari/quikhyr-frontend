@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
@@ -119,7 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
               //     shrinkWrap: true,
               //     children: [
               // ListTile(
-              //   contentPadding: EdgeInsets.zero,
+              //   contentPadding: EdgeInsets.zero, 
               //   leading: Container(
               //     decoration: const BoxDecoration(
               //       shape: BoxShape.circle,

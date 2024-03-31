@@ -4,7 +4,6 @@ import 'package:quikhyr/features/chat/firebase_provider.dart';
 import 'package:quikhyr/features/chat/presentation/components/chat_messages.dart';
 import 'package:quikhyr/features/chat/presentation/components/chat_text_field.dart';
 import 'package:quikhyr/models/client_model.dart';
-import 'package:quikhyr/models/worker_model.dart';
 
 class ChatConversationScreen extends StatefulWidget {
   final ClientModel worker;
