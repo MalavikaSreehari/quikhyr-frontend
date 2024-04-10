@@ -4,29 +4,33 @@ import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 
 class QuikRoutes {
   static const root = '/';
-  static const homeNamedPagePath = '/home';
-  static const homeDetailsNamedPagePath = 'details';
-  static const homeDetailsFromSearchNamedPagePath = 'detailsFromSearch';
-  static const profileNamedPagePath = '/profile';
-  static const exploreNamedPagePath = '/explore';
-  static const chatNamedPagePath = '/chat';
-  static const chatConversationNamedPagePath = 'conversation';
-  static const bookNamedPagePath = '/book';
-  static const loginNamedPagePath = 'login';
-  static const signUpNamedPagePath = '/signup';
-  static const settingsNamedPagePath = '/settings';
+  static const homePath = '/home';
+  static const homeDetailsPath = 'details';
+  static const homeDetailsFromSearchPath = 'detailsFromSearch';
+  static const profilePath = '/profile';
+  static const explorePath = '/explore';
+  static const chatPath = '/chat';
+  static const chatConversationPath = 'conversation';
+  static const bookPath = '/book';
+  static const loginPath = 'login';
+  static const signUpPath = '/signup';
+  static const signInPath = '/signin';
+  static const settingsPath = '/settings';
+  static const welcomePath = '/welcome';
 
-  static const homeNamedPageName = 'homeName';
-  static const homeDetailsNamedPageName = 'homeDetailsName';
-  static const homeDetailsFromSearchNamedPageName = 'homeDetailsFromSearchName';
-  static const profileNamedPageName = 'profileName';
-  static const exploreNamedPageName = 'exploreName';
-  static const chatNamedPageName = 'chatName';
-  static const chatConversationNamedPageName = 'chatConversationName';
-  static const bookNamedPageName = 'bookName';
-  static const loginNamedPageName = 'loginName';
-  static const signUpNamePageName = 'signupName';
-  static const settingsNamedPageName = 'settingsName';
+  static const homeName = 'homeName';
+  static const homeDetailsName = 'homeDetailsName';
+  static const homeDetailsFromSearchName = 'homeDetailsFromSearchName';
+  static const profileName = 'profileName';
+  static const exploreName = 'exploreName';
+  static const chatName = 'chatName';
+  static const chatConversationName = 'chatConversationName';
+  static const bookName = 'bookName';
+  static const loginName = 'loginName';
+  static const signUpName = 'signupName';
+  static const signInName = 'signinName';
+  static const settingsName = 'settingsName';
+  static const welcomeName = 'welcomeName';
 
   static Widget errorWidget(BuildContext context, GoRouterState state) =>
       const NotFoundScreen();

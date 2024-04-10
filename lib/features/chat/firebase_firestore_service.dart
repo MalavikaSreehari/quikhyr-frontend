@@ -73,13 +73,13 @@ class FirebaseFirestoreService {
         .collection('messages')
         .add(message.toJson());
 
-    await firestore
-        .collection('clients')
-        .doc(receiverId)
-        .collection('chat')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('messages')
-        .add(message.toJson());
+    // await firestore
+    //     .collection('clients')
+    //     .doc(receiverId)
+    //     .collection('chat')
+    //     .doc(FirebaseAuth.instance.currentUser!.uid)
+    //     .collection('messages')
+    //     .add(message.toJson());
     await firestore
         .collection('workers')
         .doc(receiverId)

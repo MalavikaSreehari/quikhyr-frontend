@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
               ClickableSvgIcon(
                   svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
                   onTap: () {
-                    context.pushNamed(QuikRoutes.loginNamedPageName);
+                    context.pushNamed(QuikRoutes.loginName);
                   }),
               QuikSpacing.hS10(),
               ClickableSvgIcon(
@@ -133,12 +133,11 @@ class HomeScreen extends StatelessWidget {
                                     //!! JANKY CODE, MAY BREAK, NEED TO USE BETTER LOGIC OR ENUMS
                                     if (subService == "") {
                                       context.pushNamed(
-                                          QuikRoutes.homeDetailsNamedPageName,
+                                          QuikRoutes.homeDetailsName,
                                           pathParameters: {'service': service});
                                     } else {
                                       context.pushNamed(
-                                          QuikRoutes
-                                              .homeDetailsFromSearchNamedPageName,
+                                          QuikRoutes.homeDetailsFromSearchName,
                                           pathParameters: {
                                             'service': service,
                                             'subService': subService
@@ -310,12 +309,13 @@ class HomeScreen extends StatelessWidget {
                         (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () {
-                          context.read<SubserviceCubit>().fetchSubservices(
-                              state.services[index].id);
+                          context
+                              .read<SubserviceCubit>()
+                              .fetchSubservices(state.services[index].id);
                           context.read<WorkerlistCubit>().getWorkersByServiceId(
                               serviceId: state.services[index].id);
                           context.pushNamed(
-                            QuikRoutes.homeDetailsNamedPageName,
+                            QuikRoutes.homeDetailsName,
                             extra: state.services[index],
                           );
                         },

@@ -15,20 +15,22 @@ class FirebaseProvider extends ChangeNotifier {
 
   Future<List<ClientModel>> getAllWorkers() async {
     var workersCollection = FirebaseFirestore.instance.collection('workers');
-    var clientsCollection = FirebaseFirestore.instance.collection('clients');
+    // var clientsCollection = FirebaseFirestore.instance.collection('clients');
 
     var workersSnapshot = await workersCollection.get();
-    var clientsSnapshot = await clientsCollection.get();
+    // var clientsSnapshot = await clientsCollection.get();
 
     var workers = workersSnapshot.docs
         .map((doc) => ClientModel.fromMap(doc.data()))
         .toList();
 
-    var clients = clientsSnapshot.docs
-        .map((doc) => ClientModel.fromMap(doc.data()))
-        .toList();
+    // var clients = clientsSnapshot.docs
+    //     .map((doc) => ClientModel.fromMap(doc.data()))
+    //     .toList();
 
-    users = [...workers, ...clients];
+    // users = [...workers, ...clients];
+
+    users = workers;
     notifyListeners();
 
     return users;

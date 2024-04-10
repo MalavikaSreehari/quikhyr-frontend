@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:quikhyr/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:quikhyr/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_screen.dart';
@@ -30,7 +32,7 @@ class AppRouter {
   static final _shellNavigatorSettingsKey =
       GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
   static final GoRouter _router = GoRouter(
-    initialLocation: QuikRoutes.homeNamedPagePath,
+    initialLocation: QuikRoutes.homePath,
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     routes: [
@@ -68,8 +70,8 @@ class AppRouter {
                 navigatorKey: _shellNavigatorHomeKey,
                 routes: <RouteBase>[
                   GoRoute(
-                    path: QuikRoutes.homeNamedPagePath,
-                    name: QuikRoutes.homeNamedPageName,
+                    path: QuikRoutes.homePath,
+                    name: QuikRoutes.homeName,
                     pageBuilder: (context, state) {
                       // context
                       //     .read<ServicesCategoryBloc>()
@@ -82,8 +84,8 @@ class AppRouter {
                     routes: [
                       GoRoute(
                         path:
-                            '${QuikRoutes.homeDetailsFromSearchNamedPagePath}/:service/:subService',
-                        name: QuikRoutes.homeDetailsFromSearchNamedPageName,
+                            '${QuikRoutes.homeDetailsFromSearchPath}/:service/:subService',
+                        name: QuikRoutes.homeDetailsFromSearchName,
                         //navigation is done through routes so please make sure to supply a name
 
                         pageBuilder: (context, state) {
@@ -114,8 +116,8 @@ class AppRouter {
                         },
                       ),
                       GoRoute(
-                        path: QuikRoutes.homeDetailsNamedPagePath,
-                        name: QuikRoutes.homeDetailsNamedPageName,
+                        path: QuikRoutes.homeDetailsPath,
+                        name: QuikRoutes.homeDetailsName,
                         //navigation is done through routes so please make sure to supply a name
 
                         pageBuilder: (context, state) {
@@ -147,8 +149,8 @@ class AppRouter {
               navigatorKey: _shellNavigatorExploreKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: QuikRoutes.exploreNamedPagePath,
-                  name: QuikRoutes.exploreNamedPageName,
+                  path: QuikRoutes.explorePath,
+                  name: QuikRoutes.exploreName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     //ADD FILTERCHIP PROVIDER TO TRY OUT NOT PUTTING ALL BLOCS IN MAIN FILE
                     child: BlocProvider(
@@ -165,8 +167,8 @@ class AppRouter {
               navigatorKey: _shellNavigatorChatKey,
               routes: <RouteBase>[
                 GoRoute(
-                    path: QuikRoutes.chatNamedPagePath,
-                    name: QuikRoutes.chatNamedPageName,
+                    path: QuikRoutes.chatPath,
+                    name: QuikRoutes.chatName,
                     pageBuilder: (context, state) {
                       // final WorkerModel worker =
                       //     state.extra as WorkerModel;
@@ -178,8 +180,8 @@ class AppRouter {
                     routes: [
                       GoRoute(
                         parentNavigatorKey: _rootNavigatorKey,
-                        path: QuikRoutes.chatConversationNamedPagePath,
-                        name: QuikRoutes.chatConversationNamedPageName,
+                        path: QuikRoutes.chatConversationPath,
+                        name: QuikRoutes.chatConversationName,
                         pageBuilder: (context, state) =>
                             CustomTransitionPage<void>(
                           // key: state.pageKey,
@@ -205,8 +207,8 @@ class AppRouter {
               navigatorKey: _shellNavigatorBookKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: QuikRoutes.bookNamedPagePath,
-                  name: QuikRoutes.bookNamedPageName,
+                  path: QuikRoutes.bookPath,
+                  name: QuikRoutes.bookName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: BookingScreen(key: state.pageKey),
                   ),
@@ -217,8 +219,8 @@ class AppRouter {
               navigatorKey: _shellNavigatorSettingsKey,
               routes: <RouteBase>[
                 GoRoute(
-                  path: QuikRoutes.settingsNamedPagePath,
-                  name: QuikRoutes.settingsNamedPageName,
+                  path: QuikRoutes.settingsPath,
+                  name: QuikRoutes.settingsName,
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: SettingsScreen(key: state.pageKey),
                   ),
@@ -226,6 +228,27 @@ class AppRouter {
               ],
             ),
           ]),
+      GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          path: QuikRoutes.signInPath,
+          name: QuikRoutes.signInName,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: SignInScreen());
+          }),
+      GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          path: QuikRoutes.signUpPath,
+          name: QuikRoutes.signUpName,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: SignUpScreen());
+          }),
+      GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          path: QuikRoutes.welcomePath,
+          name: QuikRoutes.welcomeName,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: WelcomeScreen());
+          }),
 
       //It is not necessary to provide a navigatorKey if it isn't also
       //needed elsewhere. If not provided, a default key will be used.

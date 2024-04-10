@@ -31,7 +31,6 @@ class _UserItemState extends State<UserItem> {
               backgroundColor: Colors.transparent,
               backgroundImage: NetworkImage(
                 QuikAssetConstants.placeholderImage,
-                
               ),
             )),
             // if (state.workers[index].isVerified)
@@ -57,7 +56,7 @@ class _UserItemState extends State<UserItem> {
         style: chatTrailingActive,
       ),
       onTap: () {
-        context.pushNamed(QuikRoutes.chatConversationNamedPageName,
+        context.pushNamed(QuikRoutes.chatConversationName,
             extra: widget.worker);
       },
     );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/widgets/long_icon_button.dart';
 import 'package:quikhyr/features/auth/presentation/screens/sign_in_screen.dart';
@@ -47,18 +49,7 @@ class WelcomeScreen extends StatelessWidget {
                   text: "Let's get started",
                   svgPath: QuikAssetConstants.rightArrowSvg,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => SignUpBloc(
-                              userRepository: context
-                                  .read<AuthenticationBloc>()
-                                  .userRepository),
-                          child: const SignUpScreen(),
-                        ),
-                      ),
-                    );
+                    context.goNamed(QuikRoutes.signUpName);
                   },
                 ),
                 QuikSpacing.vS12(),
@@ -68,18 +59,7 @@ class WelcomeScreen extends StatelessWidget {
                   text: "Already have an account",
                   svgPath: QuikAssetConstants.rightArrowSvg,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => SignInBloc(
-                              userRepository: context
-                                  .read<AuthenticationBloc>()
-                                  .userRepository),
-                          child: const SignInScreen(),
-                        ),
-                      ),
-                    );
+                    context.goNamed(QuikRoutes.signInName);
                   },
                 ),
                 QuikSpacing.vS24(),
