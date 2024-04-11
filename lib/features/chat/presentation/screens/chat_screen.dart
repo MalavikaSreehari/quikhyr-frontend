@@ -1,13 +1,23 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
+import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
+import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
 import 'package:quikhyr/features/chat/firebase_provider.dart';
-import 'package:quikhyr/features/chat/presentation/components/user_item.dart';
+import 'package:quikhyr/features/chat/notification_service.dart';
+import 'package:quikhyr/models/chat_list_model.dart';
+import 'package:quikhyr/models/chat_message_model.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -16,243 +26,251 @@ class ChatScreen extends StatefulWidget {
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
+  final notificationService = NotificationsService();
+  TextEditingController searchController = TextEditingController();
+  List<ChatListModel> filteredWorkers = [];
+  List<ChatListModel> allWorkers = [];
+
+  Timer? searchDebounce;
+
+  void filterClients(String query) {
+    if (searchDebounce?.isActive ?? false) {
+      searchDebounce?.cancel();
+    }
+    searchDebounce = Timer(const Duration(milliseconds: 500), () {
+      if (query.isEmpty) {
+        setState(() {
+          filteredWorkers = allWorkers;
+        });
+      } else {
+        setState(() {
+          filteredWorkers = allWorkers.where((client) {
+            return client.name.toLowerCase().contains(query.toLowerCase());
+          }).toList();
+        });
+      }
+    });
+  }
+
+  String formatDate(DateTime date) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = DateTime(now.year, now.month, now.day - 1);
+    final aDate = DateTime(date.year, date.month, date.day);
+
+    if (aDate == today) {
+      return DateFormat.jm().format(date); // Only hours and AM/PM
+    } else if (aDate == yesterday) {
+      return 'Yesterday';
+    } else {
+      return DateFormat('MMM dd, yyyy').format(date); // Only date
+    }
+  }
+
   @override
   void initState() {
-    Provider.of<FirebaseProvider>(context, listen: false).getAllWorkers();
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    notificationService.firebaseNotification(context);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        FirebaseFirestoreService.updateUserData({
+          'isActive': true,
+        });
+        break;
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        FirebaseFirestoreService.updateUserData({
+          'isActive': false,
+        });
+        break;
+      default:
+    }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    searchController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(56),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: AppBar(
-              titleSpacing: 24,
-              automaticallyImplyLeading: false, // Remove back button
-              backgroundColor: Colors.transparent,
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Q',
-                          style:
-                              TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
-                        ),
-                        TextSpan(
-                          text: 'uik',
-                          style:
-                              TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
-                        ),
-                        TextSpan(
-                          text: 'Chat',
-                          style: TextStyle(
-                              fontFamily: 'Trap',
-                              fontSize: 24,
-                              letterSpacing: -1.5),
-                        ),
-                      ],
-                    ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: AppBar(
+            titleSpacing: 24,
+            automaticallyImplyLeading: false, // Remove back button
+            backgroundColor: Colors.transparent,
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Q',
+                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
+                      ),
+                      TextSpan(
+                        text: 'uik',
+                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
+                      ),
+                      TextSpan(
+                        text: 'Chat',
+                        style: TextStyle(
+                            fontFamily: 'Trap',
+                            fontSize: 24,
+                            letterSpacing: -1.5),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              actions: [
-                ClickableSvgIcon(
-                    svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
-                    onTap: () {}),
-                QuikSpacing.hS10(),
-                ClickableSvgIcon(
-                    svgAsset: QuikAssetConstants.logoutSvg,
-                    onTap: () {
-                      // context.read<SignInBloc>().add(const SignOutRequired());
-                    }),
-                QuikSpacing.hS24(),
+                ),
               ],
             ),
+            actions: [
+              ClickableSvgIcon(
+                  svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
+                  onTap: () {}),
+              QuikSpacing.hS10(),
+              ClickableSvgIcon(
+                  svgAsset: QuikAssetConstants.logoutSvg,
+                  onTap: () {
+                    // context.read<SignInBloc>().add(const SignOutRequired());
+                  }),
+              QuikSpacing.hS24(),
+            ],
           ),
         ),
-        body: Consumer<FirebaseProvider>(builder: (context, value, child) {
-          return Padding(
-            padding:
-                const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
-            child: Column(children: [
-              QuikSearchBar(
-                onChanged: (String value) {}, // Default onChanged function
-                hintText: 'Search for chats..', // Default hintText value
-                onMicPressed: () {}, // Default onMicPressed function
-                onSearch: (String onSearch) {}, // Default onSearch function
-                controller: TextEditingController(), // Default controller
-              ),
-              QuikSpacing.vS24(),
-              Expanded(
-                  child: ListView.separated(
-                separatorBuilder: (context, index) => const GradientSeparator(),
-                itemBuilder: (context, index) {
-                  var users = value.users
-                      .where((user) =>
-                          user.id != FirebaseAuth.instance.currentUser?.uid)
-                      .toList();
-                  return UserItem(
-                    worker: users[index],
-                  );
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),
+        child: Column(
+          children: [
+            QuikSearchBar(
+              onChanged: (String value) {
+                filterClients(value);
+              }, // Default onChanged function
+              hintText: 'Search for clients..', // Default hintText value
+              onMicPressed: () {}, // Default onMicPressed function
+              onSearch: (String onSearch) {}, // Default onSearch function
+              controller: searchController, // Default controller
+            ),
+            QuikSpacing.vS24(),
+            Expanded(
+              child: StreamBuilder<List<ChatListModel>>(
+                stream: Provider.of<FirebaseProvider>(context)
+                    .getAllWorkersWithLastMessageStream(),
+                builder: (context, snapshot) {
+                  List<ChatListModel> workersToShow =
+                      filteredWorkers.isEmpty && searchController.text.isEmpty
+                          ? allWorkers
+                          : filteredWorkers;
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    if (snapshot.hasData && snapshot.data!.isEmpty) {
+                      return const Center(child: Text('No Chats Yet'));
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  } else if (snapshot.hasError) {
+                    return const Center(child: Text('An error occurred'));
+                  } else if (!snapshot.hasData) {
+                    return const Text('No Chats Yet');
+                  } else {
+                    allWorkers = snapshot.data!;
+                    allWorkers.sort((a, b) => b.sentTime.compareTo(a.sentTime));
+                    return ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          const GradientSeparator(),
+                      itemBuilder: (context, index) {
+                        return workersToShow[index].id !=
+                                FirebaseAuth.instance.currentUser?.uid
+                            ? ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: Container(
+                                  alignment: Alignment.center,
+                                  height: 64,
+                                  width: 64,
+                                  child: Stack(
+                                    children: [
+                                      const Positioned.fill(
+                                          child: CircleAvatar(
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: NetworkImage(
+                                          QuikAssetConstants.placeholderImage,
+                                        ),
+                                      )),
+                                      // if (state.workers[index].isVerified)
+                                      Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: SvgPicture.asset(
+                                          QuikAssetConstants.verifiedBlueSvg,
+                                        ),
+                                      ),
+                                      Positioned(
+                                          bottom: 0,
+                                          left: 4,
+                                          child: SvgPicture.asset(
+                                              workersToShow[index].isActive
+                                                  ? QuikAssetConstants
+                                                      .chatGreenBubbleSvg
+                                                  : QuikAssetConstants
+                                                      .chatGreyBubbleSvg)),
+                                    ],
+                                  ),
+                                ),
+                                title: Text(workersToShow[index].name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall),
+                                subtitle: workersToShow[index].messageType ==
+                                        MessageType.text
+                                    ? Text(
+                                        workersToShow[index].lastMessage,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: chatSubTitle,
+                                      )
+                                    : const Text(
+                                        "Image received",
+                                        style: chatSubTitle,
+                                      ),
+                                trailing: Text(
+                                  formatDate(workersToShow[index].sentTime)
+                                      .toString(),
+                                  style: chatTrailingActive,
+                                ),
+                                onTap: () {
+                                  GoRouter.of(context).pushNamed(
+                                      QuikRoutes.chatConversationName,
+                                      pathParameters: {
+                                        'workerId': workersToShow[index].id
+                                      });
+                                },
+                              )
+                            : const SizedBox();
+                      },
+                      itemCount: workersToShow.length,
+                    );
+                  }
                 },
-                itemCount: value.users
-                    .where((user) =>
-                        user.id != FirebaseAuth.instance.currentUser?.uid)
-                    .length,
-              ))
-
-              // Expanded(
-              //   child: ListView(
-              //     shrinkWrap: true,
-              //     children: [
-              // ListTile(
-              //   contentPadding: EdgeInsets.zero, 
-              //   leading: Container(
-              //     decoration: const BoxDecoration(
-              //       shape: BoxShape.circle,
-              //       color: gridItemBackgroundColor,
-              //     ),
-              //     alignment: Alignment.center,
-              //     height: 64,
-              //     width: 64,
-              //     child: Stack(
-              //       children: [
-              //         const Positioned.fill(
-              //             child: CircleAvatar(
-              //           backgroundImage: AssetImage(
-              //             "assets/images/ratedWorker2.png",
-              //           ),
-              //         )),
-              //         // if (state.workers[index].isVerified)
-              //         Positioned(
-              //           top: 0,
-              //           right: 0,
-              //           child: SvgPicture.asset(
-              //             AppAssetLinks.verifiedBlueSvg,
-              //           ),
-              //         ),
-              //         Positioned(
-              //             bottom: 0,
-              //             left: 4,
-              //             child: SvgPicture.asset(
-              //                 AppAssetLinks.chatGreenBubbleSvg)),
-              //       ],
-              //     ),
-              //   ),
-              //   title: Text("Kenny Kirk",
-              //       style: Theme.of(context).textTheme.headlineSmall),
-              //   subtitle: const Text("Will meet you tomorrow.",
-              //       style: chatSubTitle),
-              //   trailing: const Text(
-              //     "7:04 pm",
-              //     style: chatTrailingActive,
-              //   ),
-              //   onTap: () =>
-              //       context.pushNamed(Routes.chatConversationNamedPageName),
-              // ),
-              // const GradientSeparator(),
-              //       ListTile(
-              //         contentPadding: EdgeInsets.zero,
-              //         leading: Container(
-              //           decoration: const BoxDecoration(
-              //             shape: BoxShape.circle,
-              //             color: gridItemBackgroundColor,
-              //           ),
-              //           alignment: Alignment.center,
-              //           height: 64,
-              //           width: 64,
-              //           child: Stack(
-              //             children: [
-              //               const Positioned.fill(
-              //                   child: CircleAvatar(
-              //                 backgroundImage: AssetImage(
-              //                   "assets/images/ratedWorker3.png",
-              //                 ),
-              //               )),
-              //               // if (state.workers[index].isVerified)
-              //               Positioned(
-              //                 top: 0,
-              //                 right: 0,
-              //                 child: SvgPicture.asset(
-              //                   AppAssetLinks.verifiedBlueSvg,
-              //                 ),
-              //               ),
-              //               Positioned(
-              //                   bottom: 0,
-              //                   left: 4,
-              //                   child: SvgPicture.asset(
-              //                       AppAssetLinks.chatGreyBubbleSvg)),
-              //             ],
-              //           ),
-              //         ),
-              //         title: Text("Henry Kal",
-              //             style: Theme.of(context).textTheme.headlineSmall),
-              //         subtitle: const Text("Payment has been transferred.",
-              //             overflow: TextOverflow.ellipsis,
-              //             style: chatSubTitleRead),
-              //         trailing: const Text(
-              //           "Yesterday",
-              //           style: chatTrailingInactive,
-              //         ),
-              //       ),
-              //       const GradientSeparator(),
-              //       ListTile(
-              //         contentPadding: EdgeInsets.zero,
-              //         leading: Container(
-              //           decoration: const BoxDecoration(
-              //             shape: BoxShape.circle,
-              //             color: gridItemBackgroundColor,
-              //           ),
-              //           alignment: Alignment.center,
-              //           height: 64,
-              //           width: 64,
-              //           child: Stack(
-              //             children: [
-              //               const Positioned.fill(
-              //                   child: CircleAvatar(
-              //                 backgroundImage: AssetImage(
-              //                   "assets/images/ratedWorker1.png",
-              //                 ),
-              //               )),
-              //               // if (state.workers[index].isVerified)
-              //               Positioned(
-              //                 top: 0,
-              //                 right: 0,
-              //                 child: SvgPicture.asset(
-              //                   AppAssetLinks.verifiedBlueSvg,
-              //                 ),
-              //               ),
-              //               Positioned(
-              //                   bottom: 0,
-              //                   left: 4,
-              //                   child: SvgPicture.asset(
-              //                       AppAssetLinks.chatGreyBubbleSvg)),
-              //             ],
-              //           ),
-              //         ),
-              //         title: Text("John Burke",
-              //             style: Theme.of(context).textTheme.headlineSmall),
-              //         subtitle: const Text("Thank you for choosing me.",
-              //             style: chatSubTitle),
-              //         trailing: const Text("29/02/24", style: chatTrailingActive),
-              //       ),
-              //     ],
-              //   ),
-              // )
-            ]),
-          );
-        }));
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

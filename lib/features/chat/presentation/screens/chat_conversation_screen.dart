@@ -3,25 +3,25 @@ import 'package:provider/provider.dart';
 import 'package:quikhyr/features/chat/firebase_provider.dart';
 import 'package:quikhyr/features/chat/presentation/components/chat_messages.dart';
 import 'package:quikhyr/features/chat/presentation/components/chat_text_field.dart';
-import 'package:quikhyr/models/client_model.dart';
+
 
 class ChatConversationScreen extends StatefulWidget {
-  final ClientModel worker;
-  const ChatConversationScreen({super.key, required this.worker});
+  final String workerId;
+  const ChatConversationScreen({super.key, required this.workerId});
 
   @override
   State<ChatConversationScreen> createState() => _ChatConversationScreenState();
 }
 
 class _ChatConversationScreenState extends State<ChatConversationScreen> {
-  
   @override
   void initState() {
     Provider.of<FirebaseProvider>(context, listen: false)
-      .getMessages(widget.worker.id);
+      ..getWorkerById(widget.workerId)
+      ..getMessages(widget.workerId);
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +30,10 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
           padding: const EdgeInsets.all(16),
           child: Column(children: [
             ChatMessages(
-              receiverId: widget.worker.id,
+              receiverId: widget.workerId,
             ),
             ChatTextField(
-              receiverId: widget.worker.id,
+              receiverId: widget.workerId,
             )
           ]),
         ));
@@ -41,15 +41,17 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      title: Row(
-        children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(widget.worker.avatar),
-          ),
-          const SizedBox(width: 10),
-          Text(widget.worker.name),
-        ],
-      ),
-    );
+        title: Consumer<FirebaseProvider>(
+            builder: (context, value, child) => value.user != null
+                ? Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(value.user!.avatar),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(value.user!.name),
+                    ],
+                  )
+                : const SizedBox()));
   }
 }

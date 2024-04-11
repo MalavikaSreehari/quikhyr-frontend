@@ -6,6 +6,7 @@ import 'package:quikhyr/common/bloc/client_bloc.dart';
 import 'package:quikhyr/common/data/repositories/client_repo.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:quikhyr/features/auth/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
 import 'package:quikhyr/features/chat/firebase_provider.dart';
 import 'package:quikhyr/features/home/bloc/most_rated_workers_bloc.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => SignInBloc(userRepository: userRepository),
           ),
+          BlocProvider<SignUpBloc>(create: (context) => SignUpBloc(userRepository: userRepository)),
           BlocProvider<ServicesBloc>(create: (context) {
             final servicesCategoryRepo =
                 RepositoryProvider.of<ServicesRepo>(context);

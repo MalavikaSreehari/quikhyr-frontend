@@ -1,40 +1,77 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
+import 'package:quikhyr/models/chat_list_model.dart';
 import 'package:quikhyr/models/chat_message_model.dart';
 import 'package:quikhyr/models/client_model.dart';
+
 
 class FirebaseProvider extends ChangeNotifier {
   ScrollController scrollController = ScrollController();
 
-  List<ClientModel> users = [];
+  List<ChatListModel> users = [];
   ClientModel? user;
   List<ChatMessageModel> messages = [];
-  List<ClientModel> search = [];
+  List<ChatListModel> search = [];
 
-  Future<List<ClientModel>> getAllWorkers() async {
-    var workersCollection = FirebaseFirestore.instance.collection('workers');
-    // var clientsCollection = FirebaseFirestore.instance.collection('clients');
+Stream<List<ChatListModel>> getAllWorkersWithLastMessageStream() {
+  // Create a stream controller
+  StreamController<List<ChatListModel>> streamController = StreamController();
 
-    var workersSnapshot = await workersCollection.get();
-    // var clientsSnapshot = await clientsCollection.get();
+  FirebaseFirestore.instance.collection('workers').snapshots().listen((clientSnapshot) {
+    for (var doc in clientSnapshot.docs) {
+      var clientData = doc.data() as Map<String, dynamic>?;
 
-    var workers = workersSnapshot.docs
-        .map((doc) => ClientModel.fromMap(doc.data()))
-        .toList();
+      if (clientData != null) {
+        // Listen to the last message for this client in real-time
+        FirebaseFirestore.instance
+            .collection('clients')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('chat').doc(doc.id).collection('messages')
+            .orderBy('sentTime', descending: true)
+            .limit(1)
+            .snapshots().listen((messageSnapshot) {
+          if (messageSnapshot.docs.isNotEmpty) {
+            var messageData = messageSnapshot.docs.first.data() as Map<String, dynamic>;
+            String lastMessage = messageData['content'] ?? '';
+            DateTime sentTime = (messageData['sentTime'] as Timestamp).toDate();
+            MessageType messageType = stringToMessageType(messageData['messageType']);
 
-    // var clients = clientsSnapshot.docs
-    //     .map((doc) => ClientModel.fromMap(doc.data()))
-    //     .toList();
+            // Construct the ChatListModel
+            ChatListModel workerWithLastMessage = ChatListModel(
+              name: clientData['name'],
+              id: doc.id,
+              isVerified: clientData['isVerified'] ?? false,
+              isActive: clientData['isActive'] ?? false,
+              avatar: clientData['avatar'] ?? '',
+              lastMessage: lastMessage,
+              sentTime: sentTime,
+              messageType: messageType,
+            );
 
-    // users = [...workers, ...clients];
+            // Update the specific client with the new last message
+            int index = users.indexWhere((user) => user.id == doc.id);
+            if (index != -1) {
+              users[index] = workerWithLastMessage;
+            } else {
+              users.add(workerWithLastMessage);
+            }
 
-    users = workers;
-    notifyListeners();
+            // Add the updated list of clients with the last message to the stream
+            streamController.add(users);
+          }
+        });
+      }
+    }
+  });
 
-    return users;
-  }
+  return streamController.stream;
+}
+
+
 
   ClientModel? getWorkerById(String userId) {
     FirebaseFirestore.instance
@@ -47,6 +84,7 @@ class FirebaseProvider extends ChangeNotifier {
     });
     return user;
   }
+
 
   List<ChatMessageModel> getMessages(String receiverId) {
     FirebaseFirestore.instance
@@ -74,9 +112,8 @@ class FirebaseProvider extends ChangeNotifier {
         }
       });
 
-  // Future<void> searchUser(String name) async {
-  //   search =
-  //       await FirebaseFirestoreService.searchUser(name);
-  //   notifyListeners();
-  // }
+  Future<void> searchUser(String name) async {
+    search = await FirebaseFirestoreService.searchUser(name);
+    notifyListeners();
+  }
 }

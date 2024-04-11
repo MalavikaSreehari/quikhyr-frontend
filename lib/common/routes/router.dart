@@ -180,13 +180,13 @@ class AppRouter {
                     routes: [
                       GoRoute(
                         parentNavigatorKey: _rootNavigatorKey,
-                        path: QuikRoutes.chatConversationPath,
+                        path: '${QuikRoutes.chatConversationPath}/:workerId',
                         name: QuikRoutes.chatConversationName,
                         pageBuilder: (context, state) =>
                             CustomTransitionPage<void>(
                           // key: state.pageKey,
                           child: ChatConversationScreen(
-                            worker: state.extra as ClientModel,
+                            workerId: state.pathParameters['workerId']!,
                           ),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) =>

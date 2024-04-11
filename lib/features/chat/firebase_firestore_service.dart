@@ -2,8 +2,9 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:quikhyr/models/chat_list_model.dart';
 import 'package:quikhyr/models/chat_message_model.dart';
-import 'package:quikhyr/models/worker_model.dart';
+
 import 'firebase_storage_service.dart';
 
 class FirebaseFirestoreService {
@@ -15,7 +16,7 @@ class FirebaseFirestoreService {
   //   required String email,
   //   required String uid,
   // }) async {
-  //   final user = WorkerModel(
+  //   final user = ClientModel(
   //     id: uid,
   //     email: email,
   //     name: name,
@@ -61,9 +62,6 @@ class FirebaseFirestoreService {
   static Future<void> _addMessageToChat(
     String receiverId,
     ChatMessageModel message,
-
-    //!!Remove the 2nd await firestore if unnecessary amounts of chats are being added to 
-    //!!Wrong receiver
   ) async {
     await firestore
         .collection('clients')
@@ -73,13 +71,6 @@ class FirebaseFirestoreService {
         .collection('messages')
         .add(message.toJson());
 
-    // await firestore
-    //     .collection('clients')
-    //     .doc(receiverId)
-    //     .collection('chat')
-    //     .doc(FirebaseAuth.instance.currentUser!.uid)
-    //     .collection('messages')
-    //     .add(message.toJson());
     await firestore
         .collection('workers')
         .doc(receiverId)
@@ -89,18 +80,22 @@ class FirebaseFirestoreService {
         .add(message.toJson());
   }
 
-  static Future<void> updateUserData(Map<String, dynamic> data) async =>
+  static Future<void> updateUserData(
+          Map<String, dynamic> data) async =>
       await firestore
-          .collection('workers')
+          .collection('clients')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update(data);
 
-  static Future<List<WorkerModel>> searchUser(String name) async {
+  static Future<List<ChatListModel>> searchUser(
+      String name) async {
     final snapshot = await FirebaseFirestore.instance
         .collection('workers')
         .where("name", isGreaterThanOrEqualTo: name)
         .get();
 
-    return snapshot.docs.map((doc) => WorkerModel.fromMap(doc.data())).toList();
+    return snapshot.docs
+        .map((doc) => ChatListModel.fromMap(doc.data()))
+        .toList();
   }
 }
