@@ -14,10 +14,11 @@ import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
+import 'package:quikhyr/features/home/presentation/screens/immediate_booking_screen.dart';
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
-import 'package:quikhyr/models/client_model.dart';
 import 'package:quikhyr/models/service_category_model.dart';
+import 'package:quikhyr/models/sub_service_category_model.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -138,6 +139,32 @@ class AppRouter {
                               },
                               child: HomeDetailScreen(
                                 serviceModel: state.extra as ServiceModel?,
+                                key: state.pageKey,
+                              ));
+                        },
+                      ),
+                         GoRoute(
+                        path: QuikRoutes.homeImmediateBookingPath,
+                        name: QuikRoutes.homeImmediateBookingName,
+
+                        pageBuilder: (context, state) {
+                          final SubserviceModel subserviceModel =
+                              state.extra as SubserviceModel;
+                          return CustomTransitionPage<void>(
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(-1, 0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                              child: ImmediateBookingScreen(
+                                subserviceModel: subserviceModel,
                                 key: state.pageKey,
                               ));
                         },

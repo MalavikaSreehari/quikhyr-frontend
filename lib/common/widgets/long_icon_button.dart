@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 
 class LongIconButton extends StatelessWidget {
   final String text;
   final String? svgPath;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? foregroundColor;
   final Color? backgroundColor;
   final double height; // Added optional height with default value
@@ -29,6 +30,7 @@ class LongIconButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor:
               backgroundColor ?? Theme.of(context).colorScheme.primary,
+          disabledBackgroundColor: labelColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),

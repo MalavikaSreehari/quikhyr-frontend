@@ -22,6 +22,8 @@ import 'package:quikhyr/features/home/data/repository/search_repo.dart';
 import 'package:quikhyr/features/home/data/repository/services_category_repo.dart';
 import 'package:quikhyr/features/home/data/repository/subservices_repo.dart';
 import 'package:quikhyr/features/home/data/repository/worker_list_repo.dart';
+import 'package:quikhyr/features/notification/cubit/notification_cubit.dart';
+import 'package:quikhyr/features/notification/repository/notification_repo.dart';
 
 class MyApp extends StatelessWidget {
   final FirebaseUserRepo userRepository;
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider<NotificationRepo>(create: (context) => NotificationRepo()),
         RepositoryProvider<ClientRepo>(
           create: (context) => ClientRepo(),
         ),
@@ -49,6 +52,11 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<NotificationCubit>(create: (context) {
+            return NotificationCubit(
+              RepositoryProvider.of<NotificationRepo>(context),
+            );
+          },),
           BlocProvider<AuthenticationBloc>(
             create: (context) =>
                 AuthenticationBloc(userRepository: userRepository),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
   final bool obscureText;
   final TextInputType keyboardType;
@@ -12,10 +12,12 @@ class MyTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final String? errorMsg;
   final String? Function(String?)? onChanged;
+  final String? initialValue;
 
   const MyTextField({
+    this.initialValue,
     Key? key,
-    required this.controller,
+    this.controller,
     required this.hintText,
     required this.obscureText,
     required this.keyboardType,
@@ -40,7 +42,9 @@ class _MyTextFieldState extends State<MyTextField> {
     return Focus(
       onFocusChange: (hasFocus) {
         setState(() {
-          backgroundColor = hasFocus ? const Color.fromRGBO(51, 153, 204, 0.12) : const Color(0xFF313131);
+          backgroundColor = hasFocus
+              ? const Color.fromRGBO(51, 153, 204, 0.12)
+              : const Color(0xFF313131);
         });
       },
       child: Builder(
@@ -51,6 +55,7 @@ class _MyTextFieldState extends State<MyTextField> {
               color: backgroundColor,
             ),
             child: TextFormField(
+              initialValue: widget.initialValue,
               validator: widget.validator,
               controller: widget.controller,
               obscureText: widget.obscureText,
@@ -73,7 +78,8 @@ class _MyTextFieldState extends State<MyTextField> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+                  borderSide:
+                      BorderSide(color: Theme.of(context).colorScheme.primary),
                 ),
                 fillColor: const Color.fromRGBO(51, 153, 204, 0.12),
                 filled: true,
@@ -88,13 +94,13 @@ class _MyTextFieldState extends State<MyTextField> {
                   height: 1,
                 ),
                 labelStyle: const TextStyle(
-      color: Color.fromRGBO(233, 234, 236, 0.50),
-      fontFamily: 'Trap',
-      fontSize: 13,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w600,
-      height: 1,
-    ),
+                  color: Color.fromRGBO(233, 234, 236, 0.50),
+                  fontFamily: 'Trap',
+                  fontSize: 13,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w600,
+                  height: 1,
+                ),
                 errorText: widget.errorMsg,
               ),
             ),

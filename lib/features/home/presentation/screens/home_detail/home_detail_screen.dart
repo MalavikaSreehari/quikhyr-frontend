@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
@@ -32,6 +33,7 @@ class HomeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SubserviceModel? selectedSubservice;
     debugPrint(serviceModel?.avatar);
     debugPrint(serviceModel?.name);
     return Scaffold(
@@ -191,7 +193,17 @@ class HomeDetailScreen extends StatelessWidget {
                 QuikSpacing.vS30(),
                 LongIconButton(
                   text: "Immediate Booking",
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed(QuikRoutes.homeImmediateBookingName,
+                        extra: selectedSubservice ??
+                            SubserviceModel(
+                                id: "0",
+                                serviceId: serviceModel?.id ?? "0",
+                                serviceName: "All",
+                                name: "All Subservices",
+                                description: "All",
+                                tags: const []));
+                  },
                   svgPath: QuikAssetConstants.rightArrowSvg,
                 ),
                 QuikSpacing.vS10(),
@@ -207,16 +219,30 @@ class HomeDetailScreen extends StatelessWidget {
                         subservices: [],
                       );
                     } else if (state is SubservicesLoaded) {
-                      state.subservices.insert(
-                          0,
+                      if (state.subservices[0] !=
                           SubserviceModel(
                               id: "0",
                               serviceId: state.subservices[1].serviceId,
                               serviceName: "All",
                               name: "All Subservices",
                               description: "All",
-                              tags: const []));
+                              tags: const [])) {
+                        state.subservices.insert(
+                            0,
+                            SubserviceModel(
+                                id: "0",
+                                serviceId: state.subservices[1].serviceId,
+                                serviceName: "All",
+                                name: "All Subservices",
+                                description: "All",
+                                tags: const []));
+                      }
                       return QuikDropDownButtonSubservice(
+                        //!?VALUE CALLBACK VS VALUE SETTER VS FUNCTION
+                        onSubserviceSelected: (SubserviceModel subservice) {
+                          selectedSubservice = subservice;
+                          debugPrint(selectedSubservice?.name);
+                        },
                         subservices: state.subservices,
                       );
                     } else if (state is SubservicesError) {

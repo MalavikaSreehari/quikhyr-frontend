@@ -7,6 +7,7 @@ class QuikRoutes {
   static const homePath = '/home';
   static const homeDetailsPath = 'details';
   static const homeDetailsFromSearchPath = 'detailsFromSearch';
+  static const homeImmediateBookingPath = 'immediateBooking';
   static const profilePath = '/profile';
   static const explorePath = '/explore';
   static const chatPath = '/chat';
@@ -21,6 +22,7 @@ class QuikRoutes {
   static const homeName = 'homeName';
   static const homeDetailsName = 'homeDetailsName';
   static const homeDetailsFromSearchName = 'homeDetailsFromSearchName';
+  static const homeImmediateBookingName = 'immediateBookingName';
   static const profileName = 'profileName';
   static const exploreName = 'exploreName';
   static const chatName = 'chatName';

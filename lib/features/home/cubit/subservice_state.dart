@@ -1,24 +1,39 @@
 part of 'subservice_cubit.dart';
 
-sealed class SubserviceState extends Equatable {
+abstract class SubserviceState extends Equatable {
   const SubserviceState();
 
   @override
   List<Object> get props => [];
 }
 
+class SubservicesLoading extends SubserviceState {}
 
-final class SubservicesLoading extends SubserviceState {}
-
-final class SubservicesLoaded extends SubserviceState {
+class SubservicesLoaded extends SubserviceState {
   final List<SubserviceModel> subservices;
-  const SubservicesLoaded(this.subservices);
+  final bool isSendServiceRequestSignalEnabled;
+
+  const SubservicesLoaded({
+    required this.subservices,
+    this.isSendServiceRequestSignalEnabled = false,
+  });
+
+  SubservicesLoaded copyWith({
+    List<SubserviceModel>? subservices,
+    bool? isSendServiceRequestSignalEnabled,
+  }) {
+    return SubservicesLoaded(
+      subservices: subservices ?? this.subservices,
+      isSendServiceRequestSignalEnabled:
+          isSendServiceRequestSignalEnabled ?? this.isSendServiceRequestSignalEnabled,
+    );
+  }
 
   @override
-  List<Object> get props => [subservices];
+  List<Object> get props => [subservices, isSendServiceRequestSignalEnabled];
 }
 
-final class SubservicesError extends SubserviceState {
+class SubservicesError extends SubserviceState {
   final String message;
   const SubservicesError(this.message);
 

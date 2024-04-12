@@ -12,10 +12,12 @@ class QuikDropDownButtonSubservice extends StatefulWidget {
   final Color? foregroundColor;
   final Color? backgroundColor;
   final double height;
+  final Function(SubserviceModel subservice)? onSubserviceSelected;
 
   const QuikDropDownButtonSubservice({
     Key? key,
     required this.subservices,
+    this.onSubserviceSelected,
     this.foregroundColor,
     this.backgroundColor,
     this.height = 54,
@@ -100,6 +102,9 @@ class _QuikDropDownButtonSubserviceState
               setState(() {
                 selectedSubservice = newSubservice;
               });
+              if (widget.onSubserviceSelected != null) {
+                widget.onSubserviceSelected!(newSubservice!);
+              }
             },
           ),
         ),

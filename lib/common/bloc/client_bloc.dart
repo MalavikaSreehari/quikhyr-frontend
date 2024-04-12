@@ -18,6 +18,7 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
       : super(ClientInitial()) {
     on<FetchClient>(_onFetchClient);
     on<UpdatePincode>(_onUpdatePincode);
+    on<UpdateLocation>(_onUpdateLocation);
   }
 
   FutureOr<void> _onFetchClient(
@@ -38,5 +39,17 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
       (error) => emit(PincodeUpdatedError(error: error)),
       (client) => add(FetchClient()),
     );
+  }
+
+  FutureOr<void> _onUpdateLocation(UpdateLocation event, Emitter<ClientState> emit) async {
+      emit(LocationUpdating());
+    final String workerId = await firebaseUserRepo.getCurrentUserId();
+    final result = await clientRepo.updateClientLocation(
+        clientId: workerId, location: event.newLocation);
+    result.fold((error) => emit(LocationUpdatedError(error: error)), (worker) {
+      emit(LocationUpdatedSuccess());
+      add(FetchClient());
+    });
+  
   }
 }

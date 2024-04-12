@@ -104,6 +104,17 @@ const TextStyle chatSubTitle = TextStyle(
   height: 1.0,
 );
 
+const TextStyle timeGreenTextStyle = TextStyle(
+  color: quikHyrGreen,
+  fontFamily: 'Trap',
+  fontSize: 12.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+  height: 1.0,
+);
+
+
+
 const TextStyle chatSubTitleRead = TextStyle(
   color: placeHolderText,
   fontFamily: 'Trap',
