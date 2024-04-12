@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/app_routes.dart';
 import 'package:quikhyr/common/routes/screens/page_not_found.dart';
+import 'package:quikhyr/common/screens/notification_screen.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
@@ -231,7 +232,8 @@ return NoTransitionPage(
                 ),
               ],
             ),
-          ])
+          ]),
+          GoRoute(path: Routes.notificationPath, name: Routes.notificationName, pageBuilder: (context, state) => const NoTransitionPage(child: NotificationScreen())),
       //It is not necessary to provide a navigatorKey if it isn't also
       //needed elsewhere. If not provided, a default key will be used.
     ],

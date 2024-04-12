@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               ClickableSvgIcon(
                   svgAsset: AppAssetLinks.bellNotificationActiveSvg,
                   onTap: () {
-                    //HANDLE GO TO NOTIFICATIONS
+                    context.pushNamed(Routes.notificationName);
                   }),
               AppSizing.hS10(),
               ClickableSvgIcon(

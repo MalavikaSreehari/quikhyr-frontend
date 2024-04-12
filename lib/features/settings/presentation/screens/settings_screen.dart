@@ -67,8 +67,10 @@ class SettingsScreen extends StatelessWidget {
                 height: 24,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CircleAvatar(
+Row(children: [
+                    const CircleAvatar(
                     radius: 32,
                     backgroundImage:
                         NetworkImage(AppAssetLinks.placeholderImage),
@@ -106,11 +108,10 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    width: 12,
-                  ),
+
+],),
                   Align(
-                    alignment: Alignment.bottomRight,
+                    alignment: Alignment.centerRight,
                     child: OutlinedButton.icon(
                       onPressed: () {},
                       icon: const Icon(
@@ -170,30 +171,30 @@ class SettingsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: const Icon(
-                        Icons.person,
-                        color: labelColor,
-                      ),
+                      leading: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.accountSvg,
+                                onTap: () {},
+                              ),
                       title: Text(
                         'Manage Account',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     ListTile(
-                      leading: const Icon(
-                        Icons.mark_unread_chat_alt,
-                        color: labelColor,
-                      ),
+                      leading: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.notificationsSvg,
+                                onTap: () {},
+                              ),
                       title: Text(
                         'Manage Notifications',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     ListTile(
-                      leading: const Icon(
-                        Icons.block_rounded,
-                        color: labelColor,
-                      ),
+                      leading: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.blockSvg,
+                                onTap: () {},
+                              ),
                       title: Text(
                         'Block/Unblock Workers',
                         style: Theme.of(context).textTheme.bodyMedium,
@@ -214,20 +215,20 @@ class SettingsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: const Icon(
-                        Icons.help,
-                        color: labelColor,
-                      ),
+                      leading: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.faqSvg,
+                                onTap: () {},
+                              ),
                       title: Text(
                         'Explore FAQs',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     ListTile(
-                      leading: const Icon(
-                        Icons.bug_report_rounded,
-                        color: labelColor,
-                      ),
+                      leading: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.bugSvg,
+                                onTap: () {},
+                              ),
                       title: Text(
                         'Report Bugs',
                         style: Theme.of(context).textTheme.bodyMedium,
@@ -248,25 +249,48 @@ class SettingsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: const Icon(
-                        Icons.help,
-                        color: labelColor,
-                      ),
+                      leading: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.termsAndConditionsSvg,
+                                onTap: () {},
+                              ),
                       title: Text(
                         'Terms and Conditions',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     ListTile(
-                      leading: const Icon(
-                        Icons.star,
-                        color: labelColor,
-                      ),
+                      leading: ClickableSvgIcon(
+                                svgAsset: AppAssetLinks.privacySvg,
+                                onTap: () {},
+                              ),
                       title: Text(
-                        'Report Bugs',
+                        'Privacy Policy',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
+                    
                     ),
+                    // ListTile(
+                    //  leading: Icon(Icons.info, color: secondary, size: 24),
+                    //   title: Text(
+                    //     'QuikHyr',
+                    //     style: Theme.of(context).textTheme.bodyMedium,
+                    //   ), 
+                    // )
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                           Icon(Icons.info_outline_rounded, color: secondary, size: 24),
+                           SizedBox(width: 8,),
+                       Text(
+                          'QuikHyr',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

@@ -15,6 +15,7 @@ class Routes {
   static const loginNamedPagePath = '/login';
   static const signUpNamedPagePath = '/signup';
   static const settingsNamedPagePath = '/settings';
+  static const notificationPath = '/notification';
 
   static const homeNamedPageName = 'homeName';
   static const homeDetailsNamedPageName = 'homeDetailsName';
@@ -27,7 +28,7 @@ class Routes {
   static const loginNamedPageName = 'loginName';
   static const signUpNamePageName = 'signupName';
   static const settingsNamedPageName = 'settingsName';
-
+  static const notificationName = 'notificationName';
 
     static Widget errorWidget(BuildContext context, GoRouterState state) => const NotFoundScreen();
 }
