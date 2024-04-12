@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/routes/screens/page_not_found.dart';
+import 'package:quikhyr/common/screens/notification_screen.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:quikhyr/features/auth/presentation/screens/sign_up_screen.dart';
@@ -255,6 +256,7 @@ class AppRouter {
               ],
             ),
           ]),
+          GoRoute(path: QuikRoutes.notificationPath, name: QuikRoutes.notificationName, pageBuilder: (context, state) => const NoTransitionPage(child: NotificationScreen())),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: QuikRoutes.signInPath,
