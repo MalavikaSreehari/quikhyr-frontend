@@ -44,7 +44,7 @@ class SettingsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              AppSizing.vS30(),
+              QuikSpacing.vS30(),
               QuikSearchBar(
                 onChanged: (String onChanged) {},
                 hintText: 'Search for settings..',
@@ -72,7 +72,7 @@ Row(children: [
                     const CircleAvatar(
                     radius: 32,
                     backgroundImage:
-                        NetworkImage(AppAssetLinks.placeholderImage),
+                        NetworkImage(QuikAssetConstants.placeholderImage),
                   ),
                   const SizedBox(
                     width: 16,
@@ -138,17 +138,17 @@ Row(children: [
         ),
         // actions: [
         //   ClickableSvgIcon(
-        //       svgAsset: AppAssetLinks.bellNotificationActiveSvg,
+        //       svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
         //       onTap: () {
         //         //HANDLE GO TO NOTIFICATIONS
         //       }),
-        //   AppSizing.hS10(),
+        //   QuikSpacing.hS10(),
         //   ClickableSvgIcon(
-        //       svgAsset: AppAssetLinks.logoutSvg,
+        //       svgAsset: QuikAssetConstants.logoutSvg,
         //       onTap: () {
         //         // context.read<SignInBloc>().add(const SignOutRequired());
         //       }),
-        //   AppSizing.hS24(),
+        //   QuikSpacing.hS24(),
         // ],
       ),
       body: SingleChildScrollView(
@@ -171,7 +171,7 @@ Row(children: [
                   children: [
                     ListTile(
                       leading: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.accountSvg,
+                                svgAsset: QuikAssetConstants.accountSvg,
                                 onTap: () {},
                               ),
                       title: Text(
@@ -181,7 +181,7 @@ Row(children: [
                     ),
                     ListTile(
                       leading: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.notificationsSvg,
+                                svgAsset: QuikAssetConstants.notificationsSvg,
                                 onTap: () {},
                               ),
                       title: Text(
@@ -191,7 +191,7 @@ Row(children: [
                     ),
                     ListTile(
                       leading: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.blockSvg,
+                                svgAsset: QuikAssetConstants.blockSvg,
                                 onTap: () {},
                               ),
                       title: Text(
@@ -215,7 +215,7 @@ Row(children: [
                   children: [
                     ListTile(
                       leading: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.faqSvg,
+                                svgAsset: QuikAssetConstants.faqSvg,
                                 onTap: () {},
                               ),
                       title: Text(
@@ -225,7 +225,7 @@ Row(children: [
                     ),
                     ListTile(
                       leading: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.bugSvg,
+                                svgAsset: QuikAssetConstants.bugSvg,
                                 onTap: () {},
                               ),
                       title: Text(
@@ -249,7 +249,7 @@ Row(children: [
                   children: [
                     ListTile(
                       leading: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.termsAndConditionsSvg,
+                                svgAsset: QuikAssetConstants.termsAndConditionsSvg,
                                 onTap: () {},
                               ),
                       title: Text(
@@ -259,7 +259,7 @@ Row(children: [
                     ),
                     ListTile(
                       leading: ClickableSvgIcon(
-                                svgAsset: AppAssetLinks.privacySvg,
+                                svgAsset: QuikAssetConstants.privacySvg,
                                 onTap: () {},
                               ),
                       title: Text(

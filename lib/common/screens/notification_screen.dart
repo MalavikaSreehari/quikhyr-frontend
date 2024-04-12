@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/app_asset_links.dart';
-import 'package:quikhyr/common/constants/app_routes.dart';
-import 'package:quikhyr/common/constants/app_sizing.dart';
-import 'package:quikhyr/common/constants/app_theme.dart';
+import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
+import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 
@@ -15,7 +12,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),
         child: Padding(
@@ -51,13 +48,12 @@ class NotificationScreen extends StatelessWidget {
               ],
             ),
             actions: [
-              
               ClickableSvgIcon(
-                  svgAsset: AppAssetLinks.logoutSvg,
+                  svgAsset: QuikAssetConstants.logoutSvg,
                   onTap: () {
                     context.read<SignInBloc>().add(const SignOutRequired());
                   }),
-              AppSizing.hS24(),
+              QuikSpacing.hS24(),
             ],
           ),
         ),
@@ -65,67 +61,69 @@ class NotificationScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: ListView.builder(
-          itemCount: 5, 
+          itemCount: 5,
           itemBuilder: (context, index) {
             return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: Container(
-        alignment: Alignment.center,
-        height: 64,
-        width: 64,
-        child: CircleAvatar(
+              contentPadding: EdgeInsets.zero,
+              leading: Container(
+                alignment: Alignment.center,
+                height: 64,
+                width: 64,
+                child: const CircleAvatar(
                   backgroundImage: NetworkImage(
-        AppAssetLinks.placeholderImage,
+                    QuikAssetConstants.placeholderImage,
                   ),
                 ),
-      ),
-      title: Text("Worker Name",
-          style: Theme.of(context).textTheme.headlineSmall),
-      subtitle: Text("Service Time: 12:00 pm", style: chatSubTitle),
-      trailing: const Text(
-        "Price",
-        style: chatTrailingActive,
-      ),
-      onTap: () {
-        showModalBottomSheet(context: context, builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          color: Theme.of(context).colorScheme.secondary,
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text("Worker Name"),
-                  subtitle: Text("Service Time: 12:00 pm"),
-                  trailing: Text("Price"),
-                  
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        context.goNamed(Routes.chatConversationNamedPageName);
-                      },
-                      child: Text("Accept"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.goNamed(Routes.chatConversationNamedPageName);
-                      },
-                      child: Text("Reject"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-        });
-      },
-    );
-
+              ),
+              title: Text("Worker Name",
+                  style: Theme.of(context).textTheme.headlineSmall),
+              subtitle:
+                  const Text("Service Time: 12:00 pm", style: chatSubTitle),
+              trailing: const Text(
+                "Price",
+                style: chatTrailingActive,
+              ),
+              onTap: () {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200,
+                        color: Theme.of(context).colorScheme.secondary,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            children: [
+                              const ListTile(
+                                title: Text("Worker Name"),
+                                subtitle: Text("Service Time: 12:00 pm"),
+                                trailing: Text("Price"),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      debugPrint("Accepted");
+                                    },
+                                    child: const Text("Accept"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      debugPrint("Rejected");
+                                    },
+                                    child: const Text("Reject"),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+              },
+            );
           },
         ),
       ),
