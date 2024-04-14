@@ -170,8 +170,9 @@ class NotificationsService {
           }
         }),
       );
+      debugPrint('Notification sent successfully to $receiverToken');
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('Failed to send notification: $e');
     }
   }
 }

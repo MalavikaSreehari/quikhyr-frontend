@@ -90,7 +90,7 @@ Stream<List<ChatListModel>> getAllWorkersWithLastMessageStream() {
         .snapshots(includeMetadataChanges: true)
         .listen((messages) {
       this.messages = messages.docs
-          .map((doc) => ChatMessageModel.fromJson(doc.data()))
+          .map((doc) => ChatMessageModel.fromJson(doc.data(), doc.id))
           .toList();
       notifyListeners();
 

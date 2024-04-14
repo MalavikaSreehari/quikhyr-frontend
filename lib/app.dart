@@ -52,11 +52,11 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<NotificationCubit>(create: (context) {
-            return NotificationCubit(
-              RepositoryProvider.of<NotificationRepo>(context),
-            );
-          },),
+            BlocProvider<NotificationCubit>(create: (context) {
+              return NotificationCubit(
+                RepositoryProvider.of<NotificationRepo>(context),
+              );
+            },),
           BlocProvider<AuthenticationBloc>(
             create: (context) =>
                 AuthenticationBloc(userRepository: userRepository),

@@ -28,6 +28,45 @@ class FirebaseFirestoreService {
   //       .set(user.toJson());
   // }
 
+  // static Future<void> respondToBookingProposal({
+  //   required String receiverId,
+  //   required bool isAccepted,
+  // }) async {
+  //   final message = ChatMessageModel(
+  //     content: 'Booking Accepted By ${FirebaseAuth.instance.currentUser!.uid}',
+  //     hasResponded: true,
+  //     isAccepted: isAccepted,
+  //     sentTime: DateTime.now(),
+  //     receiverId: receiverId,
+  //     messageType: MessageType.booking,
+  //     senderId: FirebaseAuth.instance.currentUser!.uid,
+  //   );
+  //   await _addMessageToChat(receiverId, message);
+  // }
+
+  static Future<void> updateBookingProposal({
+    required String receiverId,
+    required bool isAccepted,
+    required String textMessageId,
+  }) async {
+    await firestore
+        .collection('clients')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('chat')
+        .doc(receiverId)
+        .collection('messages')
+        .doc(textMessageId)
+        .update({'isAccepted': isAccepted, 'hasResponded': true});
+    await firestore
+        .collection('workers')
+        .doc(receiverId)
+        .collection('chat')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('messages')
+        .doc(textMessageId)
+        .update({'isAccepted': isAccepted, 'hasResponded': true});
+  }
+
   static Future<void> addTextMessage({
     required String content,
     required String receiverId,
@@ -63,13 +102,15 @@ class FirebaseFirestoreService {
     String receiverId,
     ChatMessageModel message,
   ) async {
+    var newDocId = firestore.collection('clients').doc().id;
     await firestore
         .collection('clients')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('chat')
         .doc(receiverId)
         .collection('messages')
-        .add(message.toJson());
+        .doc(newDocId)
+        .set(message.toJson());
 
     await firestore
         .collection('workers')
@@ -77,18 +118,17 @@ class FirebaseFirestoreService {
         .collection('chat')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('messages')
-        .add(message.toJson());
+        .doc(newDocId)
+        .set(message.toJson());
   }
 
-  static Future<void> updateUserData(
-          Map<String, dynamic> data) async =>
+  static Future<void> updateUserData(Map<String, dynamic> data) async =>
       await firestore
           .collection('clients')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update(data);
 
-  static Future<List<ChatListModel>> searchUser(
-      String name) async {
+  static Future<List<ChatListModel>> searchUser(String name) async {
     final snapshot = await FirebaseFirestore.instance
         .collection('workers')
         .where("name", isGreaterThanOrEqualTo: name)
