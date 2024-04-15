@@ -284,6 +284,11 @@ class HomeDetailScreen extends StatelessWidget {
                       return Column(
                         children: state.workers
                             .map((worker) => ListTile(
+                                onTap: () {
+                                  context.pushNamed(
+                                      QuikRoutes.chatConversationName,
+                                      pathParameters: {'workerId': worker.id},);
+                                },
                                 contentPadding: EdgeInsets.zero,
                                 leading: CircleAvatar(
                                   radius: 32,

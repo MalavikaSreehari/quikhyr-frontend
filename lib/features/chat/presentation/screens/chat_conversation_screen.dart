@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
 import 'package:quikhyr/features/chat/firebase_provider.dart';
 import 'package:quikhyr/features/chat/notification_service.dart';
 import 'package:quikhyr/features/chat/presentation/components/chat_messages.dart';

@@ -16,7 +16,11 @@ class FirebaseProvider extends ChangeNotifier {
   ClientModel? user;
   List<ChatMessageModel> messages = [];
   List<ChatListModel> search = [];
-
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 Stream<List<ChatListModel>> getAllWorkersWithLastMessageStream() {
   var streamController = StreamController<List<ChatListModel>>.broadcast();
 
@@ -99,11 +103,29 @@ Stream<List<ChatListModel>> getAllWorkersWithLastMessageStream() {
     return messages;
   }
 
-  void scrollDown() => WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (scrollController.hasClients) {
-          scrollController.jumpTo(scrollController.position.maxScrollExtent);
-        }
-      });
+void scrollDown() {
+  // Check if the scrollController is attached to any scroll views.
+  if (scrollController.hasClients) {
+    // Check if the current scroll position is at the bottom.
+    // If it's not at the bottom, there's no need to scroll.
+    final maxScroll = scrollController.position.maxScrollExtent;
+    final currentScroll = scrollController.position.pixels;
+    final isAtBottom = currentScroll >= (maxScroll - 100); // 100 is a threshold, can be adjusted
+
+    // Use a post frame callback to ensure the UI has been updated.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Only scroll down if we're at the bottom of the chat.
+      if (isAtBottom) {
+        scrollController.animateTo(
+          maxScroll,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+}
+
 
   Future<void> searchUser(String name) async {
     search = await FirebaseFirestoreService.searchUser(name);

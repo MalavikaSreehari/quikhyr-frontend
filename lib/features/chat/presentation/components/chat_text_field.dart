@@ -23,8 +23,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
 
   @override
   void initState() {
-    notificationsService
-        .getReceiverToken(widget.receiverId);
+    notificationsService.getReceiverToken(widget.receiverId);
     super.initState();
   }
 
@@ -77,9 +76,10 @@ class _ChatTextFieldState extends State<ChatTextField> {
         senderId: FirebaseAuth.instance.currentUser!.uid,
       );
       controller.clear();
+    }
+    if (context.mounted) {
       FocusScope.of(context).unfocus();
     }
-    FocusScope.of(context).unfocus();
   }
 
   Future<void> _sendImage() async {
