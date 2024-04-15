@@ -2,6 +2,8 @@ class QuikAssetConstants {
   static const String sendSvg = 'assets/icons/send.svg';
   static const String ratingSvg = 'assets/icons/feedback_active.svg';
   static const String qrCodeSvg = 'assets/icons/qr_code.svg';
+  static const String qrCodeLargeSvg = 'assets/icons/qr_code_large.svg';
+
   static const String arrowRightUpSvg = 'assets/icons/arrow_right_up.svg';
   static const String placeholderImage =
       "https://firebasestorage.googleapis.com/v0/b/quikhyr-app.appspot.com/o/assets%2Favatar_placeholder.png?alt=media&token=6f22f53a-d775-4691-b1ba-1fa31e6cf1ec";

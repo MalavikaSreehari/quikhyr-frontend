@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/short_icon_button.dart';
+import 'package:quikhyr/features/booking/repository/booking_repository.dart';
 import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
 import 'package:quikhyr/features/chat/notification_service.dart';
+import 'package:quikhyr/models/simple_booking_model.dart';
 import 'package:quikhyr/models/chat_message_model.dart';
+import 'package:quikhyr/models/location_model.dart';
 
 class BookingRequestBubble extends StatefulWidget {
   final bool isMe;
@@ -25,8 +28,50 @@ class BookingRequestBubble extends StatefulWidget {
 class _BookingRequestBubbleState extends State<BookingRequestBubble> {
   final notificationsService = NotificationsService();
 
-  Future<void> _respondToBookingProposal(BuildContext context,
-      String receiverId, String messageId, bool isAccepted) async {
+  Future<void> _respondToBookingProposal(
+      BuildContext context,
+      String receiverId,
+      String messageId,
+      ChatMessageModel message,
+      bool isAccepted) async {
+    final response = await BookingRepository().createBooking(
+      SimpleBookingModel(
+        subserviceId:
+            message.subserviceId ?? "99", // Default value for subserviceId
+        location: LocationModel(latitude: 55, longitude: 55),
+        clientId: message.receiverId,
+        dateTime: message.timeslot ?? DateTime.now(),
+        ratePerUnit: message.ratePerUnit ?? 0.0,
+        status: "Pending",
+        unit: message.unit ?? "-99", // Default value for unit
+        workerId: message.senderId,
+      ),
+    );
+
+    // Check the result of the createBooking call
+    final isSuccess = response.fold((l) {
+      debugPrint(l.toString());
+      return false; // Return false if there's an error
+    }, (r) => true); // Return true if successful
+
+    // Only run the following methods if createBooking was successful
+    if (isSuccess) {
+      debugPrint("Booking created successfully");
+      // await FirebaseFirestoreService.respondToBookingProposal(
+      //     receiverId: widget.receiverId, isAccepted: isAccepted);
+
+      await notificationsService.sendNotification(
+        body: "Booking Accepted By ${FirebaseAuth.instance.currentUser!.uid}",
+        senderId: FirebaseAuth.instance.currentUser!.uid,
+      );
+      if (context.mounted) {
+        FocusScope.of(context).unfocus();
+      }
+
+      if (context.mounted) {
+        FocusScope.of(context).unfocus();
+      }
+    }
     await FirebaseFirestoreService.updateBookingProposal(
         textMessageId: messageId,
         receiverId: receiverId,
@@ -69,7 +114,7 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
               ),
               const SizedBox(height: 5.0),
               Text(
-                'Price per Unit: ${widget.message.pricePerUnit.toString()}',
+                'Price per Unit: ${widget.message.ratePerUnit.toString()}',
                 style: descriptionTextStyle,
               ),
               const SizedBox(height: 5.0),
@@ -79,26 +124,34 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
               ),
               if (!widget.isMe) ...[
                 const SizedBox(height: 10.0),
-                Row(
-                  children: [
-                    ShortIconButton(
-                        isEnabled: widget.message.hasResponded == null,
-                        text: 'Accept',
-                        onPressed: () {
-                          _respondToBookingProposal(context, widget.receiverId,
-                              widget.message.id ?? "99", true);
-                          
-                        }),
-                    const SizedBox(width: 10.0),
-                    ShortIconButton(
-                        isEnabled: widget.message.hasResponded == null,
-                        text: 'Reject',
-                        onPressed: () {
-                          _respondToBookingProposal(context, widget.receiverId,
-                              widget.message.id ?? "99", false);
-                        }),
-                  ],
-                ),
+                if (widget.message.hasResponded == null)
+                  Row(
+                    children: [
+                      ShortIconButton(
+                          isEnabled: widget.message.hasResponded == null,
+                          text: 'Accept',
+                          onPressed: () {
+                            _respondToBookingProposal(
+                              context,
+                              widget.receiverId,
+                              widget.message.id ?? "99",
+                              widget.message,
+                              true,
+                            );
+                          }),
+                      const SizedBox(width: 10.0),
+                      ShortIconButton(
+                          text: 'Reject',
+                          onPressed: () {
+                            _respondToBookingProposal(
+                                context,
+                                widget.receiverId,
+                                widget.message.id ?? "99",
+                                widget.message,
+                                false);
+                          }),
+                    ],
+                  ),
                 const SizedBox(height: 10.0),
                 Text(
                   widget.message.hasResponded == null

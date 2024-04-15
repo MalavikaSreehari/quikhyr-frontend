@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,10 +10,9 @@ import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 import 'package:quikhyr/features/booking/blocs/cubit/booking_cubit.dart';
-import 'package:quikhyr/features/booking/repository/booking_repository.dart';
 
-class BookingScreen extends StatelessWidget {
-  const BookingScreen({super.key});
+class BookingDetailScreen extends StatelessWidget {
+  const BookingDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +95,11 @@ class BookingScreen extends StatelessWidget {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: "CURRENT ",
+                            text: "BOOKING ",
                             style: Theme.of(context).textTheme.titleMedium,
                             children: [
                               TextSpan(
-                                text: "BOOKINGS",
+                                text: "DETAILS",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium
@@ -132,7 +130,7 @@ class BookingScreen extends StatelessWidget {
                       child: BlocBuilder<BookingCubit, BookingState>(
                         builder: (context, state) {
                           if (state is BookingLoading) {
-                            return const CircularProgressIndicator();
+                            return CircularProgressIndicator();
                           } else if (state is BookingLoaded) {
                             return ListView.separated(
                               separatorBuilder: (context, index) =>
@@ -170,8 +168,7 @@ class BookingScreen extends StatelessWidget {
                                         Text(booking.workerId,
                                             style: workerListNameTextStyle),
                                         QuikSpacing.vS8(),
-                                        const Text("Mechanic",
-                                            style: chatSubTitle),
+                                        Text("Mechanic", style: chatSubTitle),
                                       ],
                                     ),
                                     subtitle: Column(
@@ -191,19 +188,14 @@ class BookingScreen extends StatelessWidget {
                                                 QuikAssetConstants.qrCodeSvg,
                                             height: 32,
                                             width: 32,
-                                            onTap: () {
-                                              context.pushNamed(QuikRoutes.bookingQrName);
-                                            }),
+                                            onTap: () {}),
                                         QuikSpacing.hS12(),
                                         ClickableSvgIcon(
                                             svgAsset: QuikAssetConstants
                                                 .arrowRightUpSvg,
                                             height: 32,
                                             width: 32,
-                                            onTap: () {
-                                              context.goNamed(
-                                                  QuikRoutes.bookingDetailName);
-                                            }),
+                                            onTap: () {}),
                                       ],
                                     ),
                                   ),
@@ -216,101 +208,96 @@ class BookingScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    QuikSpacing.vS24(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: "PAST ",
-                            style: Theme.of(context).textTheme.titleMedium,
-                            children: [
-                              TextSpan(
-                                text: "BOOKINGS",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.copyWith(
-                                      color: primary,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              "This Week",
-                              style: filterDropDownMediumTextStyle,
-                            ),
-                            SvgPicture.asset(
-                              QuikAssetConstants.dropDownArrowSvg,
-                              width: 16,
-                              height: 16,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                    QuikSpacing.vS16(),
-                    Expanded(
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            QuikSpacing.vS16(),
-                        itemCount: state.booking.currentBookings.length,
-                        itemBuilder: (context, index) {
-                          final booking = state.booking.currentBookings[index];
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: textInputBackgroundColor,
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              leading: Container(
-                                height: 48,
-                                width: 48,
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: labelColor),
-                                ),
-                                child: SvgPicture.asset(
-                                  QuikAssetConstants.electricalsSvg,
-                                  height: 24,
-                                  width: 24,
-                                ),
-                              ),
-                              title: Text(booking.workerId,
-                                  style: workerListNameTextStyle),
-                              subtitle:
-                                  Text(booking.status, style: chatSubTitleRead),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ClickableSvgIcon(
-                                      svgAsset: QuikAssetConstants.ratingSvg,
-                                      height: 32,
-                                      width: 32,
-                                      onTap: () {}),
-                                  QuikSpacing.hS12(),
-                                  ClickableSvgIcon(
-                                      svgAsset:
-                                          QuikAssetConstants.arrowRightUpSvg,
-                                      height: 32,
-                                      width: 32,
-                                      onTap: () {
-                                        context.goNamed(
-                                            QuikRoutes.bookingDetailName);
-                                      }),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    // QuikSpacing.vS24(),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     RichText(
+                    //       text: TextSpan(
+                    //         text: "PAST ",
+                    //         style: Theme.of(context).textTheme.titleMedium,
+                    //         children: [
+                    //           TextSpan(
+                    //             text: "BOOKINGS",
+                    //             style: Theme.of(context)
+                    //                 .textTheme
+                    //                 .titleMedium
+                    //                 ?.copyWith(
+                    //                   color: primary,
+                    //                 ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     Row(
+                    //       children: [
+                    //         const Text(
+                    //           "This Week",
+                    //           style: filterDropDownMediumTextStyle,
+                    //         ),
+                    //         SvgPicture.asset(
+                    //           QuikAssetConstants.dropDownArrowSvg,
+                    //           width: 16,
+                    //           height: 16,
+                    //         )
+                    //       ],
+                    //     )
+                    //   ],
+                    // ),
+                    // QuikSpacing.vS16(),
+                    // Expanded(
+                    //   child: ListView.builder(
+                    //     itemCount: state.booking.currentBookings.length,
+                    //     itemBuilder: (context, index) {
+                    //       final booking = state.booking.currentBookings[index];
+                    //       return Container(
+                    //         decoration: BoxDecoration(
+                    //           color: textInputBackgroundColor,
+                    //           borderRadius: BorderRadius.circular(16),
+                    //         ),
+                    //         child: ListTile(
+                    //           contentPadding: const EdgeInsets.symmetric(
+                    //               horizontal: 16, vertical: 8),
+                    //           leading: Container(
+                    //             height: 48,
+                    //             width: 48,
+                    //             padding: const EdgeInsets.all(12),
+                    //             decoration: BoxDecoration(
+                    //               shape: BoxShape.circle,
+                    //               border: Border.all(color: labelColor),
+                    //             ),
+                    //             child: SvgPicture.asset(
+                    //               QuikAssetConstants.electricalsSvg,
+                    //               height: 24,
+                    //               width: 24,
+                    //             ),
+                    //           ),
+                    //           title: Text(booking.workerId,
+                    //               style: workerListNameTextStyle),
+                    //           subtitle:
+                    //               Text(booking.status, style: chatSubTitleRead),
+                    //           trailing: Row(
+                    //             mainAxisSize: MainAxisSize.min,
+                    //             children: [
+                    //               ClickableSvgIcon(
+                    //                   svgAsset: QuikAssetConstants.ratingSvg,
+                    //                   height: 32,
+                    //                   width: 32,
+                    //                   onTap: () {}),
+                    //               QuikSpacing.hS12(),
+                    //               ClickableSvgIcon(
+                    //                   svgAsset:
+                    //                       QuikAssetConstants.arrowRightUpSvg,
+                    //                   height: 32,
+                    //                   width: 32,
+                    //                   onTap: () {}),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 );
               } else {

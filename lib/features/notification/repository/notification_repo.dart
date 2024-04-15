@@ -13,7 +13,7 @@ try {
     url,
     headers: {'Content-Type': 'application/json'},
     body: notification.toJson(),
-  );
+  );  
 
   if (response.statusCode == 201) {
     return const Right(true);

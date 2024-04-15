@@ -1,9 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quikhyr/features/booking/repository/booking_repository.dart';
+import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
 import 'package:quikhyr/features/chat/firebase_provider.dart';
 import 'package:quikhyr/features/chat/notification_service.dart';
 import 'package:quikhyr/features/chat/presentation/components/chat_messages.dart';
 import 'package:quikhyr/features/chat/presentation/components/chat_text_field.dart';
+import 'package:quikhyr/models/simple_booking_model.dart';
+import 'package:quikhyr/models/location_model.dart';
 
 class ChatConversationScreen extends StatefulWidget {
   final String workerId;
@@ -24,23 +29,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
     super.initState();
   }
 
-  // Future<void> _respondToBookingProposal(
-  //     BuildContext context, bool isAccepted) async {
-  //   await FirebaseFirestoreService.respondToBookingProposal(
-  //       receiverId: widget.workerId, isAccepted: isAccepted);
-
-  //   await notificationsService.sendNotification(
-  //     body: "Booking Accepted By ${FirebaseAuth.instance.currentUser!.uid}",
-  //     senderId: FirebaseAuth.instance.currentUser!.uid,
-  //   );
-  //   if (context.mounted) {
-  //     FocusScope.of(context).unfocus();
-  //   }
-
-  //   if (context.mounted) {
-  //     FocusScope.of(context).unfocus();
-  //   }
-  // }
+  
 
   @override
   Widget build(BuildContext context) {

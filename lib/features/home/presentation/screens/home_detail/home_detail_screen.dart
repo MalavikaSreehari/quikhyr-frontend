@@ -8,6 +8,7 @@ import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
+import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/long_icon_button.dart';
 import 'package:quikhyr/common/widgets/quik_small_text_with_border.dart';
@@ -284,11 +285,11 @@ class HomeDetailScreen extends StatelessWidget {
                       return Column(
                         children: state.workers
                             .map((worker) => ListTile(
-                                onTap: () {
-                                  context.pushNamed(
-                                      QuikRoutes.chatConversationName,
-                                      pathParameters: {'workerId': worker.id},);
-                                },
+                                // onTap: () {
+                                //   context.pushNamed(
+                                //       QuikRoutes.chatConversationName,
+                                //       pathParameters: {'workerId': worker.id},);
+                                // },
                                 contentPadding: EdgeInsets.zero,
                                 leading: CircleAvatar(
                                   radius: 32,
@@ -331,11 +332,20 @@ class HomeDetailScreen extends StatelessWidget {
                                             text: 'Available',
                                           ),
                                           QuikSpacing.hS8(),
-                                          SvgPicture.asset(
-                                            QuikAssetConstants.arrowRightUpSvg,
-                                            width: 28,
-                                            height: 28,
-                                          ),
+                                          ClickableSvgIcon(
+                                              height: 28,
+                                              width: 28,
+                                              svgAsset: QuikAssetConstants
+                                                  .arrowRightUpSvg,
+                                              onTap: () {
+                                                context.pushNamed(
+                                                    QuikRoutes.profileName);
+                                              })
+                                          // SvgPicture.asset(
+                                          //   QuikAssetConstants.arrowRightUpSvg,
+                                          //   width: 28,
+                                          //   height: 28,
+                                          // ),
                                         ],
                                       ),
                                     ),

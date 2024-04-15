@@ -13,12 +13,15 @@ class QuikRoutes {
   static const chatPath = '/chat';
   static const chatConversationPath = 'conversation';
   static const bookPath = '/book';
+  static const bookingDetailPath = 'bookingDetail';
+  static const bookingQrPath = 'bookingQr';
+
   static const loginPath = 'login';
   static const signUpPath = '/signup';
   static const signInPath = '/signin';
   static const settingsPath = '/settings';
   static const welcomePath = '/welcome';
-   static const notificationPath = '/notification';
+  static const notificationPath = '/notification';
 
   static const homeName = 'homeName';
   static const homeDetailsName = 'homeDetailsName';
@@ -29,13 +32,14 @@ class QuikRoutes {
   static const chatName = 'chatName';
   static const chatConversationName = 'chatConversationName';
   static const bookName = 'bookName';
+  static const bookingDetailName = 'bookingDetailName';
   static const loginName = 'loginName';
   static const signUpName = 'signupName';
   static const signInName = 'signinName';
   static const settingsName = 'settingsName';
   static const welcomeName = 'welcomeName';
   static const notificationName = 'notificationName';
-
+  static const bookingQrName = 'bookingQrName';
 
   static Widget errorWidget(BuildContext context, GoRouterState state) =>
       const NotFoundScreen();

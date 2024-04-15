@@ -8,6 +8,8 @@ import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_b
 import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:quikhyr/features/auth/blocs/sign_up_bloc/sign_up_bloc.dart';
 import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
+import 'package:quikhyr/features/booking/blocs/cubit/booking_cubit.dart';
+import 'package:quikhyr/features/booking/repository/booking_repository.dart';
 import 'package:quikhyr/features/chat/firebase_provider.dart';
 import 'package:quikhyr/features/home/bloc/most_rated_workers_bloc.dart';
 import 'package:quikhyr/features/home/bloc/search_bloc.dart';
@@ -33,7 +35,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<NotificationRepo>(create: (context) => NotificationRepo()),
+        RepositoryProvider<BookingRepository>(
+          create: (context) => BookingRepository(),
+        ),
+        RepositoryProvider<NotificationRepo>(
+            create: (context) => NotificationRepo()),
         RepositoryProvider<ClientRepo>(
           create: (context) => ClientRepo(),
         ),
@@ -52,11 +58,14 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-            BlocProvider<NotificationCubit>(create: (context) {
+          BlocProvider(create: (context) => BookingCubit()..getBookingsById()),
+          BlocProvider<NotificationCubit>(
+            create: (context) {
               return NotificationCubit(
                 RepositoryProvider.of<NotificationRepo>(context),
               );
-            },),
+            },
+          ),
           BlocProvider<AuthenticationBloc>(
             create: (context) =>
                 AuthenticationBloc(userRepository: userRepository),
@@ -64,7 +73,8 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => SignInBloc(userRepository: userRepository),
           ),
-          BlocProvider<SignUpBloc>(create: (context) => SignUpBloc(userRepository: userRepository)),
+          BlocProvider<SignUpBloc>(
+              create: (context) => SignUpBloc(userRepository: userRepository)),
           BlocProvider<ServicesBloc>(create: (context) {
             final servicesCategoryRepo =
                 RepositoryProvider.of<ServicesRepo>(context);
@@ -96,8 +106,7 @@ class MyApp extends StatelessWidget {
             return SubserviceCubit(
               subservicesRepo,
             );
-          }
-          ),
+          }),
           BlocProvider<WorkerlistCubit>(create: (context) {
             final workerListRepo =
                 RepositoryProvider.of<WorkerListRepo>(context);

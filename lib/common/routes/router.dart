@@ -4,10 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/routes/screens/page_not_found.dart';
 import 'package:quikhyr/common/screens/notification_screen.dart';
+import 'package:quikhyr/common/screens/qr_screen.dart';
 import 'package:quikhyr/features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:quikhyr/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:quikhyr/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:quikhyr/features/auth/presentation/screens/welcome_screen.dart';
+import 'package:quikhyr/features/booking/presentation/screens/booking_detail_screen.dart';
 import 'package:quikhyr/features/booking/presentation/screens/booking_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_screen.dart';
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
@@ -16,6 +18,7 @@ import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dar
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/immediate_booking_screen.dart';
+import 'package:quikhyr/features/profile/presentation/screens/profile_screen.dart';
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
 import 'package:quikhyr/models/service_category_model.dart';
@@ -144,10 +147,9 @@ class AppRouter {
                               ));
                         },
                       ),
-                         GoRoute(
+                      GoRoute(
                         path: QuikRoutes.homeImmediateBookingPath,
                         name: QuikRoutes.homeImmediateBookingName,
-
                         pageBuilder: (context, state) {
                           final SubserviceModel subserviceModel =
                               state.extra as SubserviceModel;
@@ -240,7 +242,24 @@ class AppRouter {
                   pageBuilder: (context, state) => NoTransitionPage(
                     child: BookingScreen(key: state.pageKey),
                   ),
-                ),
+                  routes: [
+                    GoRoute(
+                      parentNavigatorKey: _shellNavigatorBookKey,
+                      path: QuikRoutes.bookingDetailPath,
+                      name: QuikRoutes.bookingDetailName,
+                      pageBuilder: (context, state) => NoTransitionPage(
+                        child: BookingDetailScreen(key: state.pageKey),
+                      ),
+                    ),
+                    GoRoute(
+                        parentNavigatorKey: _shellNavigatorBookKey,
+                        path: QuikRoutes.bookingQrPath,
+                        name: QuikRoutes.bookingQrName,
+                        pageBuilder: (context, state) {
+                          return const NoTransitionPage(child: QrScreen());
+                        }),
+                  ],
+                )
               ],
             ),
             StatefulShellBranch(
@@ -256,7 +275,11 @@ class AppRouter {
               ],
             ),
           ]),
-          GoRoute(path: QuikRoutes.notificationPath, name: QuikRoutes.notificationName, pageBuilder: (context, state) => const NoTransitionPage(child: NotificationScreen())),
+      GoRoute(
+          path: QuikRoutes.notificationPath,
+          name: QuikRoutes.notificationName,
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: NotificationScreen())),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: QuikRoutes.signInPath,
@@ -277,6 +300,13 @@ class AppRouter {
           name: QuikRoutes.welcomeName,
           pageBuilder: (context, state) {
             return const NoTransitionPage(child: WelcomeScreen());
+          }),
+      GoRoute(
+          // parentNavigatorKey: _rootNavigatorKey,
+          path: QuikRoutes.profilePath,
+          name: QuikRoutes.profileName,
+          pageBuilder: (context, state) {
+            return const NoTransitionPage(child: ProfileScreen());
           }),
 
       //It is not necessary to provide a navigatorKey if it isn't also
