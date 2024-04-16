@@ -157,8 +157,8 @@ class BookingScreen extends StatelessWidget {
                                         shape: BoxShape.circle,
                                         border: Border.all(color: primary),
                                       ),
-                                      child: SvgPicture.asset(
-                                        QuikAssetConstants.autoRepairSvg,
+                                      child: SvgPicture.network(
+                                        booking.serviceAvatar,
                                         height: 24,
                                         width: 24,
                                       ),
@@ -167,10 +167,10 @@ class BookingScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(booking.workerId,
+                                        Text(booking.workerName,
                                             style: workerListNameTextStyle),
                                         QuikSpacing.vS8(),
-                                        const Text("Mechanic",
+                                        Text(booking.subserviceName,
                                             style: chatSubTitle),
                                       ],
                                     ),
@@ -192,7 +192,8 @@ class BookingScreen extends StatelessWidget {
                                             height: 32,
                                             width: 32,
                                             onTap: () {
-                                              context.pushNamed(QuikRoutes.bookingQrName);
+                                              context.pushNamed(
+                                                  QuikRoutes.bookingQrName);
                                             }),
                                         QuikSpacing.hS12(),
                                         ClickableSvgIcon(
@@ -257,9 +258,9 @@ class BookingScreen extends StatelessWidget {
                       child: ListView.separated(
                         separatorBuilder: (context, index) =>
                             QuikSpacing.vS16(),
-                        itemCount: state.booking.currentBookings.length,
+                        itemCount: state.booking.pastBookings.length,
                         itemBuilder: (context, index) {
-                          final booking = state.booking.currentBookings[index];
+                          final booking = state.booking.pastBookings[index];
                           return Container(
                             decoration: BoxDecoration(
                               color: textInputBackgroundColor,
@@ -276,16 +277,16 @@ class BookingScreen extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   border: Border.all(color: labelColor),
                                 ),
-                                child: SvgPicture.asset(
-                                  QuikAssetConstants.electricalsSvg,
+                                child: SvgPicture.network(
+                                  booking.serviceAvatar,
                                   height: 24,
                                   width: 24,
                                 ),
                               ),
-                              title: Text(booking.workerId,
+                              title: Text("worker50",
                                   style: workerListNameTextStyle),
-                              subtitle:
-                                  Text(booking.status, style: chatSubTitleRead),
+                              subtitle: Text(booking.subserviceName,
+                                  style: chatSubTitleRead),
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -313,8 +314,10 @@ class BookingScreen extends StatelessWidget {
                     ),
                   ],
                 );
+              } else if (state is BookingError) {
+                return Center(child: Text(state.message));
               } else {
-                return const Center(child: Text('Error loading bookings'));
+                return const Text('Error loading bookings');
               }
             },
           ),

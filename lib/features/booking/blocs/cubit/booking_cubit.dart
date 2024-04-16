@@ -9,14 +9,20 @@ part 'booking_state.dart';
 
 class BookingCubit extends Cubit<BookingState> {
   BookingCubit() : super(BookingInitial());
-  void getBookingsById() async {
+    Future<void> getBookingsById() async {
     emit(BookingLoading());
-    final response = await BookingRepository()
-        .getBookingsById(FirebaseAuth.instance.currentUser!.uid);
-    response.fold((l) => emit(BookingError(l)), (r) {
-      debugPrint(r.currentBookings.toString());
-      debugPrint(r.pastBookings.toString());
-      return emit(BookingLoaded(r));
-    });
+    try {
+      final result = await BookingRepository().getBookingsById(FirebaseAuth.instance.currentUser!.uid);
+      result.fold(
+        (failure) {
+          debugPrint(failure);
+          return emit(BookingError(failure));
+        },
+        
+        (bookingData) => emit(BookingLoaded(bookingData)),
+      );
+    } catch (e) {
+      emit(BookingError(e.toString()));
+    }
   }
 }

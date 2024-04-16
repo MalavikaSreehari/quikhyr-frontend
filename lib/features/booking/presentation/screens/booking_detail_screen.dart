@@ -165,7 +165,7 @@ class BookingDetailScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(booking.workerId,
+                                        Text(booking.locationName,
                                             style: workerListNameTextStyle),
                                         QuikSpacing.vS8(),
                                         Text("Mechanic", style: chatSubTitle),

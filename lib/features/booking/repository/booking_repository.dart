@@ -28,14 +28,14 @@ class BookingRepository {
     }
   }
 
-  Future<Either<String, BookingData>> getBookingsById(
-      String clientId) async {
+  Future<Either<String, BookingData>> getBookingsById(String clientId) async {
     final url = Uri.parse('$baseUrl/bookings/?clientId=$clientId');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
+        debugPrint(response.body);
         final bookingData = jsonDecode(response.body);
-        
+        debugPrint(bookingData.toString());
         return Right(BookingData.fromJson(bookingData));
       } else {
         return Left('Failed to get booking data ${response.body}');

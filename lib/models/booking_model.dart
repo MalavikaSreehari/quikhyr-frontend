@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:quikhyr/models/location_model.dart';
 
 class BookingData {
@@ -25,54 +24,91 @@ class BookingData {
       };
 }
 
+// "locationName": "Nizhnesaitovo",
+// "dateTime": "16/04/2024 12:42:00",
+// "ratePerUnit": 258,
+// "unit": "hh",
+// "status": "Pending"
 class Booking {
+  String? clientId;
+  LocationModel? location;
+  String serviceAvatar;
+  String? subserviceId;
+  String subserviceName;
+  String workerName;
+  String? workerId;
   String dateTime;
   String unit;
-  String workerId;
-  String clientId;
   String locationName;
-  Timestamps? timestamps;
-  LocationModel? location;
-  String subserviceId;
   num ratePerUnit;
   String status;
 
   Booking({
+    this.location,
+    required this.serviceAvatar,
+    this.subserviceId,
+    required this.subserviceName,
+    required this.workerName,
+    this.workerId,
     required this.dateTime,
     required this.unit,
-    required this.workerId,
-    required this.clientId,
     required this.locationName,
-    required this.timestamps,
-    required this.location,
-    required this.subserviceId,
     required this.ratePerUnit,
     required this.status,
   });
 
-  factory Booking.fromJson(Map<String, dynamic> json) => Booking(
-        dateTime: json["dateTime"],
-        unit: json["unit"],
-        workerId: json["workerId"],
-        clientId: json["clientId"],
-        locationName: json["locationName"],
-        //!!TIMESTAMPS MAY NEED FROMMAP AS INPUT IS JSON
-        timestamps: Timestamps.fromJson(json["timestamps"]),
-        location: LocationModel.fromMap(json["location"]),
-        subserviceId: json["subserviceId"],
-        ratePerUnit: json["ratePerUnit"],
-        status: json["status"],
-      );
+  factory Booking.fromJson(Map<String, dynamic> json) {
+
+    if (json['serviceAvatar'] is! String) {
+      throw const FormatException('serviceAvatar must be a string');
+    }
+
+    if (json['subserviceName'] is! String) {
+      throw const FormatException('subserviceName must be a string');
+    }
+    if (json['workerName'] is! String) {
+      throw const FormatException('workerName must be a string');
+    }
+
+    if (json['dateTime'] is! String) {
+      throw const FormatException('dateTime must be a string');
+    }
+    if (json['unit'] is! String) {
+      throw const FormatException('unit must be a string');
+    }
+    if (json['locationName'] is! String) {
+      throw const FormatException('locationName must be a string');
+    }
+    if (json['ratePerUnit'] is! num) {
+      throw const FormatException('ratePerUnit must be a number');
+    }
+    if (json['status'] is! String) {
+      throw const FormatException('status must be a string');
+    }
+
+    return Booking(
+      serviceAvatar: json["serviceAvatar"],
+      subserviceName: json["subserviceName"],
+      workerName: json["workerName"],
+      dateTime: json["dateTime"],
+      unit: json["unit"],
+      locationName: json["locationName"],
+      ratePerUnit: json["ratePerUnit"],
+      status: json["status"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
+        "clientId": clientId ?? '-99',
+        "location": location?.toJson(),
+        "serviceAvatar": serviceAvatar,
+        "subserviceId": subserviceId ?? '-100',
+        "subserviceName": subserviceName,
+        "workerName": workerName,
+        "workerId": workerId ?? '-200',
         "dateTime": dateTime,
         "unit": unit,
-        "workerId": workerId,
-        "clientId": clientId,
         "locationName": locationName,
-        "timestamps": timestamps?.toJson(),
-        "location": location?.toJson(),
-        "subserviceId": subserviceId,
         "ratePerUnit": ratePerUnit,
         "status": status,
       };

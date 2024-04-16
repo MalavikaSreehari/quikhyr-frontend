@@ -6,6 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:quikhyr/models/location_model.dart';
 
 class SimpleBookingModel extends Equatable {
+  final String? workerName;
+  final String? subserviceName;
+  final String? serviceAvatar;
   final String clientId;
   final DateTime dateTime;
   final LocationModel location;
@@ -16,10 +19,13 @@ class SimpleBookingModel extends Equatable {
   final String subserviceId;
   final String workerId;
   const SimpleBookingModel({
+    this.subserviceName,
+    this.serviceAvatar,
+    this.workerName,
+    required this.subserviceId,
     required this.clientId,
     required this.dateTime,
     required this.location,
-    required this.subserviceId,
     this.locationName,
     required this.ratePerUnit,
     required this.status,
@@ -66,7 +72,6 @@ class SimpleBookingModel extends Equatable {
       'clientId': clientId,
       'dateTime': formattedDate,
       'location': location.toMap(),
-      'locationName': locationName,
       'ratePerUnit': ratePerUnit,
       'status': status,
       'unit': unit,
