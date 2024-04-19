@@ -7,6 +7,7 @@ import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
+import 'package:quikhyr/common/enums/status.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/quik_app_bar.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
@@ -120,9 +121,15 @@ class BookingScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   QuikSpacing.vS8(),
-                                  Text(
-                                      '${booking.dateTime.hour}:${booking.dateTime.minute} ${booking.dateTime.hour >= 12 ? 'PM' : 'AM'} ${booking.dateTime.toString().split(" ")[0]}',
-                                      style: timeGreenTextStyle),
+                                  if (booking.status == Status.notCompleted)
+                                    Text(
+                                        '${booking.dateTime.hour}:${booking.dateTime.minute} ${booking.dateTime.hour >= 12 ? 'PM' : 'AM'} ${booking.dateTime.toString().split(" ")[0]}',
+                                        style: timeGreenTextStyle.copyWith(
+                                            color: quikHyrRed))
+                                  else
+                                    Text(
+                                        '${booking.dateTime.hour}:${booking.dateTime.minute} ${booking.dateTime.hour >= 12 ? 'PM' : 'AM'} ${booking.dateTime.toString().split(" ")[0]}',
+                                        style: timeGreenTextStyle)
                                 ],
                               ),
                               trailing: Row(
@@ -262,7 +269,8 @@ class BookingScreen extends StatelessWidget {
                                       width: 32,
                                       onTap: () {
                                         context.goNamed(
-                                            QuikRoutes.bookingDetailName, extra: booking);
+                                            QuikRoutes.bookingDetailName,
+                                            extra: booking);
                                       }),
                                 ],
                               ),

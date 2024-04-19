@@ -202,6 +202,15 @@ const TextStyle workerListSubtitleTextStyle = TextStyle(
   height: 1.0,
 );
 
+const TextStyle infoText_14_400TextStyle = TextStyle(
+  color: placeHolderText,
+  fontFamily: 'Trap',
+  fontSize: 14,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w400,
+  height: 1.2,
+);
+
 const TextStyle workerListPriceTextStyle = TextStyle(
   color: quikHyrBlue,
   letterSpacing: 0.5,

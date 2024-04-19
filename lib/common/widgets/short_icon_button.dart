@@ -19,9 +19,9 @@ class ShortIconButton extends StatelessWidget {
     this.svgPath,
     this.onPressed,
     this.foregroundColor,
-    this.backgroundColor,
-    this.height = 54,
-    this.width = 100,
+    this.backgroundColor = primary,
+    this.height = 60,
+    this.width = 158,
     this.isEnabled = true, // Set default value for isEnabled
   }) : super(key: key);
 
@@ -45,34 +45,47 @@ class ShortIconButton extends StatelessWidget {
           onPressed: isEnabled
               ? onPressed
               : null, // Disable onPressed when not enabled
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              if (svgPath != null) ...[
-                SvgPicture.asset(
-                  svgPath!,
-                  color: isEnabled
-                      ? foregroundColor ??
-                          Theme.of(context).colorScheme.onPrimary
-                      : Theme.of(context)
-                          .disabledColor, // Use disabled color for SVG when not enabled
-                  height: 14,
-                  width: 14,
-                ),
-                QuikSpacing.hS6(),
-              ],
-              Text(
-                text,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+          child: svgPath == null
+              ? Center(
+                  // Center the text if only text is specified
+                  child: Text(
+                    text,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: isEnabled
+                              ? foregroundColor ??
+                                  Theme.of(context).colorScheme.onPrimary
+                              : Theme.of(context)
+                                  .disabledColor, // Use disabled color for text when not enabled
+                        ),
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SvgPicture.asset(
+                      svgPath!,
                       color: isEnabled
                           ? foregroundColor ??
                               Theme.of(context).colorScheme.onPrimary
                           : Theme.of(context)
-                              .disabledColor, // Use disabled color for text when not enabled
+                              .disabledColor, // Use disabled color for SVG when not enabled
                     ),
-              ),
-            ],
-          ),
+                    QuikSpacing.hS6(),
+                    Expanded(
+                      // Wrap the Text widget with Expanded
+                      child: Text(
+                        text,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: isEnabled
+                                  ? foregroundColor ??
+                                      Theme.of(context).colorScheme.onPrimary
+                                  : Theme.of(context)
+                                      .disabledColor, // Use disabled color for text when not enabled
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
         ),
       ),
     );

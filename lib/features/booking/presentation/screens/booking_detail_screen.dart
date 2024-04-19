@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/enums/status.dart';
+import 'package:quikhyr/common/quik_dialogs.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/quik_app_bar.dart';
-import 'package:quikhyr/common/widgets/quik_search_bar.dart';
+import 'package:quikhyr/common/widgets/quik_list_tile_button_and_text.dart';
+import 'package:quikhyr/common/widgets/short_icon_button.dart';
 import 'package:quikhyr/common/widgets/status_text.dart';
-import 'package:quikhyr/features/booking/blocs/cubit/booking_cubit.dart';
 import 'package:quikhyr/models/booking_model.dart';
 
 class BookingDetailScreen extends StatelessWidget {
@@ -33,91 +33,149 @@ class BookingDetailScreen extends StatelessWidget {
           leadingSvgLink: booking.serviceAvatar,
           showBackButton: true,
           trailingWidgets: [
-            ClickableSvgIcon(
-                svgAsset: QuikAssetConstants.qrCodeSvg,
-                height: 32,
-                width: 32,
-                onTap: () {
-                  context.pushNamed(QuikRoutes.bookingQrName, pathParameters: {
-                    "qrData": booking.id.hashCode.toString()
-                  });
-                })
+            if (booking.status == Status.notCompleted)
+              ClickableSvgIcon(
+                  svgAsset: QuikAssetConstants.qrCodeSvg,
+                  height: 32,
+                  width: 32,
+                  onTap: () {
+                    context.pushNamed(QuikRoutes.bookingQrName,
+                        pathParameters: {
+                          "qrData": booking.id.hashCode.toString()
+                        });
+                  })
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const GradientSeparator(),
-              QuikSpacing.vS12(),
-              Text("OVERVIEW", style: Theme.of(context).textTheme.titleMedium),
-              QuikSpacing.vS24(),
-              const Text(
-                "Get a complete overview of the booking you have made.",
-                style: descriptionTextStyle,
-              ),
-              QuikSpacing.vS32(),
-              RichText(
-                text: TextSpan(
-                  text: "Time Slot: ",
-                  style: bodyLargeTextStyle,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const GradientSeparator(
+                  paddingTop: 0,
+                ),
+                QuikSpacing.vS12(),
+                Text("OVERVIEW",
+                    style: Theme.of(context).textTheme.titleMedium),
+                QuikSpacing.vS24(),
+                const Text(
+                  "Get a complete overview of the booking you have made.",
+                  style: descriptionTextStyle,
+                ),
+                QuikSpacing.vS32(),
+                RichText(
+                  text: TextSpan(
+                    text: "Time Slot: ",
+                    style: bodyLargeTextStyle,
+                    children: [
+                      if (booking.status == Status.pending)
+                        TextSpan(
+                          text: DateFormat('hh:mm a').format(booking.dateTime),
+                          style: bodyLargeBoldTextStyle.copyWith(
+                              color: quikHyrGreen),
+                        )
+                      else
+                        TextSpan(
+                          text: DateFormat('hh:mm a').format(booking.dateTime),
+                          style: bodyLargeBoldTextStyle,
+                        )
+                    ],
+                  ),
+                ),
+                QuikSpacing.vS16(),
+                RichText(
+                  text: TextSpan(
+                    text: "Work Rate: ",
+                    style: bodyLargeTextStyle,
+                    children: [
+                      TextSpan(
+                        text: '${booking.ratePerUnit} /${booking.unit}',
+                        style: bodyLargeBoldTextStyle,
+                      ),
+                    ],
+                  ),
+                ),
+                QuikSpacing.vS32(),
+                StatusText(status: booking.status),
+                QuikSpacing.vS32(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    TextSpan(
-                      text: "${booking.dateTime}",
-                      style: timeGreenLargeTextStyle,
+                    ShortIconButton(
+                        backgroundColor: secondary,
+                        foregroundColor: onSecondary,
+                        onPressed: () {
+                          showReportIssueBottomSheet(context);
+                        },
+                        text: "Report Issue",
+                        svgPath: QuikAssetConstants.dangerTriangleSvg),
+                    QuikSpacing.hS16(),
+                    ShortIconButton(
+                      onPressed: () {
+                        showBookingConfirmationDialog(context);
+                      },
+                      text: "Close Booking",
                     ),
                   ],
                 ),
-              ),
-              QuikSpacing.vS16(),
-              RichText(
-                text: TextSpan(
-                  text: "Work Rate: ",
-                  style: bodyLargeTextStyle,
-                  children: [
-                    TextSpan(
-                      text: "${booking.ratePerUnit} /${booking.unit}",
-                      style: bodyLargeBoldTextStyle,
+                QuikSpacing.vS32(),
+                const Text("Steps to follow:", style: workerListNameTextStyle),
+                QuikSpacing.vS20(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24),
+                  child: RichText(
+                    text: const TextSpan(
+                      text: "1. Provide the QR Code",
+                      style: workerListNameTextStyle,
+                      children: [
+                        TextSpan(
+                          text:
+                              "  associated with your Booking ID (available by clicking on the icon at the top-right corner of the screen) to the worker,",
+                          style: infoText_14_400TextStyle,
+                        ),
+                        TextSpan(text: " to record work completion.")
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-              QuikSpacing.vS32(),
-              StatusText(status: booking.status),
-              QuikSpacing.vS32(),
-              if (booking.status != Status.completed)
+                QuikSpacing.vS16(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 24),
+                  child: RichText(
+                    text: const TextSpan(
+                      text: "2. Rate and review",
+                      style: workerListNameTextStyle,
+                      children: [
+                        TextSpan(
+                          text: "   the worker, which may be helpful for many.",
+                          style: infoText_14_400TextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                QuikSpacing.vS24(),
+                if (booking.status != Status.completed)
+                  const QuikListTileButtonAndText(
+                    title: "Cancel Booking",
+                    leadingSvgLink: QuikAssetConstants.cancelBookingSvg,
+                  ),
+                const Text(
+                  "Booking cancellation only available before a cut-off time of 1hr before the alloted slot.",
+                  style: descriptionTextStyle,
+                ),
+                QuikSpacing.vS24(),
                 const QuikListTileButtonAndText(
-                  title: "Cancel Booking",
-                  leadingSvgLink: QuikAssetConstants.cancelBookingSvg,
-                ),
-              const QuikListTileButtonAndText(
-                  title: "Download booking details",
-                  leadingSvgLink: QuikAssetConstants.downloadSvg)
-            ],
+                    title: "Download booking details",
+                    leadingSvgLink: QuikAssetConstants.downloadSvg),
+                const Text(
+                  "Booking was made on 09/03/2024 at 09:30pm via QuikHyr App.",
+                  style: descriptionTextStyle,
+                )
+              ],
+            ),
           ),
         ));
-  }
-}
-
-class QuikListTileButtonAndText extends StatelessWidget {
-  final String title;
-  final String leadingSvgLink;
-  const QuikListTileButtonAndText({
-    super.key,
-    required this.title,
-    required this.leadingSvgLink,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: SvgPicture.asset(leadingSvgLink),
-      title: Text(
-        title,
-        style: workerListNameTextStyle,
-      ),
-    );
   }
 }
