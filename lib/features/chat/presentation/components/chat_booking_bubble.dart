@@ -34,6 +34,7 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
       String messageId,
       ChatMessageModel message,
       bool isAccepted) async {
+    debugPrint(message.timeslot.toString());
     final response = await BookingRepository().createBooking(
       SimpleBookingModel(
         subserviceId:

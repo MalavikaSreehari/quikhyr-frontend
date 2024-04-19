@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
@@ -20,6 +21,19 @@ class NotificationScreen extends StatelessWidget {
           child: AppBar(
             titleSpacing: 24,
             automaticallyImplyLeading: false, // Remove back button
+            leading: Row(
+                children: [
+                  QuikSpacing.hS12(),
+                  ClickableSvgIcon(
+                    svgAsset: QuikAssetConstants.backArrowSvg,
+                    size: 32,
+                    onTap: () {
+                      context.pop();
+                    },
+                  ),
+                  QuikSpacing.hS12(),
+                ],
+              ),
             backgroundColor: Colors.transparent,
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -11,6 +11,7 @@ import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
+import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/long_icon_button.dart';
 import 'package:quikhyr/common/widgets/quik_small_text_with_border.dart';
@@ -144,14 +145,21 @@ class _ImmediateBookingScreenState extends State<ImmediateBookingScreen> {
           child: Padding(
             padding: const EdgeInsets.only(top: 12),
             child: AppBar(
-              leading: GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child:
-                      const Icon(Icons.arrow_back_ios_new, color: secondary)),
+leading: Row(
+                children: [
+                  QuikSpacing.hS12(),
+                  ClickableSvgIcon(
+                    svgAsset: QuikAssetConstants.backArrowSvg,
+                    size: 32,
+                    onTap: () {
+                      context.pop();
+                    },
+                  ),
+                  QuikSpacing.hS12(),
+                ],
+              ),
               // titleSpacing: 24,
-              // automaticallyImplyLeading: false, // Remove back button
+              automaticallyImplyLeading: false, // Remove back button
               backgroundColor: Colors.transparent,
               title: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

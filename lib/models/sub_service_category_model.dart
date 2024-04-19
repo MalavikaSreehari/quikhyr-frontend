@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -9,14 +8,15 @@ class SubserviceModel extends Equatable {
   final String serviceId;
   final String serviceName;
   final String name;
-  final String description;
+  final String? description;
   final List<String> tags;
+
   SubserviceModel({
     required this.id,
     required this.serviceId,
     required this.serviceName,
     required this.name,
-    required this.description,
+    this.description,
     required this.tags,
   });
 
@@ -55,16 +55,27 @@ class SubserviceModel extends Equatable {
       serviceId: map['serviceId'] as String,
       serviceName: map['serviceName'] as String,
       name: map['name'] as String,
-      description: map['description'] as String,
       tags: List<String>.from(
           (map['tags'] as List<dynamic>).map((e) => e.toString())),
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() {
+    try {
+      return json.encode(toMap());
+    } catch (e) {
+      throw Exception('Error encoding SubserviceModel to JSON: $e');
+    }
+  }
 
-  factory SubserviceModel.fromJson(String source) =>
-      SubserviceModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory SubserviceModel.fromJson(String source) {
+    try {
+      return SubserviceModel.fromMap(
+          json.decode(source) as Map<String, dynamic>);
+    } catch (e) {
+      throw Exception('Error decoding SubserviceModel from JSON: $e');
+    }
+  }
 
   @override
   String toString() {
@@ -72,7 +83,7 @@ class SubserviceModel extends Equatable {
   }
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       id,
       serviceId,

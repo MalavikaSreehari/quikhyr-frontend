@@ -403,11 +403,15 @@ class HomeDetailScreen extends StatelessWidget {
                                             text: 'Available',
                                           ),
                                           QuikSpacing.hS8(),
-                                          SvgPicture.asset(
-                                            QuikAssetConstants.arrowRightUpSvg,
-                                            width: 28,
-                                            height: 28,
-                                          ),
+                                          ClickableSvgIcon(
+                                              height: 28,
+                                              width: 28,
+                                              svgAsset: QuikAssetConstants
+                                                  .arrowRightUpSvg,
+                                              onTap: () {
+                                                context.pushNamed(
+                                                    QuikRoutes.profileName);
+                                              })
                                         ],
                                       ),
                                     ),

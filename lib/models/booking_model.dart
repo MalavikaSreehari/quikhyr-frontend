@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quikhyr/common/enums/status.dart';
 import 'package:quikhyr/models/location_model.dart';
 
 class BookingData {
@@ -10,26 +12,43 @@ class BookingData {
     required this.pastBookings,
   });
 
-  factory BookingData.fromJson(Map<String, dynamic> json) => BookingData(
-        currentBookings: List<Booking>.from(
-            json["currentBookings"].map((x) => Booking.fromJson(x))),
-        pastBookings: List<Booking>.from(
-            json["pastBookings"].map((x) => Booking.fromJson(x))),
-      );
+  factory BookingData.fromJson(Map<String, dynamic> json) {
+    if (json["currentBookings"] is! List || json["pastBookings"] is! List) {
+      throw 'Invalid data format';
+    }
 
-  Map<String, dynamic> toJson() => {
-        "currentBookings":
-            List<dynamic>.from(currentBookings.map((x) => x.toJson())),
-        "pastBookings": List<dynamic>.from(pastBookings.map((x) => x.toJson())),
-      };
-}
+    return BookingData(
+      currentBookings: (json["currentBookings"] as List)
+          .map((x) => Booking.fromJson(x))
+          .toList(),
+      pastBookings: (json["pastBookings"] as List)
+          .map((x) => Booking.fromJson(x))
+          .toList(),
+    );
+  }
+
+//   factory BookingData.fromJson(Map<String, dynamic> json) => BookingData(
+//   currentBookings: (json["currentBookings"] as List).map((x) => Booking.fromJson(x)).toList(),
+//   pastBookings: (json["pastBookings"] as List).map((x) => Booking.fromJson(x)).toList(),
+// );
+
+//   Map<String, dynamic> toJson() => {
+//         "currentBookings":
+//             List<dynamic>.from(currentBookings.map((x) => x.toJson())),
+//         "pastBookings": List<dynamic>.from(pastBookings.map((x) => x.toJson())),
+//       };
+// }
 
 // "locationName": "Nizhnesaitovo",
 // "dateTime": "16/04/2024 12:42:00",
 // "ratePerUnit": 258,
 // "unit": "hh",
 // "status": "Pending"
+}
+
 class Booking {
+  String? id;
+  String serviceName;
   String? clientId;
   LocationModel? location;
   String serviceAvatar;
@@ -37,13 +56,16 @@ class Booking {
   String subserviceName;
   String workerName;
   String? workerId;
-  String dateTime;
+  DateTime dateTime;
   String unit;
   String locationName;
   num ratePerUnit;
-  String status;
+  Status status;
 
   Booking({
+    this.id,
+    required this.serviceName,
+    this.clientId,
     this.location,
     required this.serviceAvatar,
     this.subserviceId,
@@ -58,47 +80,33 @@ class Booking {
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
-
-    if (json['serviceAvatar'] is! String) {
-      throw const FormatException('serviceAvatar must be a string');
+    if (json['dateTime'] is! Map) {
+      throw 'Invalid dateTime format';
     }
 
-    if (json['subserviceName'] is! String) {
-      throw const FormatException('subserviceName must be a string');
-    }
-    if (json['workerName'] is! String) {
-      throw const FormatException('workerName must be a string');
-    }
-
-    if (json['dateTime'] is! String) {
-      throw const FormatException('dateTime must be a string');
-    }
-    if (json['unit'] is! String) {
-      throw const FormatException('unit must be a string');
-    }
-    if (json['locationName'] is! String) {
-      throw const FormatException('locationName must be a string');
-    }
-    if (json['ratePerUnit'] is! num) {
-      throw const FormatException('ratePerUnit must be a number');
-    }
-    if (json['status'] is! String) {
-      throw const FormatException('status must be a string');
-    }
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(
+        (json['dateTime']['_seconds'] as int) * 1000 +
+            (json['dateTime']['_nanoseconds'] as int) ~/ 1000000);
 
     return Booking(
-      serviceAvatar: json["serviceAvatar"],
-      subserviceName: json["subserviceName"],
-      workerName: json["workerName"],
-      dateTime: json["dateTime"],
-      unit: json["unit"],
-      locationName: json["locationName"],
-      ratePerUnit: json["ratePerUnit"],
-      status: json["status"],
+      id: json["id"] ?? '',
+      serviceName: json["serviceName"] ?? '',
+      clientId: json["clientId"] ?? '',
+      location: LocationModel.fromMap(
+          json["location"] ?? {'latitude': 66, 'longitude': 66}),
+      serviceAvatar: json["serviceAvatar"] ?? '',
+      subserviceName: json["subserviceName"] ?? '',
+      workerName: json["workerName"] ?? '',
+      dateTime: dateTime,
+      unit: json["unit"] ?? '',
+      locationName: json["locationName"] ?? '',
+      ratePerUnit: json["ratePerUnit"] ?? 0,
+      status: Status.fromJson(json["status"] ?? 'Pending'),
     );
   }
 
   Map<String, dynamic> toJson() => {
+        "serviceName": serviceName,
         "clientId": clientId ?? '-99',
         "location": location?.toJson(),
         "serviceAvatar": serviceAvatar,
@@ -106,11 +114,11 @@ class Booking {
         "subserviceName": subserviceName,
         "workerName": workerName,
         "workerId": workerId ?? '-200',
-        "dateTime": dateTime,
+        "dateTime": Timestamp.fromDate(dateTime).toString(),
         "unit": unit,
         "locationName": locationName,
         "ratePerUnit": ratePerUnit,
-        "status": status,
+        "status": status.toJson(),
       };
 }
 

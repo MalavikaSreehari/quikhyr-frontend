@@ -1,69 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
+import 'package:quikhyr/common/widgets/quik_app_bar.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 
 class QrScreen extends StatelessWidget {
-  const QrScreen({super.key});
+  final String qrData;
+  const QrScreen({super.key, required this.qrData});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: AppBar(
-            titleSpacing: 24,
-            automaticallyImplyLeading: false, // Remove back button
-            backgroundColor: Colors.transparent,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Q',
-                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
-                      ),
-                      TextSpan(
-                        text: 'uik',
-                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
-                      ),
-                      TextSpan(
-                        text: 'Book',
-                        style: TextStyle(
-                            fontFamily: 'Trap',
-                            fontSize: 24,
-                            letterSpacing: -1.5),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            // actions: [
-            //   ClickableSvgIcon(
-            //       svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
-            //       onTap: () {
-            //         context.pushNamed(QuikRoutes.notificationName);
-            //         // BookingRepository().getBookingsById(
-            //         //     FirebaseAuth.instance.currentUser!.uid);
-            //       }),
-            //   QuikSpacing.hS10(),
-            //   ClickableSvgIcon(
-            //       svgAsset: QuikAssetConstants.logoutSvg,
-            //       onTap: () {
-            //         // context.read<SignInBloc>().add(const SignOutRequired());
-            //       }),
-            //   QuikSpacing.hS24(),
-            // ],
-          ),
-        ),
+      appBar: const QuikAppBar(
+        showBackButton: true,
+        pageName: 'Book',
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
@@ -92,11 +46,24 @@ class QrScreen extends StatelessWidget {
               style: chatSubTitleRead,
             ),
             QuikSpacing.vS32(),
-            Expanded(
-                child: Align(
-                    alignment: Alignment.center,
-                    child:
-                        SvgPicture.asset(QuikAssetConstants.qrCodeLargeSvg))),
+            Container(
+              decoration: BoxDecoration(
+                color: secondary,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.all(12),
+              child: PrettyQrView(
+                decoration: const PrettyQrDecoration(
+                    image: PrettyQrDecorationImage(
+                        scale: 0.3,
+                        image: AssetImage(
+                            QuikAssetConstants.logoIconCircleTransparentPng)),
+                    background: secondary,
+                    shape: PrettyQrSmoothSymbol(roundFactor: 0.7)),
+                qrImage: QrImage(QrCode.fromData(
+                    data: qrData, errorCorrectLevel: QrErrorCorrectLevel.H)),
+              ),
+            ),
           ],
         ),
       ),

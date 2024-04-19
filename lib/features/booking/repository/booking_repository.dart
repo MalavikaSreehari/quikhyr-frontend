@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -9,9 +10,10 @@ import 'package:quikhyr/models/simple_booking_model.dart';
 class BookingRepository {
   Future<Either<String, bool>> createBooking(SimpleBookingModel booking) async {
     final url = Uri.parse('$baseUrl/bookings');
+    log(booking.toJson());
 
     try {
-      debugPrint(booking.toJson());
+      debugPrint(booking.toMap().toString());
       final response = await http.post(
         url,
         body: booking.toJson(),

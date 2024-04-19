@@ -61,6 +61,11 @@ class QuikAssetConstants {
   static const String faqSvg = 'assets/icons/faq.svg';
   static const String notificationsSvg = 'assets/icons/notifications.svg';
   static const String privacySvg = 'assets/icons/privacy.svg';
-  static const String termsAndConditionsSvg = 'assets/icons/terms_and_conditions.svg';
-
+  static const String termsAndConditionsSvg =
+      'assets/icons/terms_and_conditions.svg';
+  static const String backArrowSvg = 'assets/icons/back_arrow.svg';
+  static const String logoIconCircleTransparentPng =
+      'assets/icons/logo_icon_circle_transparent.png';
+  static const String cancelBookingSvg = 'assets/icons/cancel_booking.svg';
+  static const String downloadSvg = 'assets/icons/download.svg';
 }

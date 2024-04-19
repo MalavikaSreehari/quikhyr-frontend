@@ -21,6 +21,7 @@ import 'package:quikhyr/features/home/presentation/screens/immediate_booking_scr
 import 'package:quikhyr/features/profile/presentation/screens/profile_screen.dart';
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
+import 'package:quikhyr/models/booking_model.dart';
 import 'package:quikhyr/models/service_category_model.dart';
 import 'package:quikhyr/models/sub_service_category_model.dart';
 
@@ -213,22 +214,8 @@ class AppRouter {
                         path: '${QuikRoutes.chatConversationPath}/:workerId',
                         name: QuikRoutes.chatConversationName,
                         pageBuilder: (context, state) =>
-                            CustomTransitionPage<void>(
-                          // key: state.pageKey,
-                          child: ChatConversationScreen(
-                            workerId: state.pathParameters['workerId']!,
-                          ),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) =>
-                                  SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(
-                                  -1, 0), // Modified: Start from left (-1, 0)
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: child,
-                          ),
-                        ),
+                            createCustomTransitionPage(ChatConversationScreen(
+                                workerId: state.pathParameters['workerId']!)),
                       ),
                     ]),
               ],
@@ -247,16 +234,20 @@ class AppRouter {
                       parentNavigatorKey: _shellNavigatorBookKey,
                       path: QuikRoutes.bookingDetailPath,
                       name: QuikRoutes.bookingDetailName,
-                      pageBuilder: (context, state) => NoTransitionPage(
-                        child: BookingDetailScreen(key: state.pageKey),
-                      ),
+                      pageBuilder: (context, state) =>
+                          createCustomTransitionPage(BookingDetailScreen(
+                        key: state.pageKey,
+                        booking: state.extra as Booking,
+                      )),
                     ),
                     GoRoute(
                         parentNavigatorKey: _shellNavigatorBookKey,
-                        path: QuikRoutes.bookingQrPath,
+                        path: "${QuikRoutes.bookingQrPath}/:qrData",
                         name: QuikRoutes.bookingQrName,
                         pageBuilder: (context, state) {
-                          return const NoTransitionPage(child: QrScreen());
+                          return createCustomTransitionPage(QrScreen(
+                              qrData: state.pathParameters['qrData'] ??
+                                  'Data Fetching Error'));
                         }),
                   ],
                 )
@@ -317,6 +308,21 @@ class AppRouter {
 
   static GoRouter get router => _router;
 }
+
+CustomTransitionPage<void> createCustomTransitionPage(Widget child) {
+  return CustomTransitionPage<void>(
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+        SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(-1, 0), // Start from left (-1, 0)
+        end: Offset.zero,
+      ).animate(animation),
+      child: child,
+    ),
+  );
+}
+
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';

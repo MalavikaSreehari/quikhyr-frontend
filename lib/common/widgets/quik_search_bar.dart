@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 
 class QuikSearchBar extends StatefulWidget {
@@ -57,7 +58,7 @@ class _QuikSearchBarState extends State<QuikSearchBar> {
           ),
         ),
         suffixIcon: SizedBox(
-          width: 66,
+          width: 80,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -65,9 +66,11 @@ class _QuikSearchBarState extends State<QuikSearchBar> {
                 height: 24,
                 child: VerticalDivider(color: textInputIconColor),
               ),
+              QuikSpacing.hS12(),
               ClickableSvgIcon(
                   svgAsset: QuikAssetConstants.searchMicSvg,
-                  onTap: widget.onMicPressed)
+                  onTap: widget.onMicPressed),
+              QuikSpacing.hS24(),
             ],
           ),
         ),

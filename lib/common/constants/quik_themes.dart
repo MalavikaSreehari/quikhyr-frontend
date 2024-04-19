@@ -112,8 +112,14 @@ const TextStyle timeGreenTextStyle = TextStyle(
   fontWeight: FontWeight.w600,
   height: 1.0,
 );
-
-
+const TextStyle timeGreenLargeTextStyle = TextStyle(
+  color: quikHyrGreen,
+  fontFamily: 'Trap',
+  fontSize: 14.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+  height: 1.20,
+);
 
 const TextStyle chatSubTitleRead = TextStyle(
   color: placeHolderText,
@@ -167,7 +173,7 @@ const TextStyle descriptionTextStyle = TextStyle(
   fontSize: 12.0,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w400,
-  height: 1.28,
+  height: 1.2,
 );
 
 const TextStyle filterDropDownMediumTextStyle = TextStyle(
@@ -212,4 +218,22 @@ const TextStyle workerListUnitTextStyle = TextStyle(
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
   height: 1.0,
+);
+
+const TextStyle bodyLargeTextStyle = TextStyle(
+  color: secondary,
+  fontFamily: 'Trap',
+  fontSize: 14,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w400,
+  height: 1.2,
+);
+
+const TextStyle bodyLargeBoldTextStyle = TextStyle(
+  color: secondary,
+  fontFamily: 'Trap',
+  fontSize: 14.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+  height: 1.20,
 );

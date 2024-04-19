@@ -12,6 +12,7 @@ import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
+import 'package:quikhyr/common/widgets/quik_app_bar.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
 import 'package:quikhyr/features/chat/firebase_provider.dart';
@@ -106,54 +107,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: AppBar(
-            titleSpacing: 24,
-            automaticallyImplyLeading: false, // Remove back button
-            backgroundColor: Colors.transparent,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Q',
-                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
-                      ),
-                      TextSpan(
-                        text: 'uik',
-                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
-                      ),
-                      TextSpan(
-                        text: 'Chat',
-                        style: TextStyle(
-                            fontFamily: 'Trap',
-                            fontSize: 24,
-                            letterSpacing: -1.5),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            actions: [
-              ClickableSvgIcon(
-                  svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
-                  onTap: () {}),
-              QuikSpacing.hS10(),
-              ClickableSvgIcon(
-                  svgAsset: QuikAssetConstants.logoutSvg,
-                  onTap: () {
-                    // context.read<SignInBloc>().add(const SignOutRequired());
-                  }),
-              QuikSpacing.hS24(),
-            ],
-          ),
-        ),
+      appBar: const QuikAppBar(
+        pageName: 'Chat',
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 0),

@@ -4,6 +4,7 @@ import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
+import 'package:quikhyr/common/widgets/quik_app_bar.dart';
 import 'package:quikhyr/common/widgets/quik_search_bar.dart';
 import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 
@@ -21,52 +22,16 @@ class ExploreScreen extends StatelessWidget {
     ];
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(56),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: AppBar(
-              titleSpacing: 24,
-              automaticallyImplyLeading: false, // Remove back button
-              backgroundColor: Colors.transparent,
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Q',
-                          style:
-                              TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
-                        ),
-                        TextSpan(
-                          text: 'uik',
-                          style:
-                              TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
-                        ),
-                        TextSpan(
-                          text: 'Explore',
-                          style: TextStyle(
-                              fontFamily: 'Trap',
-                              fontSize: 24,
-                              letterSpacing: -1.5),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                ClickableSvgIcon(
-                    svgAsset: QuikAssetConstants.filterSvg,
-                    onTap: () {
-                      //HANDLE GO TO NOTIFICATIONS
-                    }),
-                QuikSpacing.hS24(),
-              ],
-            ),
-          ),
+        appBar: QuikAppBar(
+          showPageName: true,
+          pageName: 'Explore',
+          trailingWidgets: [
+            ClickableSvgIcon(
+                svgAsset: QuikAssetConstants.filterSvg,
+                onTap: () {
+                  //HANDLE FILTER
+                }),
+          ],
         ),
         body: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),

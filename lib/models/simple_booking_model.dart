@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
 import 'package:quikhyr/models/location_model.dart';
+
+
 
 class SimpleBookingModel extends Equatable {
   final String? workerName;
@@ -57,20 +59,11 @@ class SimpleBookingModel extends Equatable {
     );
   }
 
-  String get formattedDate {
-    final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm:ss');
-    return formatter.format(dateTime);
-  }
-
-  static DateTime parseDateTime(String dateString) {
-    return DateFormat('dd/MM/yyyy HH:mm:ss').parse(dateString);
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'subserviceId': subserviceId,
       'clientId': clientId,
-      'dateTime': formattedDate,
+      'dateTime': Timestamp.fromDate(dateTime).toString(),
       'location': location.toMap(),
       'ratePerUnit': ratePerUnit,
       'status': status,
@@ -83,7 +76,9 @@ class SimpleBookingModel extends Equatable {
     return SimpleBookingModel(
       subserviceId: map['subserviceId'] as String,
       clientId: map['clientId'] as String,
-      dateTime: parseDateTime(map['dateTime']),
+      dateTime: DateTime.fromMillisecondsSinceEpoch(
+          (map['dateTime']['_seconds'] as int) * 1000 +
+              (map['dateTime']['_nanoseconds'] as int) ~/ 1000000),
       location: map['location']
           .LocationModel
           .fromMap(map['location'] as Map<String, dynamic>),
