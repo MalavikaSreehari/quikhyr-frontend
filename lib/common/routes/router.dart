@@ -15,15 +15,17 @@ import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_scr
 import 'package:quikhyr/features/chat/presentation/screens/chat_screen.dart';
 import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
 import 'package:quikhyr/features/explore/presentation/screens/explore_screen.dart';
+import 'package:quikhyr/features/home/models/immediate_screen_data_model.dart';
 import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/home_detail/home_detail_screen.dart';
 import 'package:quikhyr/features/home/presentation/screens/immediate_booking_screen.dart';
+import 'package:quikhyr/features/home/presentation/screens/map_screen.dart';
 import 'package:quikhyr/features/profile/presentation/screens/profile_screen.dart';
 import 'package:quikhyr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quikhyr/main_wrapper.dart';
 import 'package:quikhyr/models/booking_model.dart';
+import 'package:quikhyr/models/location_model.dart';
 import 'package:quikhyr/models/service_category_model.dart';
-import 'package:quikhyr/models/sub_service_category_model.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -152,8 +154,8 @@ class AppRouter {
                         path: QuikRoutes.homeImmediateBookingPath,
                         name: QuikRoutes.homeImmediateBookingName,
                         pageBuilder: (context, state) {
-                          final SubserviceModel subserviceModel =
-                              state.extra as SubserviceModel;
+                          final immediateBookingScreenDataModel =
+                              state.extra as ImmediateBookingScreenDataModel;
                           return CustomTransitionPage<void>(
                               transitionsBuilder: (context, animation,
                                   secondaryAnimation, child) {
@@ -168,11 +170,22 @@ class AppRouter {
                                 );
                               },
                               child: ImmediateBookingScreen(
-                                subserviceModel: subserviceModel,
+                                immediateBookingScreenDataModel: immediateBookingScreenDataModel,
                                 key: state.pageKey,
                               ));
                         },
                       ),
+                      GoRoute(
+                        path: QuikRoutes.mapPath,
+                        name: QuikRoutes.mapName,
+                        pageBuilder: (context, state) {
+                          return createCustomTransitionPage(MapScreen(
+                            locationModel: state.extra as LocationModel,
+                                key: state.pageKey,
+                              ));  
+                              
+                        },
+                      )
                     ],
                   ),
                 ]),
@@ -299,6 +312,7 @@ class AppRouter {
           pageBuilder: (context, state) {
             return const NoTransitionPage(child: ProfileScreen());
           }),
+      
 
       //It is not necessary to provide a navigatorKey if it isn't also
       //needed elsewhere. If not provided, a default key will be used.

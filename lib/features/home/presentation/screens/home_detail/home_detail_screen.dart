@@ -14,6 +14,7 @@ import 'package:quikhyr/common/widgets/long_icon_button.dart';
 import 'package:quikhyr/common/widgets/quik_small_text_with_border.dart';
 import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
 import 'package:quikhyr/features/home/cubit/workerlist_cubit.dart';
+import 'package:quikhyr/features/home/models/immediate_screen_data_model.dart';
 import 'package:quikhyr/features/home/presentation/components/quik_drop_down_button.dart';
 import 'package:quikhyr/features/home/presentation/components/shimmer_circle_small.dart';
 import 'package:quikhyr/models/service_category_model.dart';
@@ -196,14 +197,14 @@ class HomeDetailScreen extends StatelessWidget {
                   text: "Immediate Booking",
                   onPressed: () {
                     context.pushNamed(QuikRoutes.homeImmediateBookingName,
-                        extra: selectedSubservice ??
-                            SubserviceModel(
-                                id: "0",
-                                serviceId: serviceModel?.id ?? "0",
-                                serviceName: "All",
-                                name: "All Subservices",
-                                description: "All",
-                                tags: const []));
+                        extra: ImmediateBookingScreenDataModel(
+                            serviceAvatar: serviceModel?.avatar ??
+                                QuikAssetConstants.serviceNotFoundImageSvg,
+                            id: selectedSubservice?.id ?? "0",
+                            serviceId: selectedSubservice?.serviceId ?? "0",
+                            serviceName: serviceModel?.name ?? "All",
+                            name: selectedSubservice?.name ?? "All Subservices",
+                            tags: selectedSubservice?.tags ?? ["booking"]));
                   },
                   svgPath: QuikAssetConstants.rightArrowSvg,
                 ),

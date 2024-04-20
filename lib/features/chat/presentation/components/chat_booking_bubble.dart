@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/widgets/short_icon_button.dart';
+import 'package:quikhyr/common/widgets/quik_short_button.dart';
 import 'package:quikhyr/features/booking/repository/booking_repository.dart';
 import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
 import 'package:quikhyr/features/chat/notification_service.dart';
@@ -128,7 +128,7 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
                 if (widget.message.hasResponded == null)
                   Row(
                     children: [
-                      ShortIconButton(
+                      QuikShortButton(
                           isEnabled: widget.message.hasResponded == null,
                           text: 'Accept',
                           onPressed: () {
@@ -141,7 +141,7 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
                             );
                           }),
                       const SizedBox(width: 10.0),
-                      ShortIconButton(
+                      QuikShortButton(
                           text: 'Reject',
                           onPressed: () {
                             _respondToBookingProposal(

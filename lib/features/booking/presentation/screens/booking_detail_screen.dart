@@ -12,7 +12,7 @@ import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/quik_app_bar.dart';
 import 'package:quikhyr/common/widgets/quik_list_tile_button_and_text.dart';
-import 'package:quikhyr/common/widgets/short_icon_button.dart';
+import 'package:quikhyr/common/widgets/quik_short_button.dart';
 import 'package:quikhyr/common/widgets/status_text.dart';
 import 'package:quikhyr/models/booking_model.dart';
 
@@ -99,26 +99,27 @@ class BookingDetailScreen extends StatelessWidget {
                 QuikSpacing.vS32(),
                 StatusText(status: booking.status),
                 QuikSpacing.vS32(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ShortIconButton(
-                        backgroundColor: secondary,
-                        foregroundColor: onSecondary,
+                if (booking.status == Status.notCompleted)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      QuikShortButton(
+                          backgroundColor: secondary,
+                          foregroundColor: onSecondary,
+                          onPressed: () {
+                            showReportIssueBottomSheet(context);
+                          },
+                          text: "Report Issue",
+                          svgPath: QuikAssetConstants.dangerTriangleSvg),
+                      QuikSpacing.hS16(),
+                      QuikShortButton(
                         onPressed: () {
-                          showReportIssueBottomSheet(context);
+                          showBookingConfirmationDialog(context);
                         },
-                        text: "Report Issue",
-                        svgPath: QuikAssetConstants.dangerTriangleSvg),
-                    QuikSpacing.hS16(),
-                    ShortIconButton(
-                      onPressed: () {
-                        showBookingConfirmationDialog(context);
-                      },
-                      text: "Close Booking",
-                    ),
-                  ],
-                ),
+                        text: "Close Booking",
+                      ),
+                    ],
+                  ),
                 QuikSpacing.vS32(),
                 const Text("Steps to follow:", style: workerListNameTextStyle),
                 QuikSpacing.vS20(),

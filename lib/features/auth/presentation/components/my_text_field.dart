@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quikhyr/common/constants/quik_colors.dart';
 
 class MyTextField extends StatefulWidget {
   final TextEditingController? controller;
@@ -13,6 +14,7 @@ class MyTextField extends StatefulWidget {
   final String? errorMsg;
   final String? Function(String?)? onChanged;
   final String? initialValue;
+  final bool isReadOnly; // Added isReadOnly property
 
   const MyTextField({
     this.initialValue,
@@ -28,6 +30,7 @@ class MyTextField extends StatefulWidget {
     this.focusNode,
     this.errorMsg,
     this.onChanged,
+    this.isReadOnly = false, // Set default value for isReadOnly
   }) : super(key: key);
 
   @override
@@ -35,23 +38,25 @@ class MyTextField extends StatefulWidget {
 }
 
 class _MyTextFieldState extends State<MyTextField> {
-  Color backgroundColor = const Color(0xFF313131);
+  Color backgroundColor = textInputBackgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return Focus(
       onFocusChange: (hasFocus) {
-        setState(() {
-          backgroundColor = hasFocus
-              ? const Color.fromRGBO(51, 153, 204, 0.12)
-              : const Color(0xFF313131);
-        });
+        if (!widget.isReadOnly) { // Only change color if not read-only
+          setState(() {
+            backgroundColor = hasFocus
+                ? textInputActiveBackgroundColor
+                : textInputActiveBackgroundColor;
+          });
+        }
       },
       child: Builder(
         builder: (BuildContext context) {
           return Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(16),
               color: backgroundColor,
             ),
             child: TextFormField(
@@ -69,21 +74,22 @@ class _MyTextFieldState extends State<MyTextField> {
               },
               textInputAction: TextInputAction.next,
               onChanged: widget.onChanged,
+              readOnly: widget.isReadOnly, // Use isReadOnly property
               decoration: InputDecoration(
                 suffixIcon: widget.suffixIcon,
                 prefixIcon: widget.prefixIcon,
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(16),
                   //borderSide: BorderSide(color: Colors.transparent),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(16),
                   borderSide:
                       BorderSide(color: Theme.of(context).colorScheme.primary),
                 ),
-                fillColor: const Color.fromRGBO(51, 153, 204, 0.12),
+                fillColor: textInputBackgroundColor,
                 filled: true,
-                //focusColor: Color(0xFF3399CC),
+                // focusColor: textInputActiveBackgroundColor,
                 hintText: widget.hintText,
                 hintStyle: const TextStyle(
                   color: Color.fromRGBO(233, 234, 236, 0.50),

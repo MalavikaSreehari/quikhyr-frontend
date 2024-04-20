@@ -69,4 +69,9 @@ class QuikAssetConstants {
   static const String cancelBookingSvg = 'assets/icons/cancel_booking.svg';
   static const String downloadSvg = 'assets/icons/download.svg';
   static const String dangerTriangleSvg = 'assets/icons/danger_triangle.svg';
+  static const String editSvg = 'assets/icons/edit.svg';
+  static const String currentLocationSvg =
+      'assets/icons/current_location.svg';
+  static const String photoCameraSvg = 'assets/icons/photo_camera.svg';
+  static const String gallerySvg = 'assets/icons/gallery.svg';
 }
