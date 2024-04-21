@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quikhyr/features/booking/repository/booking_repository.dart';
 import 'package:quikhyr/models/booking_model.dart';
-import 'package:quikhyr/models/simple_booking_model.dart';
 
 part 'booking_state.dart';
 

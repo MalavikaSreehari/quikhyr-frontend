@@ -8,6 +8,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:quikhyr/common/bloc/client_bloc.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_spacings.dart';
+import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/quik_short_button.dart';
 import 'package:quikhyr/models/location_model.dart';
 
@@ -45,13 +47,30 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   final snackBar = SnackBar(
-    content: const Text('Please Enable Location Permission'),
-    action: SnackBarAction(
-      label: 'Location Permission Not Enabled',
-      onPressed: () {
-        // Code to execute.
-      },
+    backgroundColor: onSecondary, // Change the background color
+    content: Column(
+      children: [
+        const Text('Please Enable Location Permission',
+            style: workerListNameTextStyle),
+        QuikSpacing.vS16(),
+        QuikShortButton(
+          width: 188,
+          svgPath: QuikAssetConstants.settingsActiveSvg,
+          text: 'Go To Settings',
+          onPressed: () {
+            openAppSettings();
+          },
+        )
+      ],
     ),
+
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(24), // Add a border radius
+    ),
+    behavior: SnackBarBehavior.floating, // Make the SnackBar floating
+    margin: const EdgeInsets.all(10), // Add some margin
+    padding: const EdgeInsets.symmetric(
+        horizontal: 24, vertical: 24), // Add some padding
   );
 
   void getLocationPermission(context) async {
@@ -135,9 +154,10 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     camPos = CameraPosition(
-    target: LatLng(widget.locationModel.latitude.toDouble(), widget.locationModel.longitude.toDouble()),
-    zoom: 16.5,
-  );
+      target: LatLng(widget.locationModel.latitude.toDouble(),
+          widget.locationModel.longitude.toDouble()),
+      zoom: 16.5,
+    );
   }
 
   @override
