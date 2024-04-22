@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
@@ -8,21 +10,25 @@ import 'package:quikhyr/common/widgets/quik_app_bar.dart';
 import 'package:quikhyr/common/widgets/quik_short_button.dart';
 
 import '../../../../common/widgets/quik_small_text_with_border.dart';
+import '../../../../models/worker_model.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final WorkerModel worker;
+  const ProfileScreen({super.key, required this.worker});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const QuikAppBar(
+      appBar: QuikAppBar(
         onlyHasTitle: true,
         showBackButton: true,
         showPageName: false,
-        title: 'Henry Kal',
+        title: worker.name,
         trailingWidgets: [
           QuikSmallTextWithBorder(
-            text: 'Available',
+            borderColor: worker.available ? quikHyrGreen : quikHyrRed,
+            textColor: worker.available ? quikHyrGreen : quikHyrRed,
+            text: worker.available ? "Available" : "Unavailable",
           ),
         ],
       ),
@@ -39,23 +45,26 @@ class ProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Henry Kal",
+                      worker.name,
                       style: largeHeadingTextStyle,
                     ),
-                    QuikSpacing.vS12(),
-                    Text(
-                      "Plumber, Mechanic",
-                      style: subtitleMediumTextStyle,
-                    ),
+                    // QuikSpacing.vS12(),
+                    // Text(
+                    //   "Plumber & Mechanic",
+                    //   style: subtitleMediumTextStyle,
+                    // ),
                     QuikSpacing.vS16(),
-                    Text("Irinjalakuda", style: subtitleMediumPrimaryTextStyle)
+                    Text(worker.locationName ?? "Location",
+                        style: subtitleMediumPrimaryTextStyle)
                   ],
                 ),
                 const Spacer(),
-                Container(
+                SizedBox(
                   height: 100,
                   width: 100,
-                  child: Image.network(QuikAssetConstants.placeholderImage),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(worker.avatar),
+                  ),
                 )
               ],
             ),
@@ -65,7 +74,12 @@ class ProfileScreen extends StatelessWidget {
                 QuikShortButton(
                   text: "Message",
                   svgPath: QuikAssetConstants.sendSvg,
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed(QuikRoutes.chatConversationName,
+                        pathParameters: {
+                          'workerId': worker.id,
+                        });
+                  },
                 )
               ],
             ),

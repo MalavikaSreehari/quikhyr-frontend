@@ -31,7 +31,7 @@ class QuikSmallTextWithBorder extends StatelessWidget {
       child: Center(
         child: Text(
           text,
-          style: availabilityTextStyle,
+          style: availabilityTextStyle.copyWith(color: textColor),
         ),
       ),
     );

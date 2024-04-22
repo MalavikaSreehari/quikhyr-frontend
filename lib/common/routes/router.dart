@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quikhyr/models/worker_model.dart';
 import '../constants/quik_routes.dart';
 import 'screens/page_not_found.dart';
 import '../screens/notification_screen.dart';
@@ -310,7 +311,7 @@ class AppRouter {
           path: QuikRoutes.profilePath,
           name: QuikRoutes.profileName,
           pageBuilder: (context, state) {
-            return const NoTransitionPage(child: ProfileScreen());
+            return NoTransitionPage(child: ProfileScreen(worker: state.extra as WorkerModel,));
           }),
       
 

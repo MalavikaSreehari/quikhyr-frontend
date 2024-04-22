@@ -16,6 +16,8 @@ class ChatTextFormField extends StatefulWidget {
     this.hintText,
     this.obscureText,
     this.onChanged,
+    this.onSend,
+    this.onImageSend,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -24,6 +26,8 @@ class ChatTextFormField extends StatefulWidget {
   final String? hintText;
   final bool? obscureText;
   final ValueChanged<String>? onChanged;
+  final VoidCallback? onSend;
+  final VoidCallback? onImageSend;
 
   @override
   ChatTextFormFieldState createState() => ChatTextFormFieldState();
@@ -124,7 +128,7 @@ class ChatTextFormFieldState extends State<ChatTextFormField> {
                         ClickableSvgIcon(
                           color: placeHolderText,
                           svgAsset: QuikAssetConstants.sendSvg,
-                          onTap: () {},
+                          onTap: widget.onSend ?? () {},
                         )
                       ],
                     ),
@@ -133,7 +137,7 @@ class ChatTextFormFieldState extends State<ChatTextFormField> {
                     key: const ValueKey<int>(2),
                     color: placeHolderText,
                     svgAsset: QuikAssetConstants.photoCameraSvg,
-                    onTap: () {}),
+                    onTap: widget.onImageSend ?? () {}),
             onPressed: () {
               setState(() {
                 _isSendIconVisible = !_isSendIconVisible;

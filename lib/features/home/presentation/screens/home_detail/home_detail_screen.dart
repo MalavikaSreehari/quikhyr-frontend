@@ -356,7 +356,7 @@ class HomeDetailScreen extends StatelessWidget {
                                                   .arrowRightUpSvg,
                                               onTap: () {
                                                 context.pushNamed(
-                                                    QuikRoutes.profileName);
+                                                    QuikRoutes.profileName, extra: worker);
                                               })
                                           // SvgPicture.asset(
                                           //   QuikAssetConstants.arrowRightUpSvg,
@@ -427,7 +427,7 @@ class HomeDetailScreen extends StatelessWidget {
                                                   .arrowRightUpSvg,
                                               onTap: () {
                                                 context.pushNamed(
-                                                    QuikRoutes.profileName);
+                                                    QuikRoutes.profileName, extra: worker);
                                               })
                                         ],
                                       ),
