@@ -104,6 +104,15 @@ const TextStyle chatSubTitle = TextStyle(
   height: 1.0,
 );
 
+const TextStyle chatSubTitleTime = TextStyle(
+  color: secondary,
+  fontFamily: 'Trap',
+  fontSize: 10.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w500,
+  height: 1.0,
+);
+
 const TextStyle timeGreenTextStyle = TextStyle(
   color: quikHyrGreen,
   fontFamily: 'Trap',
@@ -251,6 +260,15 @@ const TextStyle workerListUnitTextStyle = TextStyle(
   fontSize: 13,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w700,
+  height: 1.0,
+);
+
+const TextStyle messageTextFieldHintTextStyle = TextStyle(
+  color: placeHolderText,
+  fontFamily: 'Trap',
+  fontSize: 13,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
   height: 1.0,
 );
 

@@ -10,7 +10,6 @@ import '../../../../common/constants/quik_asset_constants.dart';
 import '../../../../common/constants/quik_routes.dart';
 import '../../../../common/constants/quik_spacings.dart';
 import '../../../../common/constants/quik_themes.dart';
-import '../../../../common/widgets/clickable_svg_icon.dart';
 import '../../../../common/widgets/gradient_separator.dart';
 import '../../../../common/widgets/quik_app_bar.dart';
 import '../../../../common/widgets/quik_search_bar.dart';

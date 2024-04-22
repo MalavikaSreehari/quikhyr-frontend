@@ -98,7 +98,8 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
           padding: const EdgeInsets.all(10.0),
           margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
           decoration: BoxDecoration(
-            color: widget.isMe ? primary : secondary,
+            // color: widget.isMe ? primary : secondary,
+            color: gridItemBackgroundColor,
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Column(
@@ -142,6 +143,8 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
                           }),
                       const SizedBox(width: 10.0),
                       QuikShortButton(
+                          foregroundColor: quikHyrRed,
+                          backgroundColor: secondary,
                           text: 'Reject',
                           onPressed: () {
                             _respondToBookingProposal(

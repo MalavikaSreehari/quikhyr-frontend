@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/constants/quik_colors.dart';
 import '../../firebase_firestore_service.dart';
 import '../../media_service.dart';
-import '../../notification_service.dart';
+import 'package:quikhyr/features/chat/notification_service.dart';
 import 'custom_text_form_field.dart';
 
 class ChatTextField extends StatefulWidget {
@@ -37,30 +37,10 @@ class _ChatTextFieldState extends State<ChatTextField> {
   Widget build(BuildContext context) => Row(
         children: [
           Expanded(
-            child: CustomTextFormField(
+            child: ChatTextFormField(
               controller: controller,
-              hintText: 'Add Message...',
+              hintText: 'Message...',
             ),
-          ),
-          const SizedBox(width: 5),
-          CircleAvatar(
-            backgroundColor: primary,
-            radius: 20,
-            child: IconButton(
-                icon: const Icon(Icons.camera_alt, color: Colors.white),
-                onPressed: () {
-                  _sendImage();
-                }),
-          ),
-          const SizedBox(width: 5),
-          CircleAvatar(
-            backgroundColor: primary,
-            radius: 20,
-            child: IconButton(
-                icon: const Icon(Icons.send, color: Colors.white),
-                onPressed: () {
-                  _sendText(context);
-                }),
           ),
         ],
       );

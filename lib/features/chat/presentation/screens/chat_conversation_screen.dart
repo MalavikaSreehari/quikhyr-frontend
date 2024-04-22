@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -7,14 +6,10 @@ import '../../../../common/constants/quik_spacings.dart';
 import '../../../../common/constants/quik_themes.dart';
 import '../../../../common/widgets/clickable_svg_icon.dart';
 import '../../../../common/widgets/gradient_separator.dart';
-import '../../../booking/repository/booking_repository.dart';
-import '../../firebase_firestore_service.dart';
 import '../../firebase_provider.dart';
 import '../../notification_service.dart';
 import '../components/chat_messages.dart';
 import '../components/chat_text_field.dart';
-import '../../../../models/simple_booking_model.dart';
-import '../../../../models/location_model.dart';
 
 class ChatConversationScreen extends StatefulWidget {
   final String workerId;
@@ -38,7 +33,7 @@ class _ChatConversationScreenState extends State<ChatConversationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: ChatScreenAppBar(),
+        appBar: const ChatScreenAppBar(),
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(children: [
