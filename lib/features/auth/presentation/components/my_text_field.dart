@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
+import '../../../../common/constants/quik_colors.dart';
 
 class MyTextField extends StatefulWidget {
   final TextEditingController? controller;

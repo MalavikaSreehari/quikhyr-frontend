@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/models/chat_message_model.dart';
+import '../../../../common/constants/quik_colors.dart';
+import '../../../../models/chat_message_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class MessageBubble extends StatelessWidget {

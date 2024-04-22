@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/widgets/gradient_separator.dart';
-import 'package:quikhyr/common/widgets/quik_app_bar.dart';
-import 'package:quikhyr/common/widgets/quik_search_bar.dart';
+import '../constants/quik_asset_constants.dart';
+import '../constants/quik_colors.dart';
+import '../constants/quik_spacings.dart';
+import '../constants/quik_themes.dart';
+import '../widgets/gradient_separator.dart';
+import '../widgets/quik_app_bar.dart';
+import '../widgets/quik_search_bar.dart';
 
 class QrScreen extends StatelessWidget {
   final String qrData;

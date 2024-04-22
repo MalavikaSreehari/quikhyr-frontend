@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_routes.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/enums/status.dart';
-import 'package:quikhyr/common/quik_dialogs.dart';
-import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
-import 'package:quikhyr/common/widgets/gradient_separator.dart';
-import 'package:quikhyr/common/widgets/quik_app_bar.dart';
-import 'package:quikhyr/common/widgets/quik_list_tile_button_and_text.dart';
-import 'package:quikhyr/common/widgets/quik_short_button.dart';
-import 'package:quikhyr/common/widgets/status_text.dart';
-import 'package:quikhyr/models/booking_model.dart';
+import '../../../../common/constants/quik_asset_constants.dart';
+import '../../../../common/constants/quik_colors.dart';
+import '../../../../common/constants/quik_routes.dart';
+import '../../../../common/constants/quik_spacings.dart';
+import '../../../../common/constants/quik_themes.dart';
+import '../../../../common/enums/status.dart';
+import '../../../../common/quik_dialogs.dart';
+import '../../../../common/widgets/clickable_svg_icon.dart';
+import '../../../../common/widgets/gradient_separator.dart';
+import '../../../../common/widgets/quik_app_bar.dart';
+import '../../../../common/widgets/quik_list_tile_button_and_text.dart';
+import '../../../../common/widgets/quik_short_button.dart';
+import '../../../../common/widgets/status_text.dart';
+import '../../../../models/booking_model.dart';
 
 class BookingDetailScreen extends StatelessWidget {
   final Booking booking;

@@ -1,14 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_routes.dart';
-import 'package:quikhyr/common/widgets/long_icon_button.dart';
-import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import '../../../../common/constants/quik_asset_constants.dart';
+import '../../../../common/constants/quik_routes.dart';
+import '../../../../common/widgets/long_icon_button.dart';
+import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quikhyr/features/auth/presentation/components/my_text_field.dart';
-import 'package:quikhyr/features/home/presentation/screens/home/home_screen.dart';
+import '../components/my_text_field.dart';
+import '../../../home/presentation/screens/home/home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);

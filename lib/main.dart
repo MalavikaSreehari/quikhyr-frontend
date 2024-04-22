@@ -3,10 +3,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:quikhyr/app.dart';
-import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
-import 'package:quikhyr/config/firebase_options.dart';
-import 'package:quikhyr/simple_bloc_observer.dart';
+import 'app.dart';
+import 'features/auth/data/repository/firebase_user_repo.dart';
+import 'config/firebase_options.dart';
+import 'simple_bloc_observer.dart';
 
 Future<void> _backgroundMessageHandler(RemoteMessage message) async {
   await Firebase.initializeApp(

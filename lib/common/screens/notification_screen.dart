@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
-import 'package:quikhyr/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import '../constants/quik_asset_constants.dart';
+import '../constants/quik_spacings.dart';
+import '../constants/quik_themes.dart';
+import '../widgets/clickable_svg_icon.dart';
+import '../../features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);

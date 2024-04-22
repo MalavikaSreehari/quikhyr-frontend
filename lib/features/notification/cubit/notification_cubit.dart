@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quikhyr/features/notification/repository/notification_repo.dart';
-import 'package:quikhyr/models/notification_model.dart';
+import '../repository/notification_repo.dart';
+import '../../../models/notification_model.dart';
 
 part 'notification_state.dart';
 

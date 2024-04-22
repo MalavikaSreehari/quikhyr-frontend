@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
+import '../constants/quik_asset_constants.dart';
+import '../constants/quik_colors.dart';
+import '../constants/quik_spacings.dart';
+import '../constants/quik_themes.dart';
+import 'clickable_svg_icon.dart';
 
 class QuikAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final bool onlyHasTitle;
   final bool showBackButton;
   final bool showPageName;
   final String? pageName;
@@ -18,6 +19,7 @@ class QuikAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? subtitle;
   final List<Widget>? trailingWidgets;
   const QuikAppBar({
+    this.onlyHasTitle = false,
     this.hasCircleBorder = false,
     this.circleBorderColor,
     this.showPageName = true,
@@ -84,42 +86,46 @@ class QuikAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ],
                     )
-                  : Row(
-                      children: [
-                        Container(
-                          height: 38,
-                          width: 38,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border:
-                                Border.all(color: circleBorderColor ?? primary),
-                          ),
-                          child: SvgPicture.network(
-                            leadingSvgLink ??
-                                QuikAssetConstants.serviceNotFoundImageSvg,
-                            height: 32,
-                            width: 32,
-                          ),
-                        ),
-                        QuikSpacing.hS12(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  : !showPageName && !onlyHasTitle
+                      ? Row(
                           children: [
-                            Text(
-                              title ?? "Worker Name",
-                              style: workerListNameTextStyle,
+                            Container(
+                              height: 38,
+                              width: 38,
+                              padding: const EdgeInsets.all(8),
+                              decoration: hasCircleBorder ?? false
+                                  ? BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: circleBorderColor ?? primary),
+                                    )
+                                  : null,
+                              child: SvgPicture.network(
+                                leadingSvgLink ??
+                                    QuikAssetConstants.serviceNotFoundImageSvg,
+                                height: 32,
+                                width: 32,
+                              ),
                             ),
-                            QuikSpacing.vS8(),
-                            Text(
-                              subtitle ?? "Sub Service Name",
-                              style: chatSubTitle,
-                            ),
+                            QuikSpacing.hS12(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  title ?? "Worker Name",
+                                  style: workerListNameTextStyle,
+                                ),
+                                QuikSpacing.vS8(),
+                                Text(
+                                  subtitle ?? "Sub Service Name",
+                                  style: chatSubTitle,
+                                ),
+                              ],
+                            )
                           ],
                         )
-                      ],
-                    ),
-              actions: trailingWidgets?..add(QuikSpacing.hS24())),
+                      : Text(title ?? "Title", style: workerListNameTextStyle),
+              actions: trailingWidgets != null ? [...?trailingWidgets, QuikSpacing.hS24()] : [QuikSpacing.hS24()]),
         ));
   }
 

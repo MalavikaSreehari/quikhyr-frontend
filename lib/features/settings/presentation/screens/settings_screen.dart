@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
-import 'package:quikhyr/common/widgets/gradient_separator.dart';
-import 'package:quikhyr/common/widgets/quik_search_bar.dart';
+import '../../../../common/constants/quik_asset_constants.dart';
+import '../../../../common/constants/quik_colors.dart';
+import '../../../../common/constants/quik_spacings.dart';
+import '../../../../common/widgets/clickable_svg_icon.dart';
+import '../../../../common/widgets/gradient_separator.dart';
+import '../../../../common/widgets/quik_search_bar.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);

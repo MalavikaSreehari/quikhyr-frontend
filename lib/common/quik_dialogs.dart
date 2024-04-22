@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/widgets/long_icon_button.dart';
-import 'package:quikhyr/features/auth/presentation/components/my_text_field.dart';
+import 'constants/quik_colors.dart';
+import 'widgets/long_icon_button.dart';
+import '../features/auth/presentation/components/my_text_field.dart';
 
 void showBookingConfirmationDialog(BuildContext context) {
   showDialog(

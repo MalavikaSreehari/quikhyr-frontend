@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:quikhyr/models/chat_list_model.dart';
-import 'package:quikhyr/models/chat_message_model.dart';
+import '../../models/chat_list_model.dart';
+import '../../models/chat_message_model.dart';
 
 import 'firebase_storage_service.dart';
 

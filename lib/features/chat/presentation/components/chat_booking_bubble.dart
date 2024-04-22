@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/widgets/quik_short_button.dart';
-import 'package:quikhyr/features/booking/repository/booking_repository.dart';
-import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
-import 'package:quikhyr/features/chat/notification_service.dart';
-import 'package:quikhyr/models/simple_booking_model.dart';
-import 'package:quikhyr/models/chat_message_model.dart';
-import 'package:quikhyr/models/location_model.dart';
+import '../../../../common/constants/quik_colors.dart';
+import '../../../../common/constants/quik_themes.dart';
+import '../../../../common/widgets/quik_short_button.dart';
+import '../../../booking/repository/booking_repository.dart';
+import '../../firebase_firestore_service.dart';
+import '../../notification_service.dart';
+import '../../../../models/simple_booking_model.dart';
+import '../../../../models/chat_message_model.dart';
+import '../../../../models/location_model.dart';
 
 class BookingRequestBubble extends StatefulWidget {
   final bool isMe;

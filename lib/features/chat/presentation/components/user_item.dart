@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_routes.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/models/client_model.dart';
+import '../../../../common/constants/quik_asset_constants.dart';
+import '../../../../common/constants/quik_routes.dart';
+import '../../../../common/constants/quik_themes.dart';
+import '../../../../models/client_model.dart';
 
 class UserItem extends StatefulWidget {
   const UserItem({super.key, required this.worker});

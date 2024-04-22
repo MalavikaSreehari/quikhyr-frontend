@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
+import '../constants/quik_asset_constants.dart';
+import '../constants/quik_colors.dart';
+import '../constants/quik_spacings.dart';
+import 'clickable_svg_icon.dart';
 
 class QuikSearchBar extends StatefulWidget {
   final String hintText;

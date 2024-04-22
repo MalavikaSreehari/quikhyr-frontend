@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
-import 'package:quikhyr/common/widgets/quik_app_bar.dart';
-import 'package:quikhyr/common/widgets/quik_search_bar.dart';
-import 'package:quikhyr/features/explore/blocs/cubit/filter_chip_cubit.dart';
+import '../../../../common/constants/quik_asset_constants.dart';
+import '../../../../common/constants/quik_colors.dart';
+import '../../../../common/constants/quik_spacings.dart';
+import '../../../../common/widgets/clickable_svg_icon.dart';
+import '../../../../common/widgets/quik_app_bar.dart';
+import '../../../../common/widgets/quik_search_bar.dart';
+import '../../blocs/cubit/filter_chip_cubit.dart';
 
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});

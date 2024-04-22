@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quikhyr/features/home/data/repository/subservices_repo.dart';
-import 'package:quikhyr/models/sub_service_category_model.dart';
+import '../data/repository/subservices_repo.dart';
+import '../../../models/sub_service_category_model.dart';
 
 part 'subservice_state.dart';
 

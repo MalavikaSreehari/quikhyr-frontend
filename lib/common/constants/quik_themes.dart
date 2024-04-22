@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
+import 'quik_colors.dart';
 
 class AppTheme {
   static ThemeData appTheme = ThemeData(
@@ -121,6 +121,13 @@ const TextStyle timeGreenLargeTextStyle = TextStyle(
   height: 1.20,
 );
 
+const TextStyle largeHeadingTextStyle = TextStyle(
+  color: secondary,
+  fontFamily: 'Trap',
+  fontSize: 24,
+  fontWeight: FontWeight.w600,
+);
+
 const TextStyle chatSubTitleRead = TextStyle(
   color: placeHolderText,
   fontFamily: 'Trap',
@@ -218,6 +225,24 @@ const TextStyle workerListPriceTextStyle = TextStyle(
   fontSize: 16.0,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
+);
+
+const TextStyle subtitleMediumTextStyle = TextStyle(
+  color: labelColor,
+  fontFamily: 'Trap',
+  fontSize: 12,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w500,
+  height: 1.0,
+);
+
+const TextStyle subtitleMediumPrimaryTextStyle = TextStyle(
+  color: quikHyrBlue,
+  fontFamily: 'Trap',
+  fontSize: 14,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w500,
+  height: 1.0,
 );
 
 const TextStyle workerListUnitTextStyle = TextStyle(

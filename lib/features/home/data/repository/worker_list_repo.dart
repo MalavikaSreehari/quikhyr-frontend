@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:quikhyr/features/home/data/data_provider/worker_list_data_provider.dart';
-import 'package:quikhyr/models/worker_model.dart';
+import '../data_provider/worker_list_data_provider.dart';
+import '../../../../models/worker_model.dart';
 
 class WorkerListRepo {
   final WorkerListDataProvider _workerListDataProvider;

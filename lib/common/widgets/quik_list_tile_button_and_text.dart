@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
+import '../constants/quik_themes.dart';
 
 class QuikListTileButtonAndText extends StatelessWidget {
   final String title;

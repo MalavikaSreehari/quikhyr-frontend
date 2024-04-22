@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:quikhyr/common/constants/quik_secure_constants.dart';
-import 'package:quikhyr/models/booking_model.dart';
-import 'package:quikhyr/models/simple_booking_model.dart';
+import '../../../common/constants/quik_secure_constants.dart';
+import '../../../models/booking_model.dart';
+import '../../../models/simple_booking_model.dart';
 
 class BookingRepository {
   Future<Either<String, bool>> createBooking(SimpleBookingModel booking) async {

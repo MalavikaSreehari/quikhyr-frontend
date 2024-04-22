@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
-import 'package:quikhyr/common/constants/quik_secure_constants.dart';
-import 'package:quikhyr/models/client_model.dart';
+import '../../constants/quik_secure_constants.dart';
+import '../../../models/client_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:quikhyr/models/location_model.dart';
+import '../../../models/location_model.dart';
 
 class ClientRepo {
   Future<Either<String, ClientModel>> getClient(

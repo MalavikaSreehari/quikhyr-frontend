@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
-import 'package:quikhyr/features/chat/notification_service.dart';
+import '../../data/repository/firebase_user_repo.dart';
+import '../../../chat/notification_service.dart';
 
 part 'sign_in_event.dart';
 part 'sign_in_state.dart';

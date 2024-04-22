@@ -11,6 +11,7 @@ import 'package:quikhyr/common/constants/quik_themes.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/long_icon_button.dart';
+import 'package:quikhyr/common/widgets/quik_app_bar.dart';
 import 'package:quikhyr/common/widgets/quik_small_text_with_border.dart';
 import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
 import 'package:quikhyr/features/home/cubit/workerlist_cubit.dart';
@@ -40,67 +41,82 @@ class HomeDetailScreen extends StatelessWidget {
     debugPrint(serviceModel?.name);
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(56),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: AppBar(
-              leading: GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child:
-                      const Icon(Icons.arrow_back_ios_new, color: secondary)),
-              // titleSpacing: 24,
-              // automaticallyImplyLeading: false, // Remove back button
-              backgroundColor: Colors.transparent,
-              title: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: gridItemBackgroundColor),
-                    alignment: Alignment.center,
-                    height: 36,
-                    width: 36,
-                    child: SvgPicture.network(
-                      semanticsLabel: "Service Avatar",
-                      serviceModel?.avatar ??
-                          QuikAssetConstants.serviceNotFoundImageSvg,
-                      height: 24,
-                      placeholderBuilder: (BuildContext context) =>
-                          Shimmer.fromColors(
-                              baseColor: gridItemBackgroundColor,
-                              highlightColor: Colors.grey[100]!,
-                              child: shimmerCard()),
-                    ),
-                  ),
-                  QuikSpacing.hS12(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        serviceModel?.name ?? "NameNotFound",
-                        style: Theme.of(context).textTheme.titleLarge,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      QuikSpacing.vS8(),
-                      const Text("Service", style: chatSubTitle),
-                    ],
-                  )
-                ],
-              ),
-              actions: [
-                SvgPicture.asset(QuikAssetConstants.availableCircleShadesSvg,
-                    semanticsLabel: "Service Avatar", height: 24, width: 24),
-                QuikSpacing.hS4(),
-                const Text("Available", style: availabilityTextStyle),
-                QuikSpacing.hS24(),
-              ],
-            ),
-          ),
+        appBar: QuikAppBar(
+          showBackButton: true,
+          showPageName: false,
+          title: serviceModel?.name ?? "NameNotFound",
+          subtitle: "Service",
+          leadingSvgLink: serviceModel?.avatar ??
+              QuikAssetConstants.serviceNotFoundImageSvg,
+          hasCircleBorder: true,
+          trailingWidgets: [
+            SvgPicture.asset(QuikAssetConstants.availableCircleShadesSvg,
+                semanticsLabel: "Service Avatar", height: 24, width: 24),
+            QuikSpacing.hS4(),
+            const Text("Available", style: availabilityTextStyle),
+          ],
         ),
+        // appBar: PreferredSize(
+        //   preferredSize: const Size.fromHeight(56),
+        //   child: Padding(
+        //     padding: const EdgeInsets.only(top: 12),
+        //     child: AppBar(
+        //       leading: GestureDetector(
+        //           onTap: () {
+        //             context.pop();
+        //           },
+        //           child:
+        //               const Icon(Icons.arrow_back_ios_new, color: secondary)),
+        //       // titleSpacing: 24,
+        //       // automaticallyImplyLeading: false, // Remove back button
+        //       backgroundColor: Colors.transparent,
+        //       title: Row(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Container(
+        //             decoration: const BoxDecoration(
+        //                 shape: BoxShape.circle, color: gridItemBackgroundColor),
+        //             alignment: Alignment.center,
+        //             height: 36,
+        //             width: 36,
+        //             child: SvgPicture.network(
+        //               semanticsLabel: "Service Avatar",
+        //               serviceModel?.avatar ??
+        //                   QuikAssetConstants.serviceNotFoundImageSvg,
+        //               height: 24,
+        //               placeholderBuilder: (BuildContext context) =>
+        //                   Shimmer.fromColors(
+        //                       baseColor: gridItemBackgroundColor,
+        //                       highlightColor: Colors.grey[100]!,
+        //                       child: shimmerCard()),
+        //             ),
+        //           ),
+        //           QuikSpacing.hS12(),
+        //           Column(
+        //             mainAxisAlignment: MainAxisAlignment.start,
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text(
+        //                 serviceModel?.name ?? "NameNotFound",
+        //                 style: Theme.of(context).textTheme.titleLarge,
+        //                 overflow: TextOverflow.ellipsis,
+        //               ),
+        //               QuikSpacing.vS8(),
+        //               const Text("Service", style: chatSubTitle),
+        //             ],
+        //           )
+        //         ],
+        //       ),
+        //       actions: [
+        // SvgPicture.asset(QuikAssetConstants.availableCircleShadesSvg,
+        //     semanticsLabel: "Service Avatar", height: 24, width: 24),
+        // QuikSpacing.hS4(),
+        // const Text("Available", style: availabilityTextStyle),
+        // QuikSpacing.hS24(),
+        //       ],
+        //     ),
+        //   ),
+        // ),
 
         // body: Center(child: Text(serviceModel.title)));
         body: SingleChildScrollView(

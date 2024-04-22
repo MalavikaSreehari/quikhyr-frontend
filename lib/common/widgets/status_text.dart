@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/enums/status.dart';
+import '../constants/quik_colors.dart';
+import '../constants/quik_themes.dart';
+import '../enums/status.dart';
 
 class StatusText extends StatelessWidget {
   final Status status;

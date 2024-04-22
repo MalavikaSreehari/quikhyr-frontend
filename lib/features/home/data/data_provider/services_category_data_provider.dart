@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:quikhyr/common/constants/quik_secure_constants.dart';
+import '../../../../common/constants/quik_secure_constants.dart';
 
 class ServicesCategoryProvider {
   Future<String> getServicesData() async {

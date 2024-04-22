@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/routes/router.dart';
+import 'common/constants/quik_themes.dart';
+import 'common/routes/router.dart';
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});

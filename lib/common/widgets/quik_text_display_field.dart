@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
+import '../constants/quik_colors.dart';
 
 class QuikTextDisplayField extends StatelessWidget {
   final String data;

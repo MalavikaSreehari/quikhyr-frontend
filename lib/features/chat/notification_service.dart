@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
-import 'package:quikhyr/common/constants/quik_routes.dart';
-import 'package:quikhyr/features/chat/presentation/screens/chat_conversation_screen.dart';
+import '../../common/constants/quik_routes.dart';
 
 
 const channel = AndroidNotificationChannel(

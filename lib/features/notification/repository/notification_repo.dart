@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_secure_constants.dart';
-import 'package:quikhyr/models/notification_model.dart';
+import '../../../common/constants/quik_secure_constants.dart';
+import '../../../models/notification_model.dart';
 import 'package:http/http.dart' as http;
 
 class NotificationRepo {

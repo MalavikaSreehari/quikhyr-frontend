@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quikhyr/features/home/data/repository/worker_list_repo.dart';
-import 'package:quikhyr/models/worker_model.dart';
+import '../data/repository/worker_list_repo.dart';
+import '../../../models/worker_model.dart';
 
 part 'workerlist_state.dart';
 

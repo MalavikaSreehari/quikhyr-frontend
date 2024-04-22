@@ -5,13 +5,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:quikhyr/common/bloc/client_bloc.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/widgets/quik_short_button.dart';
-import 'package:quikhyr/models/location_model.dart';
+import '../../../../common/bloc/client_bloc.dart';
+import '../../../../common/constants/quik_asset_constants.dart';
+import '../../../../common/constants/quik_colors.dart';
+import '../../../../common/constants/quik_spacings.dart';
+import '../../../../common/constants/quik_themes.dart';
+import '../../../../common/widgets/quik_short_button.dart';
+import '../../../../models/location_model.dart';
 
 class MapScreen extends StatefulWidget {
   final LocationModel locationModel;

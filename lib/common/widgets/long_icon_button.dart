@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
+import '../constants/quik_colors.dart';
+import '../constants/quik_spacings.dart';
 
 class LongIconButton extends StatelessWidget {
   final String text;

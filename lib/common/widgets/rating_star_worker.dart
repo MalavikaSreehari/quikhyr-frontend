@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
+import '../constants/quik_colors.dart';
 
 class RatingStar extends StatelessWidget {
   final String rating;

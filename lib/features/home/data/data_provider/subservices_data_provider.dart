@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:quikhyr/common/constants/quik_secure_constants.dart';
+import '../../../../common/constants/quik_secure_constants.dart';
 
 class SubservicesCategoryProvider {
   Future<String> getSubservicesData(String serviceId) async {

@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quikhyr/common/data/repositories/client_repo.dart';
-import 'package:quikhyr/features/auth/data/repository/firebase_user_repo.dart';
-import 'package:quikhyr/models/location_model.dart';
-import 'package:quikhyr/models/client_model.dart';
+import '../data/repositories/client_repo.dart';
+import '../../features/auth/data/repository/firebase_user_repo.dart';
+import '../../models/location_model.dart';
+import '../../models/client_model.dart';
 
 part 'client_state.dart';
 part 'client_event.dart';

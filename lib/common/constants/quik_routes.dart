@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/routes/screens/page_not_found.dart';
+import '../routes/screens/page_not_found.dart';
 
 class QuikRoutes {
   static const root = '/';

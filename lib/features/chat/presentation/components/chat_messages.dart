@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quikhyr/features/chat/firebase_provider.dart';
-import 'package:quikhyr/features/chat/presentation/components/chat_booking_bubble.dart';
-import 'package:quikhyr/models/chat_message_model.dart';
+import '../../firebase_provider.dart';
+import 'chat_booking_bubble.dart';
+import '../../../../models/chat_message_model.dart';
 import 'empty_widget.dart';
 import 'message_bubble.dart';
 

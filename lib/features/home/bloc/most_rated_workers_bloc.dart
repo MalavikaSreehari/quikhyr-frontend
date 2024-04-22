@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quikhyr/features/home/data/repository/most_rated_workers_repo.dart';
-import 'package:quikhyr/models/worker_model.dart';
+import '../data/repository/most_rated_workers_repo.dart';
+import '../../../models/worker_model.dart';
 
 part 'most_rated_workers_event.dart';
 part 'most_rated_workers_state.dart';

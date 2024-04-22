@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/common/widgets/named_nav_bar_item_widget.dart';
+import 'common/constants/quik_asset_constants.dart';
+import 'common/constants/quik_colors.dart';
+import 'common/constants/quik_spacings.dart';
+import 'common/widgets/named_nav_bar_item_widget.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({Key? key, required this.navigationShell})

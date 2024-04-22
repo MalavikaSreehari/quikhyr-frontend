@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:quikhyr/common/enums/status.dart';
-import 'package:quikhyr/models/location_model.dart';
+import '../common/enums/status.dart';
+import 'location_model.dart';
 
 class BookingData {
   List<Booking> currentBookings;

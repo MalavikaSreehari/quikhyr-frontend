@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:quikhyr/common/constants/quik_asset_constants.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/common/constants/quik_spacings.dart';
-import 'package:quikhyr/features/home/cubit/workerlist_cubit.dart';
-import 'package:quikhyr/models/sub_service_category_model.dart';
+import '../../../../common/constants/quik_asset_constants.dart';
+import '../../../../common/constants/quik_colors.dart';
+import '../../../../common/constants/quik_spacings.dart';
+import '../../cubit/workerlist_cubit.dart';
+import '../../../../models/sub_service_category_model.dart';
 
 class QuikDropDownButtonSubservice extends StatefulWidget {
   final List<SubserviceModel> subservices;

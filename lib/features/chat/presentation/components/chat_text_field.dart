@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:quikhyr/common/constants/quik_colors.dart';
-import 'package:quikhyr/features/chat/firebase_firestore_service.dart';
-import 'package:quikhyr/features/chat/media_service.dart';
-import 'package:quikhyr/features/chat/notification_service.dart';
+import '../../../../common/constants/quik_colors.dart';
+import '../../firebase_firestore_service.dart';
+import '../../media_service.dart';
+import '../../notification_service.dart';
 import 'custom_text_form_field.dart';
 
 class ChatTextField extends StatefulWidget {

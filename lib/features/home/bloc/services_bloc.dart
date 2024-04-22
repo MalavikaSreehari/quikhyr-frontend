@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quikhyr/features/home/data/repository/services_category_repo.dart';
-import 'package:quikhyr/models/service_category_model.dart';
-import 'package:quikhyr/models/sub_service_category_model.dart';
+import '../data/repository/services_category_repo.dart';
+import '../../../models/service_category_model.dart';
+import '../../../models/sub_service_category_model.dart';
 
 part 'services_event.dart';
 part 'services_state.dart';
