@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quikhyr/models/booking_via_chat_model.dart';
 import '../../../../common/constants/quik_colors.dart';
 import '../../../../common/constants/quik_themes.dart';
 import '../../../../common/widgets/quik_short_button.dart';
@@ -36,7 +37,8 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
       bool isAccepted) async {
     debugPrint(message.timeslot.toString());
     final response = await BookingRepository().createBooking(
-      SimpleBookingModel(
+      BookingViaChatModel(
+        isRated: false,
         subserviceId:
             message.subserviceId ?? "99", // Default value for subserviceId
         location: LocationModel(latitude: 55, longitude: 55),
@@ -72,19 +74,20 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
       if (context.mounted) {
         FocusScope.of(context).unfocus();
       }
-    }
-    await FirebaseFirestoreService.updateBookingProposal(
-        textMessageId: messageId,
-        receiverId: receiverId,
-        isAccepted: isAccepted);
 
-    await notificationsService.sendNotification(
-      body: "Booking Accepted By ${FirebaseAuth.instance.currentUser!.uid}",
-      senderId: FirebaseAuth.instance.currentUser!.uid,
-    );
+      await FirebaseFirestoreService.updateBookingProposal(
+          textMessageId: messageId,
+          receiverId: receiverId,
+          isAccepted: isAccepted);
 
-    if (context.mounted) {
-      FocusScope.of(context).unfocus();
+      await notificationsService.sendNotification(
+        body: "Booking Accepted By ${FirebaseAuth.instance.currentUser!.uid}",
+        senderId: FirebaseAuth.instance.currentUser!.uid,
+      );
+
+      if (context.mounted) {
+        FocusScope.of(context).unfocus();
+      }
     }
   }
 

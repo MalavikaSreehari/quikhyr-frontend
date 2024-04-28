@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:quikhyr/models/booking_via_chat_model.dart';
 import '../../../common/constants/quik_secure_constants.dart';
 import '../../../models/booking_model.dart';
-import '../../../models/simple_booking_model.dart';
 
 class BookingRepository {
-  Future<Either<String, bool>> createBooking(SimpleBookingModel booking) async {
+  Future<Either<String, bool>> createBooking(BookingViaChatModel booking) async {
     final url = Uri.parse('$baseUrl/bookings');
     log(booking.toJson());
 
@@ -21,12 +21,12 @@ class BookingRepository {
       );
       if (response.statusCode == 201) {
         // final responseData = jsonDecode(response.body);
-        return right(true);
+        return const Right(true);
       } else {
-        return Left('Failed to create notification ${response.body}');
+        return Left('Failed to create booking ${response.body}');
       }
     } catch (e) {
-      return Left('Failed to create notification $e');
+      return Left('Failed to create booking $e');
     }
   }
 

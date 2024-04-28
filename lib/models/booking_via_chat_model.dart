@@ -5,37 +5,29 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:quikhyr/models/location_model.dart';
 
-class SimpleBookingModel extends Equatable {
-  final String? workerName;
+class BookingViaChatModel extends Equatable {
   final bool isRated;
-  final String? subserviceName;
-  final String? serviceAvatar;
   final String clientId;
   final DateTime dateTime;
   final LocationModel location;
-  final String? locationName;
   final num ratePerUnit;
   final String status;
   final String unit;
   final String subserviceId;
   final String workerId;
-  const SimpleBookingModel({
+  const BookingViaChatModel({
     required this.isRated,
-    this.subserviceName,
-    this.serviceAvatar,
-    this.workerName,
     required this.subserviceId,
     required this.clientId,
     required this.dateTime,
     required this.location,
-    this.locationName,
     required this.ratePerUnit,
     required this.status,
     required this.unit,
     required this.workerId,
   });
 
-  SimpleBookingModel copyWith({
+  BookingViaChatModel copyWith({
     bool? isRated,
     String? subserviceId,
     String? clientId,
@@ -47,13 +39,12 @@ class SimpleBookingModel extends Equatable {
     String? unit,
     String? workerId,
   }) {
-    return SimpleBookingModel(
+    return BookingViaChatModel(
       isRated: isRated ?? this.isRated,
       subserviceId: subserviceId ?? this.subserviceId,
       clientId: clientId ?? this.clientId,
       dateTime: dateTime ?? this.dateTime,
       location: location ?? this.location,
-      locationName: locationName ?? this.locationName,
       ratePerUnit: ratePerUnit ?? this.ratePerUnit,
       status: status ?? this.status,
       unit: unit ?? this.unit,
@@ -63,7 +54,6 @@ class SimpleBookingModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'workerName': workerName,
       'isRated': isRated,
       'subserviceId': subserviceId,
       'clientId': clientId,
@@ -76,8 +66,8 @@ class SimpleBookingModel extends Equatable {
     };
   }
 
-  // factory SimpleBookingModel.fromMap(Map<String, dynamic> map) {
-  //   return SimpleBookingModel(
+  // factory BookingViaChatModel.fromMap(Map<String, dynamic> map) {
+  //   return BookingViaChatModel(
   //     subserviceId: map['subserviceId'] as String,
   //     clientId: map['clientId'] as String,
   //     dateTime: DateTime.fromMillisecondsSinceEpoch(
@@ -96,8 +86,8 @@ class SimpleBookingModel extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  // factory SimpleBookingModel.fromJson(String source) =>
-  //     SimpleBookingModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  // factory BookingViaChatModel.fromJson(String source) =>
+  //     BookingViaChatModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;
@@ -109,7 +99,6 @@ class SimpleBookingModel extends Equatable {
       clientId,
       dateTime,
       location,
-      locationName,
       ratePerUnit,
       status,
       unit,
