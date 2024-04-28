@@ -345,8 +345,16 @@ class HomeDetailScreen extends StatelessWidget {
                                       width: 135,
                                       child: Row(
                                         children: [
-                                          const QuikSmallTextWithBorder(
-                                            text: 'Available',
+                                          QuikSmallTextWithBorder(
+                                            borderColor: worker.available
+                                                ? quikHyrGreen
+                                                : quikHyrRed,
+                                            textColor: worker.available
+                                                ? quikHyrGreen
+                                                : quikHyrRed,
+                                            text: worker.available
+                                                ? "Available"
+                                                : "Unavailable",
                                           ),
                                           QuikSpacing.hS8(),
                                           ClickableSvgIcon(
@@ -356,7 +364,8 @@ class HomeDetailScreen extends StatelessWidget {
                                                   .arrowRightUpSvg,
                                               onTap: () {
                                                 context.pushNamed(
-                                                    QuikRoutes.profileName, extra: worker);
+                                                    QuikRoutes.profileName,
+                                                    extra: worker);
                                               })
                                           // SvgPicture.asset(
                                           //   QuikAssetConstants.arrowRightUpSvg,
@@ -416,8 +425,16 @@ class HomeDetailScreen extends StatelessWidget {
                                       width: 135,
                                       child: Row(
                                         children: [
-                                          const QuikSmallTextWithBorder(
-                                            text: 'Available',
+                                          QuikSmallTextWithBorder(
+                                            borderColor: worker.available
+                                                ? quikHyrGreen
+                                                : quikHyrRed,
+                                            textColor: worker.available
+                                                ? quikHyrGreen
+                                                : quikHyrRed,
+                                            text: worker.available
+                                                ? "Available"
+                                                : "Unavailable",
                                           ),
                                           QuikSpacing.hS8(),
                                           ClickableSvgIcon(
@@ -427,7 +444,8 @@ class HomeDetailScreen extends StatelessWidget {
                                                   .arrowRightUpSvg,
                                               onTap: () {
                                                 context.pushNamed(
-                                                    QuikRoutes.profileName, extra: worker);
+                                                    QuikRoutes.profileName,
+                                                    extra: worker);
                                               })
                                         ],
                                       ),

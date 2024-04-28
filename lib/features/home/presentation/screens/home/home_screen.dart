@@ -10,6 +10,7 @@ import '../../../../../common/constants/quik_themes.dart';
 import '../../../../../common/widgets/clickable_svg_icon.dart';
 import '../../../../../common/widgets/quik_search_bar.dart';
 import '../../../../auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import '../../../../notification/cubit/notification_cubit.dart';
 import '../../../bloc/most_rated_workers_bloc.dart';
 import '../../../bloc/search_bloc.dart';
 import '../../../bloc/services_bloc.dart';
@@ -67,6 +68,7 @@ class HomeScreen extends StatelessWidget {
                   svgAsset: QuikAssetConstants.bellNotificationActiveSvg,
                   onTap: () {
                     context.pushNamed(QuikRoutes.notificationName);
+                    context.read<NotificationCubit>().getNotifications();
                   }),
               QuikSpacing.hS10(),
               ClickableSvgIcon(

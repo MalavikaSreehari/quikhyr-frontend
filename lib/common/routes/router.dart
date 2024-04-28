@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/models/worker_model.dart';
+import '../../models/notification_model.dart';
 import '../constants/quik_routes.dart';
+import '../screens/notification_detail_screen.dart';
 import 'screens/page_not_found.dart';
 import '../screens/notification_screen.dart';
 import '../screens/qr_screen.dart';
@@ -284,7 +286,17 @@ class AppRouter {
           path: QuikRoutes.notificationPath,
           name: QuikRoutes.notificationName,
           pageBuilder: (context, state) =>
-              const NoTransitionPage(child: NotificationScreen())),
+              const NoTransitionPage(child: NotificationScreen()),
+              routes: [
+                   GoRoute(
+          path: QuikRoutes.notificationDetailPath,
+          name: QuikRoutes.notificationDetailName,
+          pageBuilder: (context, state) => NoTransitionPage(
+                child: NotificationDetailScreen(notification: state.extra as NotificationModel,),
+              ),
+              ),
+              ]
+              ),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: QuikRoutes.signInPath,

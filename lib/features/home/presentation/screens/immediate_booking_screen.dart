@@ -2,8 +2,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quikhyr/common/bloc/client_bloc.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
@@ -11,7 +9,6 @@ import 'package:quikhyr/common/constants/quik_colors.dart';
 import 'package:quikhyr/common/constants/quik_routes.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/constants/quik_themes.dart';
-import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';
 import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/long_icon_button.dart';
 import 'package:quikhyr/common/widgets/quik_app_bar.dart';
@@ -23,8 +20,8 @@ import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
 import 'package:quikhyr/features/home/models/immediate_screen_data_model.dart';
 import 'package:quikhyr/features/home/presentation/components/quik_drop_down_button.dart';
 import 'package:quikhyr/features/notification/cubit/notification_cubit.dart';
+import 'package:quikhyr/models/create_work_alert_model.dart';
 import 'package:quikhyr/models/location_model.dart';
-import 'package:quikhyr/models/notification_model.dart';
 import 'package:quikhyr/models/sub_service_category_model.dart';
 
 class ImmediateBookingScreen extends StatefulWidget {
@@ -52,8 +49,8 @@ class _ImmediateBookingScreenState extends State<ImmediateBookingScreen> {
       tags: const []);
   String _imageUrl = QuikAssetConstants.placeholderImage;
   LocationModel _locationModel = LocationModel(
-    latitude: 0.0,
-    longitude: 0.0,
+    latitude: 10,
+    longitude: 76,
   );
   Future<void> handleImagePickingAndUploadingFromGallery() async {
     final image = await MediaService.pickImage();
@@ -182,6 +179,7 @@ class _ImmediateBookingScreenState extends State<ImmediateBookingScreen> {
                         borderRadius: BorderRadius.circular(20)),
                   ),
                 );
+                context.pop();
               } else if (state is NotificationSentError) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -286,6 +284,7 @@ class _ImmediateBookingScreenState extends State<ImmediateBookingScreen> {
                     },
                     builder: (context, state) {
                       if (state is ClientLoaded) {
+                        _locationModel = state.client.location;
                         return MyTextField(
                           isReadOnly: true,
                           suffixIcon: InkWell(
@@ -379,7 +378,8 @@ class _ImmediateBookingScreenState extends State<ImmediateBookingScreen> {
                                 ? () {
                                     context
                                         .read<NotificationCubit>()
-                                        .sendNotification(NotificationModel(
+                                        .sendWorkAlertNotification(
+                                            CreateWorkAlertModel(
                                           senderId: FirebaseAuth
                                               .instance.currentUser!.uid,
                                           subserviceId: _selectedSubservice.id,
@@ -388,7 +388,20 @@ class _ImmediateBookingScreenState extends State<ImmediateBookingScreen> {
                                           images: [_imageUrl],
                                           location: _locationModel,
                                         ));
+                                    
                                     debugPrint("Send Service Request Signal");
+                                    // NotificationModel notificationModel =
+                                    //     NotificationModel(
+                                    //         subserviceId:
+                                    //             _selectedSubservice.id,
+                                    //         location: _locationModel,
+                                    //         description: _descriptionController
+                                    //             .text
+                                    //             .trim(),
+                                    //         images: [_imageUrl],
+                                    //         senderId: FirebaseAuth
+                                    //             .instance.currentUser!.uid);
+                                    // debugPrint(notificationModel.toJson());
                                   }
                                 : null,
                             svgPath: QuikAssetConstants.sendSvg,

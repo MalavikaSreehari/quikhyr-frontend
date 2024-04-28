@@ -22,6 +22,7 @@ class QuikRoutes {
   static const settingsPath = '/settings';
   static const welcomePath = '/welcome';
   static const notificationPath = '/notification';
+  static const String notificationDetailPath = 'notificationDetail';
   static const mapPath = 'map';
 
   static const homeName = 'homeName';
@@ -40,6 +41,7 @@ class QuikRoutes {
   static const settingsName = 'settingsName';
   static const welcomeName = 'welcomeName';
   static const notificationName = 'notificationName';
+  static const String notificationDetailName = 'notificationDetailName';
   static const bookingQrName = 'bookingQrName';
   static const mapName = 'mapName';
 

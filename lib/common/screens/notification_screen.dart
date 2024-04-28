@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quikhyr/common/bloc/worker_bloc.dart';
+import '../../features/notification/cubit/notification_cubit.dart';
 import '../constants/quik_asset_constants.dart';
-import '../constants/quik_spacings.dart';
+import '../constants/quik_colors.dart';
+import '../constants/quik_routes.dart';
 import '../constants/quik_themes.dart';
-import '../widgets/clickable_svg_icon.dart';
-import '../../features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import '../utils/format_date.dart';
+import '../widgets/gradient_separator.dart';
+import '../widgets/quik_app_bar.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -14,132 +19,71 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: AppBar(
-            titleSpacing: 24,
-            automaticallyImplyLeading: false, // Remove back button
-            leading: Row(
-                children: [
-                  QuikSpacing.hS12(),
-                  ClickableSvgIcon(
-                    svgAsset: QuikAssetConstants.backArrowSvg,
-                    size: 32,
-                    onTap: () {
-                      context.pop();
-                    },
-                  ),
-                  QuikSpacing.hS12(),
-                ],
-              ),
-            backgroundColor: Colors.transparent,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: const TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Q',
-                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 32),
-                      ),
-                      TextSpan(
-                        text: 'uik',
-                        style: TextStyle(fontFamily: 'Moonhouse', fontSize: 24),
-                      ),
-                      TextSpan(
-                        text: 'Notifications',
-                        style: TextStyle(
-                            fontFamily: 'Trap',
-                            fontSize: 24,
-                            letterSpacing: -1.5),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            actions: [
-              ClickableSvgIcon(
-                  svgAsset: QuikAssetConstants.logoutSvg,
-                  onTap: () {
-                    context.read<SignInBloc>().add(const SignOutRequired());
-                  }),
-              QuikSpacing.hS24(),
-            ],
-          ),
-        ),
+      appBar: const QuikAppBar(
+        showBackButton: true,
+        pageName: 'Notifications',
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            return ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Container(
-                alignment: Alignment.center,
-                height: 64,
-                width: 64,
-                child: const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    QuikAssetConstants.placeholderImage,
-                  ),
-                ),
+      body: BlocBuilder<NotificationCubit, NotificationState>(
+        builder: (context, state) {
+          if (state is NotificationLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is NotificationLoaded) {
+            return Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  return const GradientSeparator();
+                },
+                itemCount: state.notifications.length,
+                itemBuilder: (context, index) {
+                  final notification = state.notifications[index];
+                  return ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Container(
+                      height: 48,
+                      width: 48,
+                      padding: const EdgeInsets.all(12),
+                      decoration: const BoxDecoration(
+                        color: primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: SvgPicture.asset(
+                        color: onSecondary,
+                        QuikAssetConstants.plumbingSvg,
+                        height: 24,
+                        width: 24,
+                      ),
+                    ),
+                    title: Text(
+                        notification.type?.notificationListTileDisplayString ??
+                            "Notification Category",
+                        style: Theme.of(context).textTheme.headlineSmall),
+                    subtitle: Text(
+                        notification.description ?? "Notification Description",
+                        style: chatSubTitle),
+                    trailing: Text(
+                      formatDate(
+                          notification.timestamps?.updatedAt.toDateTime() ??
+                              DateTime.now()),
+                      style: chatTrailingActive,
+                    ),
+                    onTap: () {
+                      context.pushNamed(QuikRoutes.notificationDetailName,
+                          extra: notification);
+                      context.read<WorkerBloc>().add(FetchWorker(
+                          workerId: notification.senderId ??
+                              "ERROR GETTING WORKER ID"));
+                    },
+                  );
+                },
               ),
-              title: Text("Worker Name",
-                  style: Theme.of(context).textTheme.headlineSmall),
-              subtitle:
-                  const Text("Service Time: 12:00 pm", style: chatSubTitle),
-              trailing: const Text(
-                "Price",
-                style: chatTrailingActive,
-              ),
-              onTap: () {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: 200,
-                        color: Theme.of(context).colorScheme.secondary,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            children: [
-                              const ListTile(
-                                title: Text("Worker Name"),
-                                subtitle: Text("Service Time: 12:00 pm"),
-                                trailing: Text("Price"),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      debugPrint("Accepted");
-                                    },
-                                    child: const Text("Accept"),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      debugPrint("Rejected");
-                                    },
-                                    child: const Text("Reject"),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    });
-              },
             );
-          },
-        ),
+          } else if (state is NotificationError) {
+            return Center(child: Text(state.error));
+          } else {
+            return const Center(child: Text("Unknown Error"));
+          }
+        },
       ),
     );
   }

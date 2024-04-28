@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:quikhyr/common/bloc/worker_bloc.dart';
 
 import 'app_view.dart';
 import 'common/bloc/client_bloc.dart';
 import 'common/data/repositories/client_repo.dart';
+import 'common/repo/worker_repo.dart';
 import 'features/auth/blocs/authentication_bloc/authentication_bloc.dart';
 import 'features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'features/auth/blocs/sign_up_bloc/sign_up_bloc.dart';
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider(create: (context) => WorkerRepo()),
         RepositoryProvider<BookingRepository>(
           create: (context) => BookingRepository(),
         ),
@@ -59,6 +62,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => WorkerBloc(workerRepository: RepositoryProvider.of<WorkerRepo>(context))),
           BlocProvider(create: (context) => BookingCubit()..getBookingsById()),
           BlocProvider<NotificationCubit>(
             create: (context) {

@@ -66,12 +66,13 @@ class QuikBookingListTile extends StatelessWidget {
               Text(
                   '${booking.dateTime.hour}:${booking.dateTime.minute} ${booking.dateTime.hour >= 12 ? 'PM' : 'AM'} ${booking.dateTime.toString().split(" ")[0]}',
                   style: timeGreenTextStyle)
+            
           ],
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ClickableSvgIcon(
+            if(booking.status != Status.completed)ClickableSvgIcon(
                 svgAsset: QuikAssetConstants.qrCodeSvg,
                 height: 32,
                 width: 32,
