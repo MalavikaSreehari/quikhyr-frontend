@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:quikhyr/features/notification/models/work_confirmation_back_to_worker.dart';
 import 'package:quikhyr/features/notification/models/work_rejection_back_to_worker.dart';
 import 'package:quikhyr/models/create_work_alert_model.dart';
 import '../repository/notification_repo.dart';
@@ -28,14 +29,14 @@ class NotificationCubit extends Cubit<NotificationState> {
     );
   }
 
-  // void sendWorkConfirmationNotification(NotificationModel notification) async {
-  //   emit(const NotificationSentLoading());
-  //   final result = await _notificationRepo.createWorkConfirmation(notification);
-  //   result.fold(
-  //     (error) => emit(NotificationSentError(error: error)),
-  //     (success) => emit(const NotificationSentSuccess()),
-  //   );
-  // }
+  void sendWorkConfirmationNotification(WorkConfirmationBackToWorkerModel notification) async {
+    emit(const NotificationSentLoading());
+    final result = await _notificationRepo.createWorkConfirmation(notification);
+    result.fold(
+      (error) => emit(NotificationSentError(error: error)),
+      (success) => emit(const NotificationSentSuccess()),
+    );
+  }
 
 
 

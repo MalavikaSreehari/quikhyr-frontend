@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:quikhyr/common/utils/format_date.dart';
+import 'package:quikhyr/features/notification/models/work_confirmation_back_to_worker.dart';
 import 'package:quikhyr/features/notification/models/work_rejection_back_to_worker.dart';
 
 import '../../../models/notification_model.dart';
 import '../../features/notification/cubit/notification_cubit.dart';
+import '../../models/location_model.dart';
 import '../bloc/worker_bloc.dart';
 import '../constants/quik_asset_constants.dart';
 import '../constants/quik_colors.dart';
@@ -176,16 +178,23 @@ class NotificationDetailScreen extends StatelessWidget {
                           paddingVertical: 20,
                           text: "Accept",
                           onPressed: () {
-                            // final confirmationNotification = NotificationModel(
-                            //   receiverIds: [notification.senderId ?? "RECEIVER/WORKER ID NOT FOUND"],
-                            //   senderId: FirebaseAuth.instance.currentUser?.uid ?? "SENDER/CLIENT ID NOT FOUND",
+                            final confirmationNotification = WorkConfirmationBackToWorkerModel(
+                              ratePerUnit: notification.ratePerUnit ?? 0,
+                              unit: notification.unit ?? "UNIT NOT FOUND",
+                              subserviceId: notification.subserviceId ?? "SUBSERVICE ID NOT FOUND",
+                              location: notification.location ?? LocationModel(latitude: 65, longitude: 20),
+                              locationName: notification.locationName ?? "LOCATION NAME NOT FOUND",
+                              description: notification.description ?? "DESCRIPTION NOT FOUND",
+                              dateTime: notification.dateTime ?? DateTime.now(),
+                              receiverIds: [notification.senderId ?? "RECEIVER/WORKER ID NOT FOUND"],
+                              senderId: FirebaseAuth.instance.currentUser?.uid ?? "SENDER/CLIENT ID NOT FOUND",
 
-                            //   workApprovalRequestId: notification.workApprovalRequestId ?? "WORK APPROVAL REQUEST ID NOT FOUND",
-                            //   workAlertId: notification.workAlertId ?? "WORK ALERT ID NOT FOUND",
-                            // );
-                            // context
-                            //     .read<NotificationCubit>()
-                            //     .sendWorkConfirmationNotification(confirmationNotification);
+                              workApprovalRequestId: notification.workApprovalRequestId ?? "WORK APPROVAL REQUEST ID NOT FOUND",
+                              workAlertId: notification.workAlertId ?? "WORK ALERT ID NOT FOUND",
+                            );
+                            context
+                                .read<NotificationCubit>()
+                                .sendWorkConfirmationNotification(confirmationNotification);
                           },
                         ),
                       ],

@@ -24,6 +24,7 @@ class QuikRoutes {
   static const notificationPath = '/notification';
   static const String notificationDetailPath = 'notificationDetail';
   static const mapPath = 'map';
+  static const feedbackPath = '/feedback';
 
   static const homeName = 'homeName';
   static const homeDetailsName = 'homeDetailsName';
@@ -44,6 +45,7 @@ class QuikRoutes {
   static const String notificationDetailName = 'notificationDetailName';
   static const bookingQrName = 'bookingQrName';
   static const mapName = 'mapName';
+  static const feedbackName = 'feedbackName';
 
   static Widget errorWidget(BuildContext context, GoRouterState state) =>
       const NotFoundScreen();

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quikhyr/common/screens/feedback_screen.dart';
+import 'package:quikhyr/models/overall_rating_model.dart';
 import 'package:quikhyr/models/worker_model.dart';
 import '../../models/notification_model.dart';
 import '../constants/quik_routes.dart';
@@ -324,6 +326,13 @@ class AppRouter {
           name: QuikRoutes.profileName,
           pageBuilder: (context, state) {
             return NoTransitionPage(child: ProfileScreen(worker: state.extra as WorkerModel,));
+          }),
+          GoRoute(
+          // parentNavigatorKey: _rootNavigatorKey,
+          path: QuikRoutes.feedbackPath,
+          name: QuikRoutes.feedbackName,
+          pageBuilder: (context, state) {
+            return NoTransitionPage(child: FeedbackScreen(booking: state.extra as Booking,),);
           }),
       
 

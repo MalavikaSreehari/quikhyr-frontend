@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quikhyr/features/notification/models/work_confirmation_back_to_worker.dart';
 import 'package:quikhyr/features/notification/models/work_rejection_back_to_worker.dart';
 import 'package:quikhyr/models/create_work_alert_model.dart';
 import '../../../common/constants/quik_secure_constants.dart';
@@ -38,7 +39,7 @@ class NotificationRepo {
   }
 
   Future<Either<String, bool>> createWorkConfirmation(
-      CreateWorkAlertModel notification) async {
+      WorkConfirmationBackToWorkerModel notification) async {
     try {
       final url = Uri.parse('$baseUrl/notifications/work-confirmation');
       Map<String, dynamic> workRejection = notification.toMap();

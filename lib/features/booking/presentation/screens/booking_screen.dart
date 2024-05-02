@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quikhyr/common/widgets/quik_past_booking_list_tile.dart';
 
 import '../../../../common/constants/quik_asset_constants.dart';
 import '../../../../common/constants/quik_colors.dart';
@@ -36,11 +37,11 @@ class BookingScreen extends StatelessWidget {
                 QuikSpacing.vS36(),
                 const CurrentBookingHeader(),
                 QuikSpacing.vS16(),
-                const CurrentBookingWidget(),
+                const Expanded(child: CurrentBookingWidget()),
                 QuikSpacing.vS24(),
                 const PastBookingHeader(),
                 QuikSpacing.vS16(),
-                const PastBookingWidget(),
+                const Expanded(child: PastBookingWidget()),
               ],
             )));
   }
@@ -187,7 +188,7 @@ class PastBookingWidget extends StatelessWidget {
             itemCount: state.booking.pastBookings.length,
             itemBuilder: (context, index) {
               final booking = state.booking.pastBookings[index];
-              return QuikBookingListTile(booking: booking);
+              return QuikPastBookingListTile(booking: booking);
             },
           );
         } else if (state is BookingLoaded &&
