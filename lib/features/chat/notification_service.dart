@@ -8,13 +8,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import '../../common/constants/quik_routes.dart';
-
+import '../../common/routes/router.dart';
 
 const channel = AndroidNotificationChannel(
-    'high_importance_channel',
-    'Hign Importance Notifications',
-    description:
-        'This channel is used for important notifications.',
+    'high_importance_channel', 'Hign Importance Notifications',
+    description: 'This channel is used for important notifications.',
     importance: Importance.high,
     playSound: true);
 
@@ -22,12 +20,11 @@ class NotificationsService {
   static const key =
       'AAAAkTLRTRc:APA91bFxWxSHRNz727vGSWXat7DKWqoDHE8e7ph9yh0E2HFnLKGNcSZ5zJjsCZB_HbiPG2U2ZEYGnpj0-Ue0AvRygt-SZ4ncmcCNe1LlsfmduDUQYc51m-P7Ro_FLG8iKmW4Rw9uLEMT';
 
-  final flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   void _initLocalNotification() {
-    const androidSettings = AndroidInitializationSettings(
-        '@mipmap/ic_launcher');
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
@@ -36,19 +33,17 @@ class NotificationsService {
       requestSoundPermission: true,
     );
 
-    const initializationSettings = InitializationSettings(
-        android: androidSettings, iOS: iosSettings);
-    flutterLocalNotificationsPlugin
-        .initialize(initializationSettings,
-            onDidReceiveNotificationResponse: (response) {
+    const initializationSettings =
+        InitializationSettings(android: androidSettings, iOS: iosSettings);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: (response) {
       debugPrint(response.payload.toString());
     });
   }
 
-  Future<void> _showLocalNotification(
-      RemoteMessage message) async {
+  Future<void> _showLocalNotification(RemoteMessage message) async {
     final styleInformation = BigTextStyleInformation(
-      message.notification!.body.toString(),
+      message.notification?.body.toString() ?? "No Message Body",
       htmlFormatBigText: true,
       contentTitle: message.notification!.title,
       htmlFormatTitle: true,
@@ -69,11 +64,8 @@ class NotificationsService {
       android: androidDetails,
       iOS: iosDetails,
     );
-    await flutterLocalNotificationsPlugin.show(
-        0,
-        message.notification!.title,
-        message.notification!.body,
-        notificationDetails,
+    await flutterLocalNotificationsPlugin.show(0, message.notification!.title,
+        message.notification!.body, notificationDetails,
         payload: message.data['body']);
   }
 
@@ -90,21 +82,18 @@ class NotificationsService {
       sound: true,
     );
 
-    if (settings.authorizationStatus ==
-        AuthorizationStatus.authorized) {
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       debugPrint('User granted permission');
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
       debugPrint('User granted provisional permission');
     } else {
-      debugPrint(
-          'User declined or has not accepted permission');
+      debugPrint('User declined or has not accepted permission');
     }
   }
 
   Future<void> getToken() async {
-    final token =
-        await FirebaseMessaging.instance.getToken();
+    final token = await FirebaseMessaging.instance.getToken();
     _saveToken(token!);
   }
 
@@ -128,20 +117,25 @@ class NotificationsService {
   void firebaseNotification(context) {
     _initLocalNotification();
 
-    FirebaseMessaging.onMessageOpenedApp
-        .listen((RemoteMessage message) async{
-      GoRouter.of(context).goNamed(QuikRoutes.chatConversationName, pathParameters: {'workerId': message.data['senderId']});
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      if (message.data["type"] == "work-alert" ||
+          message.data["type"] == "work-approval-request") {
+        AppRouter.router.pushNamed(QuikRoutes.notificationDetailName);
+      }
+      //!!NEED TO UPDATE THE DATA TYPE WHEN SENDING CHAT MESSAGE NOTIFICATION
+      else {
+        AppRouter.router.pushNamed(QuikRoutes.notificationDetailName,
+            pathParameters: {'workerId': message.data['senderId']});
+      }
     });
 
-    FirebaseMessaging.onMessage
-        .listen((RemoteMessage message) async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       await _showLocalNotification(message);
     });
   }
 
   Future<void> sendNotification(
-      {required String body,
-      required String senderId}) async {
+      {required String body, required String senderId}) async {
     try {
       await http.post(
         Uri.parse('https://fcm.googleapis.com/fcm/send'),
