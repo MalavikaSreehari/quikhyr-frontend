@@ -130,12 +130,6 @@ class NotificationsService {
 
     FirebaseMessaging.onMessageOpenedApp
         .listen((RemoteMessage message) async{
-      // await Navigator.of(context).push(
-      //   MaterialPageRoute(
-      //     builder: (_) =>
-      //         ChatConversationScreen(workerId: message.data['senderId']),
-      //   ),
-      // );
       GoRouter.of(context).goNamed(QuikRoutes.chatConversationName, pathParameters: {'workerId': message.data['senderId']});
     });
 

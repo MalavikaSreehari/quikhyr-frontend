@@ -105,45 +105,37 @@ class ChatTextFormFieldState extends State<ChatTextFormField> {
         hintText: widget.hintText,
         hintStyle: messageTextFieldHintTextStyle,
         prefixIcon: widget.prefixIcon != null ? Icon(widget.prefixIcon) : null,
-        suffixIcon: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          transitionBuilder: (child, animation) {
-            return ScaleTransition(scale: animation, child: child);
-          },
-          child: IconButton(
-            // icon: Icon(_isSendIconVisible ? Icons.send : Icons.camera_alt),
+        suffixIcon: IconButton(
+          // icon: Icon(_isSendIconVisible ? Icons.send : Icons.camera_alt),
 
-            icon: _isSendIconVisible
-                ? SizedBox(
-                    key: const ValueKey<int>(1),
-                    width: 56,
-                    child: Row(
-                      children: [
-                        const SizedBox(
-                          width: 1,
-                          height: 24,
-                          child: VerticalDivider(color: textInputIconColor),
-                        ),
-                        QuikSpacing.hS12(),
-                        ClickableSvgIcon(
-                          color: placeHolderText,
-                          svgAsset: QuikAssetConstants.sendSvg,
-                          onTap: widget.onSend ?? () {},
-                        )
-                      ],
-                    ),
-                  )
-                : ClickableSvgIcon(
-                    key: const ValueKey<int>(2),
-                    color: placeHolderText,
-                    svgAsset: QuikAssetConstants.photoCameraSvg,
-                    onTap: widget.onImageSend ?? () {}),
-            onPressed: () {
-              setState(() {
-                _isSendIconVisible = !_isSendIconVisible;
-              });
-            },
+          icon: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                width: 1,
+                height: 24,
+                child: VerticalDivider(color: textInputIconColor),
+              ),
+              QuikSpacing.hS12(),
+              ClickableSvgIcon(
+                  key: const ValueKey<int>(2),
+                  color: placeHolderText,
+                  svgAsset: QuikAssetConstants.photoCameraSvg,
+                  onTap: widget.onImageSend ?? () {}),
+              QuikSpacing.hS12(),
+              ClickableSvgIcon(
+                color: placeHolderText,
+                svgAsset: QuikAssetConstants.sendSvg,
+                onTap: widget.onSend ?? () {},
+              ),
+              QuikSpacing.hS6(),
+            ],
           ),
+          onPressed: () {
+            setState(() {
+              _isSendIconVisible = !_isSendIconVisible;
+            });
+          },
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),

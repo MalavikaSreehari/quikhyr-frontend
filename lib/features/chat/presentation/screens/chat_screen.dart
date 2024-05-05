@@ -75,26 +75,26 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     notificationService.firebaseNotification(context);
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   super.didChangeAppLifecycleState(state);
 
-    switch (state) {
-      case AppLifecycleState.resumed:
-        FirebaseFirestoreService.updateUserData({
-          'isActive': true,
-        });
-        break;
-      case AppLifecycleState.inactive:
-      case AppLifecycleState.paused:
-      case AppLifecycleState.detached:
-        FirebaseFirestoreService.updateUserData({
-          'isActive': false,
-        });
-        break;
-      default:
-    }
-  }
+  //   switch (state) {
+  //     case AppLifecycleState.resumed:
+  //       FirebaseFirestoreService.updateUserData({
+  //         'isActive': true,
+  //       });
+  //       break;
+  //     case AppLifecycleState.inactive:
+  //     case AppLifecycleState.paused:
+  //     case AppLifecycleState.detached:
+  //       FirebaseFirestoreService.updateUserData({
+  //         'isActive': false,
+  //       });
+  //       break;
+  //     default:
+  //   }
+  // }
 
   @override
   void dispose() {

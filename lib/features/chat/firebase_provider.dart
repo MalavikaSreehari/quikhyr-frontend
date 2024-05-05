@@ -8,7 +8,6 @@ import '../../models/chat_list_model.dart';
 import '../../models/chat_message_model.dart';
 import '../../models/client_model.dart';
 
-
 class FirebaseProvider extends ChangeNotifier {
   ScrollController scrollController = ScrollController();
 
@@ -21,54 +20,60 @@ class FirebaseProvider extends ChangeNotifier {
     scrollController.dispose();
     super.dispose();
   }
-Stream<List<ChatListModel>> getAllWorkersWithLastMessageStream() {
-  var streamController = StreamController<List<ChatListModel>>.broadcast();
 
-  FirebaseFirestore.instance.collection('workers').snapshots().listen((workerSnapshot) {
-    List<ChatListModel> initialUsers = [];
-    for (var doc in workerSnapshot.docs) {
-      var workerData = doc.data() as Map<String, dynamic>?;
-      if (workerData != null) {
-        // Fetch the last message for this worker
-        FirebaseFirestore.instance
-            .collection('clients')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('chat').doc(doc.id).collection('messages')
-            .orderBy('sentTime', descending: true)
-            .limit(1)
-            .get()
-            .then((messageSnapshot) {
-          if (messageSnapshot.docs.isNotEmpty) {
-            var messageData = messageSnapshot.docs.first.data() as Map<String, dynamic>;
-            String lastMessage = messageData['content'] ?? '';
-            DateTime sentTime = (messageData['sentTime'] as Timestamp).toDate();
-            MessageType messageType = stringToMessageType(messageData['messageType']);
+  Stream<List<ChatListModel>> getAllWorkersWithLastMessageStream() {
+    var streamController = StreamController<List<ChatListModel>>.broadcast();
 
-            ChatListModel workerWithLastMessage = ChatListModel(
-              name: workerData['name'],
-              id: doc.id,
-              isVerified: workerData['isVerified'] ?? false,
-              isActive: workerData['isActive'] ?? false,
-              avatar: workerData['avatar'] ?? '',
-              lastMessage: lastMessage,
-              sentTime: sentTime,
-              messageType: messageType,
-            );
+    FirebaseFirestore.instance
+        .collection('workers')
+        .snapshots()
+        .listen((workerSnapshot) {
+      List<ChatListModel> initialUsers = [];
+      for (var doc in workerSnapshot.docs) {
+        var workerData = doc.data() as Map<String, dynamic>?;
+        if (workerData != null) {
+          // Fetch the last message for this worker
+          FirebaseFirestore.instance
+              .collection('clients')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection('chat')
+              .doc(doc.id)
+              .collection('messages')
+              .orderBy('sentTime', descending: true)
+              .limit(1)
+              .get()
+              .then((messageSnapshot) {
+            if (messageSnapshot.docs.isNotEmpty) {
+              var messageData =
+                  messageSnapshot.docs.first.data() as Map<String, dynamic>;
+              String lastMessage = messageData['content'] ?? '';
+              DateTime sentTime =
+                  (messageData['sentTime'] as Timestamp).toDate();
+              MessageType messageType =
+                  stringToMessageType(messageData['messageType']);
 
-            initialUsers.add(workerWithLastMessage);
-          }
-          // Emit the initial list of users with the last message
-          streamController.add(initialUsers);
-        });
+              ChatListModel workerWithLastMessage = ChatListModel(
+                name: workerData['name'],
+                id: doc.id,
+                isVerified: workerData['isVerified'] ?? false,
+                isActive: workerData['isActive'] ?? false,
+                avatar: workerData['avatar'] ?? '',
+                lastMessage: lastMessage,
+                sentTime: sentTime,
+                messageType: messageType,
+              );
+
+              initialUsers.add(workerWithLastMessage);
+            }
+            // Emit the initial list of users with the last message
+            streamController.add(initialUsers);
+          });
+        }
       }
-    }
-  });
+    });
 
-  return streamController.stream;
-}
-
-
-
+    return streamController.stream;
+  }
 
   ClientModel? getWorkerById(String userId) {
     FirebaseFirestore.instance
@@ -81,7 +86,6 @@ Stream<List<ChatListModel>> getAllWorkersWithLastMessageStream() {
     });
     return user;
   }
-
 
   List<ChatMessageModel> getMessages(String receiverId) {
     FirebaseFirestore.instance
@@ -97,16 +101,17 @@ Stream<List<ChatListModel>> getAllWorkersWithLastMessageStream() {
           .map((doc) => ChatMessageModel.fromJson(doc.data(), doc.id))
           .toList();
       notifyListeners();
-
+      //!? NOT SURE ABOUT ORDER
       scrollDown();
     });
     return messages;
   }
 
-  void scrollDown() =>
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+  void scrollDown() => WidgetsBinding.instance.addPostFrameCallback((_) {
         if (scrollController.hasClients) {
           scrollController.jumpTo(
+              // duration: const Duration(milliseconds: 2000),
+              // curve: Curves.easeOut,
               scrollController.position.maxScrollExtent);
         }
       });

@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 import 'common/constants/quik_themes.dart';
 import 'common/routes/router.dart';
+import 'features/chat/notification_service.dart';
 
-class MyAppView extends StatelessWidget {
+class MyAppView extends StatefulWidget {
   const MyAppView({super.key});
+
+  @override
+  State<MyAppView> createState() => _MyAppViewState();
+}
+
+class _MyAppViewState extends State<MyAppView> {
+  final notificationService = NotificationsService();
+
+  @override
+  void initState() {
+   notificationService.firebaseNotification(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

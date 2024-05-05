@@ -43,7 +43,6 @@ class ChatMessages extends StatelessWidget {
                       case MessageType.booking:
                         return BookingRequestBubble(
                           receiverId: receiverId,
-
                           isMe: isMe,
                           message: value.messages[index],
                         );
@@ -53,5 +52,3 @@ class ChatMessages extends StatelessWidget {
               ),
       );
 }
-
-
