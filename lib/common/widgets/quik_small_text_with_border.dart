@@ -8,10 +8,12 @@ class QuikSmallTextWithBorder extends StatelessWidget {
   final Color borderColor;
   final Color backgroundColor;
   final Color textColor;
+  final double? width;
 
   const QuikSmallTextWithBorder({
     Key? key,
     required this.text,
+    this.width,
     this.borderColor = quikHyrGreen,
     this.backgroundColor = quikHyrGreenBg,
     this.textColor = quikHyrGreen,
@@ -21,7 +23,7 @@ class QuikSmallTextWithBorder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      width: 90,
+      width: width ?? 90,
       height: 28,
       decoration: BoxDecoration(
         color: backgroundColor,

@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:quikhyr/models/location_model.dart';
 
 class BookingViaChatModel extends Equatable {
-  final bool isRated;
+  final bool hasRated;
   final String clientId;
   final DateTime dateTime;
   final LocationModel location;
@@ -16,7 +16,7 @@ class BookingViaChatModel extends Equatable {
   final String subserviceId;
   final String workerId;
   const BookingViaChatModel({
-    required this.isRated,
+    required this.hasRated,
     required this.subserviceId,
     required this.clientId,
     required this.dateTime,
@@ -28,7 +28,7 @@ class BookingViaChatModel extends Equatable {
   });
 
   BookingViaChatModel copyWith({
-    bool? isRated,
+    bool? hasRated,
     String? subserviceId,
     String? clientId,
     DateTime? dateTime,
@@ -40,7 +40,7 @@ class BookingViaChatModel extends Equatable {
     String? workerId,
   }) {
     return BookingViaChatModel(
-      isRated: isRated ?? this.isRated,
+      hasRated: hasRated ?? this.hasRated,
       subserviceId: subserviceId ?? this.subserviceId,
       clientId: clientId ?? this.clientId,
       dateTime: dateTime ?? this.dateTime,
@@ -54,7 +54,7 @@ class BookingViaChatModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'isRated': isRated,
+      'hasRated': hasRated,
       'subserviceId': subserviceId,
       'clientId': clientId,
       'dateTime': dateTime.toIso8601String(),

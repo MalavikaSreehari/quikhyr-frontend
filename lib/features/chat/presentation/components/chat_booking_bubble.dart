@@ -36,9 +36,24 @@ class _BookingRequestBubbleState extends State<BookingRequestBubble> {
       ChatMessageModel message,
       bool isAccepted) async {
     debugPrint(message.timeslot.toString());
+
+    if (!isAccepted) {
+      // Send rejection notification
+      await notificationsService.sendNotification(
+        body: "Booking Rejected By ${FirebaseAuth.instance.currentUser!.uid}",
+        senderId: FirebaseAuth.instance.currentUser!.uid,
+      );
+      // Update the booking proposal status
+      await FirebaseFirestoreService.updateBookingProposal(
+          textMessageId: messageId,
+          receiverId: receiverId,
+          isAccepted: isAccepted);
+      return;
+    }
+
     final response = await BookingRepository().createBooking(
       BookingViaChatModel(
-        isRated: false,
+        hasRated: false,
         subserviceId:
             message.subserviceId ?? "99", // Default value for subserviceId
         location: LocationModel(latitude: 55, longitude: 55),

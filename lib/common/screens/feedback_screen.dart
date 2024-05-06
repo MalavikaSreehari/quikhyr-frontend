@@ -35,6 +35,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const QuikAppBar(
+        showBackButton: true,
         pageName: "Feedback",
       ),
       body: Padding(

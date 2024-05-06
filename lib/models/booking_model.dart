@@ -111,6 +111,7 @@ class Booking {
       serviceAvatar: json["serviceAvatar"] ?? '',
       subserviceName: json["subserviceName"] ?? '',
       workerName: json["workerName"] ?? '',
+      workerId: json["workerId"] ?? '',
       dateTime: DateTime.parse(json["dateTime"]),
       unit: json["unit"] ?? '',
       locationName: json["locationName"] ?? '',

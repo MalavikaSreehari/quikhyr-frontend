@@ -90,9 +90,18 @@ class ProfileScreen extends StatelessWidget {
             ),
             QuikSpacing.vS16(),
             Text(
-              "I am a highly skilled and experienced plumber and mechanic with over 10 years of experience in the field. I am proficient in all aspects of",
+              worker.summary ??
+                  "I am a highly skilled and experienced plumber and mechanic with over 10 years of experience in the field. I am proficient in all aspects of",
               style: descriptionTextStyle,
-            )
+            ),
+            QuikSpacing.vS16(),
+            if (worker.rating == 0.0)
+              const QuikSmallTextWithBorder(
+                text: "No Ratings Yet",
+                width: 150,
+              )
+            else
+              QuikSmallTextWithBorder(text: "Rating: ${worker.rating}"),
           ]),
         ),
       ),

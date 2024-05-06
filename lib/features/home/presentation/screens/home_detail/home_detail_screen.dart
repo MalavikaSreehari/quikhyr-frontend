@@ -13,11 +13,11 @@ import 'package:quikhyr/common/widgets/gradient_separator.dart';
 import 'package:quikhyr/common/widgets/long_icon_button.dart';
 import 'package:quikhyr/common/widgets/quik_app_bar.dart';
 import 'package:quikhyr/common/widgets/quik_small_text_with_border.dart';
+import 'package:quikhyr/common/widgets/rating_star_worker.dart';
 import 'package:quikhyr/features/home/cubit/subservice_cubit.dart';
 import 'package:quikhyr/features/home/cubit/workerlist_cubit.dart';
 import 'package:quikhyr/features/home/models/immediate_screen_data_model.dart';
 import 'package:quikhyr/features/home/presentation/components/quik_drop_down_button.dart';
-import 'package:quikhyr/features/home/presentation/components/shimmer_circle_small.dart';
 import 'package:quikhyr/models/service_category_model.dart';
 import 'package:quikhyr/models/sub_service_category_model.dart';
 import 'package:shimmer/shimmer.dart';
@@ -308,9 +308,47 @@ class HomeDetailScreen extends StatelessWidget {
                                 //       pathParameters: {'workerId': worker.id},);
                                 // },
                                 contentPadding: EdgeInsets.zero,
-                                leading: CircleAvatar(
-                                  radius: 32,
-                                  backgroundImage: NetworkImage(worker.avatar),
+                                leading: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: gridItemBackgroundColor,
+                                  ),
+                                  alignment: Alignment.center,
+                                  height: 64,
+                                  width: 64,
+                                  child: Stack(
+                                    children: [
+                                      Positioned.fill(
+                                        child: ClipOval(
+                                          child: Image.network(
+                                            worker.avatar,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      // if (worker.isVerified)
+                                      //   Positioned(
+                                      //     top: 0,
+                                      //     right: 0,
+                                      //     child: SvgPicture.asset(
+                                      //       QuikAssetConstants.verifiedBlueSvg,
+                                      //     ),
+                                      //   ),
+                                      if (worker.rating != 0.0)
+                                        Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          child: RatingStar(
+                                              rating: worker.rating.toString()),
+                                        )
+                                      else
+                                        const Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          child: RatingStar(rating: "       "),
+                                        )
+                                    ],
+                                  ),
                                 ),
                                 title: Text(
                                   worker.name,
@@ -388,9 +426,47 @@ class HomeDetailScreen extends StatelessWidget {
                         children: state.workers
                             .map((worker) => ListTile(
                                 contentPadding: EdgeInsets.zero,
-                                leading: CircleAvatar(
-                                  radius: 32,
-                                  backgroundImage: NetworkImage(worker.avatar),
+                                leading: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: gridItemBackgroundColor,
+                                  ),
+                                  alignment: Alignment.center,
+                                  height: 64,
+                                  width: 64,
+                                  child: Stack(
+                                    children: [
+                                      Positioned.fill(
+                                        child: ClipOval(
+                                          child: Image.network(
+                                            worker.avatar,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      // if (worker.isVerified)
+                                      //   Positioned(
+                                      //     top: 0,
+                                      //     right: 0,
+                                      //     child: SvgPicture.asset(
+                                      //       QuikAssetConstants.verifiedBlueSvg,
+                                      //     ),
+                                      //   ),
+                                      if (worker.rating != 0.0)
+                                        Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          child: RatingStar(
+                                              rating: worker.rating.toString()),
+                                        )
+                                      else
+                                        const Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          child: RatingStar(rating: "       "),
+                                        )
+                                    ],
+                                  ),
                                 ),
                                 title: Text(
                                   worker.name,

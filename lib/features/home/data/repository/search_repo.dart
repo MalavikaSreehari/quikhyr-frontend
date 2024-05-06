@@ -62,190 +62,44 @@ class SearchRepo {
   //   'Monster 1959',
   // ];
   Map<String, Map<String, String>> tagToServiceMap = {};
-  List<String> getSearchableItems() {
+
+  List<String> getSearchableItems(List<Map<String, dynamic>> subservices) {
     List<String> items = [];
 
-    for (var serviceMap in serviceMapList) {
-      for (var service in serviceMap.entries) {
-        // Add the service name to the items
-        items.add(service.key);
-        tagToServiceMap[service.key] = {
-          'service': service.key,
-          'subservice': '',
+    for (var subservice in subservices) {
+      // Add the service name to the items
+      items.add(subservice['serviceName']);
+      tagToServiceMap[subservice['serviceName']] = {
+        'service': subservice['serviceName'],
+        'subservice': '',
+      };
+
+      // Add the subservice name to the items
+      items.add(subservice['name']);
+      tagToServiceMap[subservice['name']] = {
+        'service': subservice['serviceName'],
+        'subservice': subservice['name'],
+      };
+
+      // Extract the tags
+      for (var tag in subservice['tags']) {
+        items.add(tag);
+        tagToServiceMap[tag] = {
+          'service': subservice['serviceName'],
+          'subservice': subservice['name'],
         };
-
-        // Extract the subservices
-        for (var subserviceMap in service.value['subservices']) {
-          String subservice = subserviceMap['name'];
-          items.add(subservice);
-          tagToServiceMap[subservice] = {
-            'service': service.key,
-            'subservice': subservice,
-          };
-
-          // Extract the tags
-          for (var tag in subserviceMap['tags']) {
-            items.add(tag);
-            tagToServiceMap[tag] = {
-              'service': service.key,
-              'subservice': subservice,
-            };
-          }
-        }
       }
     }
 
     return items;
   }
 
-  final List<Map<String, dynamic>> serviceMapList = [
-    {
-      'Electrician': {
-        'subservices': [
-          {
-            'name': 'Wiring',
-            'tags': ['electrical', 'wiring', 'install', 'fix', 'maintenance']
-          },
-          {
-            'name': 'Appliance Repair',
-            'tags': ['electrical', 'appliance', 'repair', 'fix']
-          },
-          {
-            'name': 'Lighting Installation',
-            'tags': ['electrical', 'light', 'lighting', 'install']
-          },
-          {
-            'name': 'Smart Home Electrical',
-            'tags': ['electrical', 'smart home', 'automation', 'install']
-          },
-          {
-            'name': 'Generator Installation',
-            'tags': ['electrical', 'generator', 'install', 'power']
-          },
-          {
-            'name': 'Safety Inspection',
-            'tags': ['electrical', 'safety', 'inspect', 'check']
-          },
-        ],
-      },
-    },
-    {
-      'Plumber': {
-        'subservices': [
-          {
-            'name': 'Pipe Installation & Repair',
-            'tags': ['plumbing', 'pipe', 'install', 'repair', 'leak']
-          },
-          {
-            'name': 'Leak Detection & Repair',
-            'tags': ['plumbing', 'leak', 'detect', 'fix', 'repair']
-          },
-          {
-            'name': 'Drain Cleaning & Clog Removal',
-            'tags': ['plumbing', 'drain', 'clean', 'clog', 'remove']
-          },
-          {
-            'name': 'Fixture Installation & Repair',
-            'tags': [
-              'plumbing',
-              'fixture',
-              'install',
-              'repair',
-              'faucet',
-              'tap',
-              'shower'
-            ]
-          },
-          {
-            'name': 'Water Heater Installation & Repair',
-            'tags': [
-              'plumbing',
-              'water heater',
-              'install',
-              'repair',
-              'hot water'
-            ]
-          },
-          {
-            'name': 'Water Softener Installation',
-            'tags': ['plumbing', 'water softener', 'install', 'water treatment']
-          },
-        ],
-      },
-    },
-    {
-      'Tree Care': {
-        'subservices': [
-          {
-            'name': 'Tree Trimming & Pruning',
-            'tags': ['tree', 'trim', 'prune', 'cut', 'maintain', 'shape']
-          },
-          {
-            'name': 'Tree Removal',
-            'tags': ['tree', 'remove', 'cut down', 'yard']
-          },
-          {
-            'name': 'Stump Grinding',
-            'tags': ['tree', 'stump', 'grind', 'remove']
-          },
-          {
-            'name': 'Tree Disease Diagnosis & Treatment',
-            'tags': ['tree', 'disease', 'diagnose', 'treat', 'health']
-          },
-          {
-            'name': 'Planting & Landscaping',
-            'tags': ['garden', 'plant', 'tree', 'landscape', 'install']
-          },
-          {
-            'name': 'Lawn Care & Maintenance',
-            'tags': ['lawn', 'yard', 'care', 'maintain', 'grass']
-          },
-        ],
-      },
-    },
-    {
-      'Auto Repair': {
-        'subservices': [
-          {
-            'name': 'Oil Change & Filter Replacement',
-            'tags': [
-              'car',
-              'vehicle',
-              'oil',
-              'change',
-              'filter',
-              'engine',
-              'maintenance'
-            ]
-          },
-          {
-            'name': 'Tire Repair & Replacement',
-            'tags': ['car', 'vehicle', 'tire', 'fix', 'replace', 'wheel']
-          },
-          {
-            'name': 'Brake Repair & Replacement',
-            'tags': ['car', 'vehicle', 'brake', 'fix', 'replace', 'safety']
-          },
-          {
-            'name': 'Engine Diagnostics & Repair',
-            'tags': ['car', 'vehicle', 'engine', 'diagnose', 'fix', 'repair']
-          },
-          {
-            'name': 'Transmission Repair',
-            'tags': ['car', 'vehicle', 'transmission', 'fix', 'repair']
-          },
-          {
-            'name': 'Battery Replacement',
-            'tags': ['car', 'vehicle', 'battery', 'replace', 'electrical']
-          },
-        ],
-      },
-    },
-  ];
+  
 
-  List<Map<String, String>> search(String query) {
+  List<Map<String, String>> search(
+      String query, List<Map<String, dynamic>> subservices) {
     final fuse = Fuzzy(
-      getSearchableItems(),
+      getSearchableItems(subservices),
       options: FuzzyOptions(
         findAllMatches: true,
         tokenize: true,

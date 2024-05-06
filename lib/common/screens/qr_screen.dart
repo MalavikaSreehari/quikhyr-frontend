@@ -14,6 +14,7 @@ class QrScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('QR Data: $qrData');
     return Scaffold(
       appBar: const QuikAppBar(
         showBackButton: true,

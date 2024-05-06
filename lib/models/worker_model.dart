@@ -9,6 +9,7 @@ import 'location_model.dart';
 class WorkerModel extends Equatable {
   final String id;
   final String? summary;
+  final num? rating;
   final String name;
   final String fcmToken;
   final bool isVerified;
@@ -28,6 +29,7 @@ class WorkerModel extends Equatable {
   const WorkerModel({
     this.locationName = "Initial Location",
     this.summary,
+    this.rating,
     required this.fcmToken,
     required this.isVerified,
     required this.isActive,
@@ -46,6 +48,7 @@ class WorkerModel extends Equatable {
   });
 
   WorkerModel copyWith({
+    num? rating,
     String? summary,
     String? locationName,
     String? fcmToken,
@@ -65,6 +68,7 @@ class WorkerModel extends Equatable {
     List<String>? serviceIds,
   }) {
     return WorkerModel(
+      rating: rating ?? this.rating,
       summary: summary ?? this.summary,
       locationName: locationName ?? this.locationName,
       id: id ?? this.id,
@@ -107,7 +111,9 @@ class WorkerModel extends Equatable {
   }
 
   factory WorkerModel.fromMap(Map<String, dynamic> map) {
+          
     return WorkerModel(
+      rating: map['rating'] != null ? map['rating'] as num : 0.0,
       summary: map['summary'] != null ? map['summary'] as String : 'Summary not found',
       locationName: map['locationName'] != null
           ? map['locationName'] as String

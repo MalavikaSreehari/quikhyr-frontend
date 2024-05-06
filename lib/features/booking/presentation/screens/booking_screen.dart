@@ -141,7 +141,7 @@ class CurrentBookingWidget extends StatelessWidget {
     return BlocBuilder<BookingCubit, BookingState>(
       builder: (context, state) {
         if (state is BookingLoading) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         } else if (state is BookingLoaded &&
             state.booking.currentBookings.isNotEmpty) {
           return ListView.separated(
@@ -150,6 +150,7 @@ class CurrentBookingWidget extends StatelessWidget {
             itemCount: state.booking.currentBookings.length,
             itemBuilder: (context, index) {
               final booking = state.booking.currentBookings[index];
+              
               return QuikBookingListTile(booking: booking);
             },
           );
@@ -179,7 +180,7 @@ class PastBookingWidget extends StatelessWidget {
     return BlocBuilder<BookingCubit, BookingState>(
       builder: (context, state) {
         if (state is BookingLoading) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         } else if (state is BookingLoaded &&
             state.booking.pastBookings.isNotEmpty) {
           return ListView.separated(
@@ -188,6 +189,8 @@ class PastBookingWidget extends StatelessWidget {
             itemCount: state.booking.pastBookings.length,
             itemBuilder: (context, index) {
               final booking = state.booking.pastBookings[index];
+              debugPrint(booking.workerId);
+              debugPrint("Booking: $booking");
               return QuikPastBookingListTile(booking: booking);
             },
           );
