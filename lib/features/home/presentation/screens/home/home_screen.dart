@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quikhyr/common/bloc/client_bloc.dart';
 import '../../../../../common/constants/quik_asset_constants.dart';
 import '../../../../../common/constants/quik_colors.dart';
 import '../../../../../common/constants/quik_routes.dart';
@@ -194,25 +195,91 @@ class HomeScreen extends StatelessWidget {
                   ),
 
                   QuikSpacing.vS16(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(QuikAssetConstants.locationFilledSvg),
-                      QuikSpacing.hS6(),
-                      Text(
-                        "Irinjalakuda",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall
-                            ?.copyWith(fontWeight: FontWeight.w700),
-                      ),
-                      ClickableSvgIcon(
-                          svgAsset: QuikAssetConstants.dropDownArrowSvg,
-                          height: 18,
-                          width: 18,
-                          onTap: () {}),
-                    ],
-                  ),
+                  BlocBuilder<ClientBloc, ClientState>(
+                    builder: (context, state) {
+                      if(state is ClientLoaded){
+return GestureDetector(
+                        onTap: () {
+                          context.pushNamed(QuikRoutes.mapName,
+                              extra: state.client.location);
+                        }
+                        // onTap: () async {
+                        //   context.read<WorkerBloc>().add(FetchInitiated());
+
+                        //   bool serviceEnabled;
+                        //   LocationPermission permissionGranted;
+
+                        //   serviceEnabled =
+                        //       await Geolocator.isLocationServiceEnabled();
+                        //   if (!serviceEnabled) {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       const SnackBar(
+                        //         content:
+                        //             Text('Please enable location services'),
+                        //       ),
+                        //     );
+                        //     return;
+                        //   }
+
+                        //   permissionGranted =
+                        //       await Geolocator.checkPermission();
+                        //   if (permissionGranted ==
+                        //       LocationPermission.denied) {
+                        //     permissionGranted =
+                        //         await Geolocator.requestPermission();
+                        //     if (permissionGranted !=
+                        //             LocationPermission.always &&
+                        //         permissionGranted !=
+                        //             LocationPermission.whileInUse) {
+                        //       if (context.mounted) {
+                        //         ScaffoldMessenger.of(context).showSnackBar(
+                        //           const SnackBar(
+                        //             content: Text(
+                        //                 'Location permission is denied'),
+                        //           ),
+                        //         );
+                        //       }
+                        //       return;
+                        //     }
+                        //   }
+
+                        //   Position position =
+                        //       await Geolocator.getCurrentPosition(
+                        //           desiredAccuracy: LocationAccuracy.high);
+                        //   context.read<WorkerBloc>().add(UpdateLocation(
+                        //       LocationModel(
+                        //           latitude: position.latitude,
+                        //           longitude: position.longitude)));
+                        // },
+                        ,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              QuikAssetConstants.locationFilledSvg,
+                              color: primary,
+                            ),
+                            Text(
+                              state.client.locationName ?? "Location",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.w700),
+                            ),
+                            ClickableSvgIcon(
+                                svgAsset: QuikAssetConstants.dropDownArrowSvg,
+                                height: 18,
+                                width: 18,
+                                onTap: () {}),
+                          ],
+                        ),
+                      );
+                      }
+                      else {
+                        return const SizedBox();
+                      }
+                    },
+                  )
                   // AppSizing.vS16(), // This is your container
                 ],
               ),

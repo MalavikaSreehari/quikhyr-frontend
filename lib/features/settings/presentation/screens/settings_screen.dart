@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quikhyr/common/bloc/client_bloc.dart';
+import '../../../../common/bloc/worker_bloc.dart';
 import '../../../../common/constants/quik_asset_constants.dart';
 import '../../../../common/constants/quik_colors.dart';
 import '../../../../common/constants/quik_spacings.dart';
@@ -68,47 +71,78 @@ class SettingsScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-Row(children: [
-                    const CircleAvatar(
-                    radius: 32,
-                    backgroundImage:
-                        NetworkImage(QuikAssetConstants.placeholderImage),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Text(
-                        'Noah Johny',
-                        style: TextStyle(
-                          color: Color(0xFFFAFFFF),
-                          fontFamily: 'Trap',
-                          fontSize: 20,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w700,
-                          height: 1.0,
-                        ),
+                      BlocBuilder<ClientBloc, ClientState>(
+                        builder: (context, state) {
+                          if (state is ClientLoaded) {
+                            return CircleAvatar(
+                              radius: 32,
+                              backgroundImage:
+                                  NetworkImage(state.client.avatar),
+                            );
+                          } else {
+                            return const CircleAvatar(
+                              radius: 32,
+                              backgroundImage: NetworkImage(
+                                  QuikAssetConstants.placeholderImage),
+                            );
+                          }
+                        },
                       ),
-                      SizedBox(
-                        height: 12,
+                      const SizedBox(
+                        width: 16,
                       ),
-                      Text(
-                        'MEMBER',
-                        style: TextStyle(
-                          color: Color(0xFF3399CC),
-                          fontFamily: 'Trap',
-                          fontSize: 14,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500,
-                          height: 1.0,
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          BlocBuilder<ClientBloc, ClientState>(
+                            builder: (context, state) {
+                              if (state is ClientLoaded) {
+                                return Text(
+                                  state.client.name,
+                                  style: const TextStyle(
+                                    color: Color(0xFFFAFFFF),
+                                    fontFamily: 'Trap',
+                                    fontSize: 20,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.0,
+                                  ),
+                                );
+                              } else {
+                                return const Text(
+                                  'Noah Johny',
+                                  style: TextStyle(
+                                    color: Color(0xFFFAFFFF),
+                                    fontFamily: 'Trap',
+                                    fontSize: 20,
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.0,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          const Text(
+                            'MEMBER',
+                            style: TextStyle(
+                              color: Color(0xFF3399CC),
+                              fontFamily: 'Trap',
+                              fontSize: 14,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500,
+                              height: 1.0,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-
-],),
                   Align(
                     alignment: Alignment.centerRight,
                     child: OutlinedButton.icon(
@@ -280,8 +314,8 @@ Row(children: [
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                           Icon(Icons.info_outline_rounded, color: secondary, size: 24),
-                           SizedBox(width: 8,),
+                           const Icon(Icons.info_outline_rounded, color: secondary, size: 24),
+                           const SizedBox(width: 8,),
                        Text(
                           'QuikHyr',
                           style: Theme.of(context).textTheme.bodyMedium,
