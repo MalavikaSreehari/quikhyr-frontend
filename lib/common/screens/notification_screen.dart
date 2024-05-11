@@ -81,7 +81,7 @@ class NotificationScreen extends StatelessWidget {
           } else if (state is NotificationError) {
             return Center(child: Text(state.error));
           } else {
-            return const Center(child: Text("Unknown Error"));
+            return const Center(child: Text("No Notifications Found"));
           }
         },
       ),

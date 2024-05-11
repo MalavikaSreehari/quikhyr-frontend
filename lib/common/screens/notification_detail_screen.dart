@@ -132,9 +132,9 @@ class NotificationDetailScreen extends StatelessWidget {
                                   }));
                         } else if (state is WorkerError) {
                           return const Center(
-                              child: Text("Error loading worker"));
+                              child: Text("No Messages Found"));
                         } else {
-                          return const Center(child: Text("Unknown Error"));
+                          return const Center(child: Text("No messages found"));
                         }
                       },
                     ),

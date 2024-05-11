@@ -23,7 +23,7 @@ class QuikPastBookingListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: gridItemBackgroundColor,
+        color: textInputBackgroundColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: ListTile(
@@ -67,12 +67,13 @@ class QuikPastBookingListTile extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            InkWell(
-              child: const Icon(Icons.feedback, color: secondary),
-              onTap: () {
-                context.pushNamed(QuikRoutes.feedbackName, extra: booking);
-              },
-            ),
+            if (booking.hasRated == false)
+              InkWell(
+                child: const Icon(Icons.feedback, color: secondary),
+                onTap: () {
+                  context.pushNamed(QuikRoutes.feedbackName, extra: booking);
+                },
+              ),
             QuikSpacing.hS12(),
             ClickableSvgIcon(
                 svgAsset: QuikAssetConstants.arrowRightUpSvg,

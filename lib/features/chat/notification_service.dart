@@ -124,7 +124,7 @@ class NotificationsService {
       }
       //!!NEED TO UPDATE THE DATA TYPE WHEN SENDING CHAT MESSAGE NOTIFICATION
       else {
-        AppRouter.router.pushNamed(QuikRoutes.notificationDetailName,
+        AppRouter.router.pushNamed(QuikRoutes.chatConversationName,
             pathParameters: {'workerId': message.data['senderId']});
       }
     });
