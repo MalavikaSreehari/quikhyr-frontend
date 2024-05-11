@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:quikhyr/common/constants/quik_secure_constants.dart';
 import '../../common/constants/quik_routes.dart';
 import '../../common/routes/router.dart';
 
@@ -17,8 +18,8 @@ const channel = AndroidNotificationChannel(
     playSound: true);
 
 class NotificationsService {
-  static const key =
-      'AAAAkTLRTRc:APA91bFxWxSHRNz727vGSWXat7DKWqoDHE8e7ph9yh0E2HFnLKGNcSZ5zJjsCZB_HbiPG2U2ZEYGnpj0-Ue0AvRygt-SZ4ncmcCNe1LlsfmduDUQYc51m-P7Ro_FLG8iKmW4Rw9uLEMT';
+  static final key =
+      notificationKey;
 
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 

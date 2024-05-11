@@ -1,3 +1,4 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_config/flutter_config.dart';
 
-String baseUrl = dotenv.env['BASE_URL']!;
+String baseUrl = FlutterConfig.get('BASE_URL')!;
+String notificationKey = FlutterConfig.get('NOTIFICATION_KEY')!;
