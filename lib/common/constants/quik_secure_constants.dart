@@ -1,4 +1,6 @@
-import 'package:flutter_config/flutter_config.dart';
 
-String baseUrl = FlutterConfig.get('BASE_URL')!;
-String notificationKey = FlutterConfig.get('NOTIFICATION_KEY')!;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+String baseUrl = dotenv.get('BASE_URL');
+String firebaseApiKey = dotenv.get('FIREBASE_API_KEY');
+String notificationKey = dotenv.get('NOTIFICATION_KEY');

@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:quikhyr/models/location_model.dart';
 
 class BookingViaChatModel extends Equatable {

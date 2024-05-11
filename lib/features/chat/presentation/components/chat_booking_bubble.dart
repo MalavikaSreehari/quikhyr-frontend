@@ -7,7 +7,6 @@ import '../../../../common/widgets/quik_short_button.dart';
 import '../../../booking/repository/booking_repository.dart';
 import '../../firebase_firestore_service.dart';
 import '../../notification_service.dart';
-import '../../../../models/simple_booking_model.dart';
 import '../../../../models/chat_message_model.dart';
 import '../../../../models/location_model.dart';
 

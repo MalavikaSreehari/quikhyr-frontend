@@ -1,12 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../common/constants/quik_asset_constants.dart';
-import '../../../../common/constants/quik_routes.dart';
 import '../../../../common/widgets/long_icon_button.dart';
 import '../components/my_text_field.dart';
 import 'package:flutter/material.dart';
-import 'sign_in_screen.dart';
 import '../../../../models/location_model.dart';
 import '../../../../models/client_model.dart';
 import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
@@ -22,6 +19,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final PageController pageController = PageController();
   // int _curr = 0;
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    _passwordController.dispose();
+    _dobController.dispose();
+    _emailController.dispose();
+    _nameController.dispose();
+    _phoneController.dispose();
+    _pincodeController.dispose();
+    _genderController.dispose();
+    // _setPasswordFormKey.currentState?.dispose();
+    // _signUpFormKey.currentState?.dispose();
+    // _profileInfoFormKey.currentState?.dispose();
+
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

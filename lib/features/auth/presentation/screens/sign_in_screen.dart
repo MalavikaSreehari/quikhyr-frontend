@@ -8,7 +8,6 @@ import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../components/my_text_field.dart';
-import '../../../home/presentation/screens/home/home_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -25,6 +24,13 @@ class _SignInScreenState extends State<SignInScreen> {
   IconData iconPassword = CupertinoIcons.eye_fill;
   bool obscurePassword = true;
   String? _errorMsg;
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

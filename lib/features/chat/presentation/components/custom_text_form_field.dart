@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quikhyr/common/constants/quik_asset_constants.dart';
 import 'package:quikhyr/common/constants/quik_spacings.dart';
 import 'package:quikhyr/common/widgets/clickable_svg_icon.dart';

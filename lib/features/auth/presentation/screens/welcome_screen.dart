@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../common/constants/quik_asset_constants.dart';
 import '../../../../common/constants/quik_routes.dart';
 import '../../../../common/constants/quik_spacings.dart';
 import '../../../../common/widgets/long_icon_button.dart';
-import 'sign_in_screen.dart';
-import 'sign_up_screen.dart';
 
-import '../../blocs/authentication_bloc/authentication_bloc.dart';
-import '../../blocs/sign_in_bloc/sign_in_bloc.dart';
-import '../../blocs/sign_up_bloc/sign_up_bloc.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

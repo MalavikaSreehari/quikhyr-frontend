@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +20,6 @@ import '../widgets/clickable_svg_icon.dart';
 import '../widgets/gradient_separator.dart';
 import '../widgets/quik_app_bar.dart';
 import '../widgets/quik_short_button.dart';
-import '../widgets/quik_small_text_with_border.dart';
 
 class NotificationDetailScreen extends StatelessWidget {
   final NotificationModel notification;
@@ -30,7 +28,6 @@ class NotificationDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController();
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: QuikAppBar(

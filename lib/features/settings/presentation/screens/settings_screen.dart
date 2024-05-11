@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quikhyr/common/bloc/client_bloc.dart';
-import '../../../../common/bloc/worker_bloc.dart';
 import '../../../../common/constants/quik_asset_constants.dart';
 import '../../../../common/constants/quik_colors.dart';
 import '../../../../common/constants/quik_spacings.dart';

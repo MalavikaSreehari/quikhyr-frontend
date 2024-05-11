@@ -13,7 +13,6 @@ import '../../../../common/constants/quik_themes.dart';
 import '../../../../common/widgets/gradient_separator.dart';
 import '../../../../common/widgets/quik_app_bar.dart';
 import '../../../../common/widgets/quik_search_bar.dart';
-import '../../firebase_firestore_service.dart';
 import '../../firebase_provider.dart';
 import '../../notification_service.dart';
 import '../../../../models/chat_list_model.dart';

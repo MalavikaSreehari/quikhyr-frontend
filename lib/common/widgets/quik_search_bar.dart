@@ -38,6 +38,7 @@ class _QuikSearchBarState extends State<QuikSearchBar> {
   @override
   void dispose() {
     _focusNode.dispose();
+    
     super.dispose();
   }
 

@@ -37,8 +37,13 @@ class ImmediateBookingScreen extends StatefulWidget {
 }
 
 class _ImmediateBookingScreenState extends State<ImmediateBookingScreen> {
+
+  @override
+  void dispose() {
+    super.dispose();
+    _descriptionController.dispose();
+  }
   bool _isUploading = false;
-  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   SubserviceModel _selectedSubservice = SubserviceModel(
       id: "0",
